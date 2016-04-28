@@ -52,6 +52,7 @@ export default class Html extends Component {
 
           <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic' />
           <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet' />
+          <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css' />
 
           <meta name='viewport' content='width=device-width, initial-scale=1' />
           {/* styles (will be present only in production with webpack extract text plugin) */}

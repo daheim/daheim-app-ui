@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Logo from '../components/logo'
+import Logo from '../components/Logo'
 
 export default class LoginLayout extends React.Component {
 
@@ -18,7 +18,7 @@ export default class LoginLayout extends React.Component {
         <div>
           <div style={{position: 'absolute', width: '100%', right: 0, top: 0, bottom: 0, backgroundSize: 'cover', backgroundImage: 'url(https://assets.daheimapp.de/media/daheim_hero.jpg),url(https://assets.daheimapp.de/media/daheim_hero@tiny.jpg)'}}></div>
           <div style={{position: 'absolute', background: 'linear-gradient(rgba(0,0,0,0), black)', width: '100%', bottom: 0, height: 50}}></div>
-          <div style={{textAlign: 'center', paddingTop: 60}}><Logo /></div>
+          <div style={{textAlign: 'center', paddingTop: 60, position: 'relative'}}><Logo color='white' style={{height: 36}} /></div>
           <div style={{position: 'relative'}}>
             {this.props.children}
             <div style={{textAlign: 'center', textShadow: '1px 1px 5px black', paddingTop: 6, color: 'rgba(255, 255, 255, 0.8)', fontSize: 12, lineHeight: '22px'}}>
