@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 
 import ReviewList from '../components/ReviewList'
 import PicturePanel from '../components/PicturePanel'
+import TalkAbout from '../components/TalkAbout'
 
 class ReadyPage extends React.Component {
 
@@ -19,7 +20,7 @@ class ReadyPage extends React.Component {
 
   render () {
     return (
-      <div>
+      <div style={{padding: 16}}>
         <div style={{textAlign: 'center'}}>
           <div style={{display: 'inline-block', margin: '20px auto'}}>
             <RaisedButton primary label='Start a Lesson' onClick={this.handleReadyClick}/>
@@ -34,6 +35,7 @@ class ReadyPage extends React.Component {
             <PicturePanel />
           </div>
         </div>
+        <TalkAbout />
       </div>
     )
   }
