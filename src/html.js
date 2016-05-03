@@ -50,10 +50,6 @@ export default class Html extends Component {
           <meta name='msapplication-TileImage' content='/ms-icon-144x144.png'/>
           <meta name='theme-color' content='#ffffff'/>
 
-          <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic' />
-          <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet' />
-          <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css' />
-
           <meta name='viewport' content='width=device-width, initial-scale=1' />
           {/* styles (will be present only in production with webpack extract text plugin) */}
           {Object.keys(assets.styles).map((style, key) =>
@@ -69,6 +65,19 @@ export default class Html extends Component {
         </head>
         <body>
           <div id='content' dangerouslySetInnerHTML={{__html: content}}/>
+          <script dangerouslySetInnerHTML={{__html: `
+            WebFontConfig = {
+              google: { families: [ 'Open+Sans:400,300,400italic,700,800:latin,latin-ext', 'Roboto:400,300,300italic,400italic,700,900:latin,latin-ext', 'Lato:400,700,900:latin,latin-ext', 'Raleway:400,300,300italic,400italic,700,900:latin,latin-ext', 'Oswald:400,700:latin,latin-ext' ] }
+            };
+            (function() {
+              var wf = document.createElement('script');
+              wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+              wf.type = 'text/javascript';
+              wf.async = 'true';
+              var s = document.getElementsByTagName('script')[0];
+              s.parentNode.insertBefore(wf, s);
+            })(); </script>
+          `}}></script>
           <script dangerouslySetInnerHTML={{__html: `window.__INIT=${JSON.stringify({API_URL: 'http://localhost:8080/api'})}`}} charSet='UTF-8'/>
           <script src={assets.javascript.main} charSet='UTF-8'/>
         </body>
