@@ -14,4 +14,4 @@ build
 /newrelic_agent.log
 /out
 /tmp
-
+/lib

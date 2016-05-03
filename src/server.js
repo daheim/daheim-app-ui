@@ -16,6 +16,7 @@ const targetUrl = 'http://localhost:3000/api'
 const proxy = httpProxy.createProxyServer({ target: targetUrl })
 
 app.use(cookieParser())
+app.use('/dist', Express.static(path.join(__dirname, '..', 'build')))
 app.use(Express.static(path.join(__dirname, '..', 'static')))
 
 app.use('/api', (req, res) => {
