@@ -6,7 +6,7 @@ export default class TalkAbout extends React.Component {
   render () {
     return (
       <div {...this.props}>
-        <h2>Lass uns reden über...</h2>
+        <h2>Über was kann man reden?</h2>
         <div style={{display: 'flex', flexWrap: 'wrap'}}>
           <div style={{flex: '0 0 200px', margin: 8}}>
             <h3>...das Alphabet</h3>
