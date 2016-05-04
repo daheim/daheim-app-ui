@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import ReviewList from '../components/ReviewList'
 import PicturePanel from '../components/PicturePanel'
 import TalkAbout from '../components/TalkAbout'
+import {connect as liveConnect, ready as liveReady} from '../actions/live'
 
 class ReadyPage extends React.Component {
 
@@ -16,6 +17,14 @@ class ReadyPage extends React.Component {
   handleReadyClick = (e) => {
     e.preventDefault()
     this.props.push('/video')
+  }
+
+  componentDidMount () {
+    this.props.liveConnect()
+  }
+
+  handleReadyChange = (e) => {
+    this.props.liveReady({ready: e.target.checked})
   }
 
   render () {
@@ -41,4 +50,7 @@ class ReadyPage extends React.Component {
   }
 }
 
-export default connect(null, {push})(ReadyPage)
+export default connect((state, props) => {
+  const {live: {connected, ready, online}, profile: {profile: user}} = state
+  return {connected, ready, online, user}
+}, {push, liveConnect, liveReady})(ReadyPage)
