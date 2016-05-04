@@ -6,6 +6,7 @@ import {connect} from 'react-redux'
 import ReviewList from '../components/ReviewList'
 import PicturePanel from '../components/PicturePanel'
 import TalkAbout from '../components/TalkAbout'
+import RoleSwitch from '../components/RoleSwitch'
 import {connect as liveConnect, ready as liveReady} from '../actions/live'
 
 class ReadyPage extends React.Component {
@@ -34,6 +35,9 @@ class ReadyPage extends React.Component {
           <div style={{display: 'inline-block', margin: '20px auto'}}>
             <RaisedButton primary label='Start a Lesson' onClick={this.handleReadyClick}/>
           </div>
+        </div>
+        <div>
+          <RoleSwitch />
         </div>
         <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', maxWidth: 1000, width: '100%', margin: '0 auto'}}>
           <ReviewList style={{flex: '0 1 600px', margin: '0 8px'}} />

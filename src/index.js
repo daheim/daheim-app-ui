@@ -14,6 +14,7 @@ import './dhm_profile_camera.css'
 // import { loadPlaces } from './actions/places'
 // import { loadTrips } from './actions/trips'
 // import { loadUsers, loadUser } from './actions/users'
+import {loadProfile} from './actions/profile'
 
 import { browserHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
@@ -53,6 +54,7 @@ function main () {
   // store.dispatch(loadTrips())
   // store.dispatch(loadUsers())
   // store.dispatch(loadUser())
+  store.dispatch(loadProfile())
 }
 
 main()

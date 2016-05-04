@@ -1,3 +1,16 @@
+import {createAction} from 'redux-actions'
+import api from '../api_client'
+
+export const SWITCH_ROLE = 'profile/switchRole'
+export const switchRole = createAction(SWITCH_ROLE, (role) => {
+  return api.post('/role', {role})
+})
+
+export const LOAD = 'profile/load'
+export const loadProfile = createAction(LOAD, () => {
+  return api.get('/profile')
+})
+
 // import dispatcher from '../dispatcher';
 // import {Store} from 'flux/utils';
 // import Promise from 'bluebird';
