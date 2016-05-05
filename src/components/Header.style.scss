@@ -1,4 +1,7 @@
 
+$headerHeight: 56;
+$textColor: rgba(0, 0, 0, 0.95);
+
 .head2 {
   border-bottom: solid 1px white;
   background: #EEE;
@@ -8,7 +11,16 @@
   max-width: 960px;
   margin: 0 auto;
   display: flex;
-  height: 60px;
+  height: $headerHeight + px;
+
+  a {
+    color: $textColor;
+    text-decoration: none;
+    &:hover, &:active, &:visited {
+      text-decoration: none;
+      color: $textColor;
+    }
+  }
 }
 
 .logo {
@@ -22,7 +34,6 @@
 
 .profile {
   flex: 0 0 auto;
-  margin: 5px;
   display: flex;
   flex-direction: column;
 }
@@ -63,4 +74,49 @@
   margin-bottom: 30px;
   z-index: 1;
   display: none;
+}
+
+.headerItem {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  height: $headerHeight + px;
+  transition: background-color 0.3s;
+  padding: 0 16px;
+}
+
+.headerItem:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.headerItemActive {
+  background-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+.logoText {
+  margin-left: 10px;
+  color: $textColor;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.avatar {
+  border-radius: 50%;
+  width: #{$headerHeight - 20}px;
+  height: #{$headerHeight - 20}px;
+}
+
+a.dropDownItem {
+  display: block;
+  padding: 10px 20px;
+  text-decoration: none;
+  color: black;
+  font-size: 14px;
+
+  &:hover, &:active, &:visited {
+    text-decoration: none;
+  }
+  &:hover {
+    background-color: #CCC;
+  }
 }

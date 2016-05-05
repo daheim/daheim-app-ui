@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Logo from './Logo'
+import UserMenu from './UserMenu'
 import style from './Header.style'
 
 export default class Header extends React.Component {
@@ -13,7 +14,9 @@ export default class Header extends React.Component {
               <Logo />
             </div>
             <div className={style.spacer}></div>
-            <div className={style.profile}></div>
+            <div className={style.profile}>
+              <UserMenu />
+            </div>
           </div>
         </div>
         <div className={style.cover2}>
