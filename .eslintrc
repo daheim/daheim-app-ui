@@ -33,7 +33,8 @@
   },
   "env": {
     "mocha": true,
-    "jasmine": true
+    "jasmine": true,
+    "browser": true
   },
   "globals": {
     "fetch": true,
