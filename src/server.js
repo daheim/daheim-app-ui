@@ -59,7 +59,7 @@ const listener = server.listen(process.env.PORT || 8080, (err) => {
     console.error(err)
   }
   const address = listener.address().family === 'IPv6' ? `[${listener.address().address}]` : listener.address().address
-  console.info('----\n==> ✅  %s is running, talking to API server on %s.', 'The Traveller UI', targetUrl)
+  console.info('----\n==> ✅  %s is running, talking to API server on %s.', 'Daheim App UI', targetUrl)
   console.info('==> 💻  Open http://%s:%s in a browser to view the app.', address, listener.address().port)
 })
 
