@@ -7,6 +7,7 @@ import RaisedButton from 'material-ui/lib/raised-button'
 import {push} from 'react-router-redux'
 
 import {saveProfile} from '../actions/profile'
+import RoleSwitch from '../components/RoleSwitch'
 
 const avatars = {
   default: 'http://www.creativemediaresearch.com/wp-content/uploads/2013/04/woman.jpg',
@@ -125,6 +126,10 @@ class ProfilePage extends React.Component {
         </div>
         <div style={{marginTop: 10}}>
           <RaisedButton label='Save' secondary onClick={this.handleSave} />
+        </div>
+        <div style={{marginTop: 50, borderTop: 'dashed 1px #CCC'}}>
+          <h2>Debug</h2>
+          <div><RoleSwitch /></div>
         </div>
       </div>
     )

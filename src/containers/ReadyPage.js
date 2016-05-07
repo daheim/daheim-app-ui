@@ -7,7 +7,6 @@ import Toggle from 'material-ui/lib/toggle'
 import ReviewList from '../components/ReviewList'
 import PicturePanel from '../components/PicturePanel'
 import TalkAbout from '../components/TalkAbout'
-import RoleSwitch from '../components/RoleSwitch'
 import ReadyUsers from '../components/ReadyUsers'
 import {connect as liveConnect, ready as liveReady} from '../actions/live'
 
@@ -51,9 +50,6 @@ class ReadyPage extends React.Component {
           <div style={{display: 'inline-block', margin: '20px auto'}}>
             <RaisedButton primary label='Start a Lesson' onClick={this.handleReadyClick}/>
           </div>
-        </div>
-        <div>
-          <RoleSwitch />
         </div>
         <div>
           <ReadyUsers />
