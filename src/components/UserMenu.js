@@ -43,7 +43,7 @@ class UserItemRaw extends React.Component {
   }
 
   render() {
-    const {user: {profile: {name} = {}} = {}} = this.props
+    const {user: {profile: {name, picture} = {}} = {}} = this.props
     const classes = classnames({
       [style.headerItem]: true,
       [style.headerItemActive]: this.state.open
@@ -54,7 +54,7 @@ class UserItemRaw extends React.Component {
           <div style={{ marginRight: 12 }}>
             {name}
           </div>
-          <img className={style.avatar} src='http://blogs.plos.org/dnascience/wp-content/plugins/all-in-one-seo-pack/images/default-user-image.png' />
+          <img className={style.avatar} src={picture} />
         </Link>
         <Popover
           open={this.state.open}
