@@ -14,7 +14,7 @@
     "start": "NODE_ENV=production node ./lib/start"
   },
   "author": "Gergo Ertli",
-  "license": "ISC",
+  "license": "MIT",
   "betterScripts": {
     "start-dev": {
       "command": "babel-watch ./src/start",
@@ -33,6 +33,10 @@
         "PORT": 8080
       }
     }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/egergo/daheim-app-ui.git"
   },
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
