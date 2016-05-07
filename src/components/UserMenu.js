@@ -12,12 +12,16 @@ class UserDropdown extends React.Component {
     onRequestClose: PropTypes.func
   }
 
+  handleClick = (e) => {
+    if (this.props.onRequestClose) this.props.onRequestClose()
+  }
+
   render () {
     return (
       <div style={{width: 200, overflowY: 'auto'}}>
-        <Link to='/profile' className={style.dropDownItem}>Edit profile</Link>
-        <Link to='/password' className={style.dropDownItem}>Change password</Link>
-        <Link to='/logout' className={style.dropDownItem}>Sign out</Link>
+        <Link to='/profile' className={style.dropDownItem} onClick={this.handleClick}>Edit profile</Link>
+        <Link to='/password' className={style.dropDownItem} onClick={this.handleClick}>Change password</Link>
+        <Link to='/logout' className={style.dropDownItem} onClick={this.handleClick}>Sign out</Link>
       </div>
     )
   }
