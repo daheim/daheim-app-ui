@@ -1,8 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link}  from 'react-router'
-import Popover from 'material-ui/lib/popover/popover'
-import PopoverAnimationFromTop from 'material-ui/lib/popover/popover-animation-from-top'
+import Popover, {PopoverAnimationVertical} from 'material-ui/Popover'
 import classnames from 'classnames'
 
 import style from './Header.style'
@@ -62,7 +61,7 @@ class UserItemRaw extends React.Component {
           anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
           onRequestClose={this.handleRequestClose}
-          animation={PopoverAnimationFromTop}
+          animation={PopoverAnimationVertical}
           style={{ borderRadius: null }}
         >
           <UserDropdown

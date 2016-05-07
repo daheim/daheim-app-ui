@@ -1,8 +1,8 @@
 import React from 'react'
-import RaisedButton from 'material-ui/lib/raised-button'
+import RaisedButton from 'material-ui/RaisedButton'
 import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
-import Toggle from 'material-ui/lib/toggle'
+import Toggle from 'material-ui/Toggle'
 
 import ReviewList from '../components/ReviewList'
 import PicturePanel from '../components/PicturePanel'

@@ -1,6 +1,5 @@
 import React from 'react'
-import RadioButton from 'material-ui/lib/radio-button'
-import RadioButtonGroup from 'material-ui/lib/radio-button-group'
+import RadioButton, {RadioButtonGroup} from 'material-ui/RadioButton'
 import {connect} from 'react-redux'
 
 import {switchRole} from '../actions/profile'

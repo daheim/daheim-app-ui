@@ -1,7 +1,7 @@
 import React from 'react'
-import TextField from 'material-ui/lib/text-field'
-import RaisedButton from 'material-ui/lib/raised-button'
-import Checkbox from 'material-ui/lib/checkbox'
+import TextField from 'material-ui/TextField'
+import RaisedButton from 'material-ui/RaisedButton'
+import Checkbox from 'material-ui/Checkbox'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 
