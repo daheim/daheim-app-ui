@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import RadioButton, {RadioButtonGroup} from 'material-ui/RadioButton'
 import {connect} from 'react-redux'
 
@@ -7,7 +7,8 @@ import {switchRole} from '../actions/profile'
 export default class RoleSwitch extends React.Component {
 
   static propTypes = {
-    switchRole: React.PropTypes.func.isRequired
+    switchRole: PropTypes.func.isRequired,
+    profile: PropTypes.object
   }
 
   handleChange = (e, value) => {

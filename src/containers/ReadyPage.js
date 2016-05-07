@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import RaisedButton from 'material-ui/RaisedButton'
 import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
@@ -13,7 +13,13 @@ import {connect as liveConnect, ready as liveReady} from '../actions/live'
 class ReadyPage extends React.Component {
 
   static propTypes = {
-    push: React.PropTypes.func.isRequired
+    push: PropTypes.func.isRequired,
+    liveConnect: PropTypes.func.isRequired,
+    liveReady: PropTypes.func.isRequired,
+    user: PropTypes.object,
+    online: PropTypes.object,
+    ready: PropTypes.bool,
+    connected: PropTypes.bool
   }
 
   handleReadyClick = (e) => {

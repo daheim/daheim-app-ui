@@ -1,13 +1,10 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
 
 export default class ReadyUsers extends React.Component {
 
   static propTypes = {
-  }
-
-  handleChange = (e, value) => {
-    this.props.switchRole(value)
+    readyUsers: PropTypes.array
   }
 
   render () {

@@ -1,11 +1,8 @@
 import io from 'socket.io-client'
 
 import {handleActions} from 'redux-actions'
-import {SET_STATE, CALL_METHOD} from './actions/live'
-import {setState} from './actions/live'
+import {SET_STATE, CALL_METHOD, setState} from './actions/live'
 import api from './api_client'
-
-import {createAction} from 'redux-actions'
 
 export default class Live {
 
@@ -13,9 +10,6 @@ export default class Live {
 
   constructor (store) {
     this.store = store
-    //this.subscribeToken = store.subscribe(() => this.handleStoreChange())
-    //this.props = store.getState().live
-    //this.handlePropsUpdated()
   }
 
   get state () {

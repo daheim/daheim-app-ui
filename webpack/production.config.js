@@ -1,4 +1,3 @@
-var merge = require('webpack-merge')
 var path = require('path')
 var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -43,7 +42,7 @@ var common = {
 
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin({compress:{warnings: false}}),
+    new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}}),
 
     webpackIsomorphicToolsPlugin
   ],

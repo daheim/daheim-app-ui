@@ -1,19 +1,18 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import {connect} from 'react-redux'
-import {Link}  from 'react-router'
+import {Link} from 'react-router'
 import Popover, {PopoverAnimationVertical} from 'material-ui/Popover'
 import classnames from 'classnames'
 
 import style from './Header.style'
 
-
 class UserDropdown extends React.Component {
 
   static propTypes = {
-    onRequestClose: React.PropTypes.func
+    onRequestClose: PropTypes.func
   }
 
-  render() {
+  render () {
     return (
       <div style={{width: 200, overflowY: 'auto'}}>
         <Link to='/profile' className={style.dropDownItem}>Edit profile</Link>
@@ -25,6 +24,10 @@ class UserDropdown extends React.Component {
 }
 
 class UserItemRaw extends React.Component {
+  static propTypes = {
+    user: PropTypes.object
+  }
+
   state = {
     open: false
   }
@@ -41,7 +44,7 @@ class UserItemRaw extends React.Component {
     })
   }
 
-  render() {
+  render () {
     const {user: {profile: {name, picture} = {}} = {}} = this.props
     const classes = classnames({
       [style.headerItem]: true,
