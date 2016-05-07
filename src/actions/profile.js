@@ -11,6 +11,11 @@ export const loadProfile = createAction(LOAD, () => {
   return api.get('/profile')
 })
 
+export const SAVE = 'profile/save'
+export const saveProfile = createAction(SAVE, (profile) => {
+  return api.post('/actions/profile/save', profile)
+})
+
 // import dispatcher from '../dispatcher';
 // import {Store} from 'flux/utils';
 // import Promise from 'bluebird';

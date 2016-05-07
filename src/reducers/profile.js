@@ -1,7 +1,10 @@
 import {handleActions} from 'redux-actions'
 
-import {LOAD} from '../actions/profile'
-import {SWITCH_ROLE} from '../actions/profile'
+import {
+  LOAD,
+  SWITCH_ROLE,
+  SAVE
+} from '../actions/profile'
 
 function updateProfile (state, action) {
   if (action.error) return state
@@ -14,9 +17,21 @@ function updateProfile (state, action) {
   }
 }
 
+function updateProfile2 (state, action) {
+  if (action.error) return state
+  if (!action.payload) return state
+  const payload = action.payload
+  return {
+    ...state,
+    loading: false,
+    profile: payload.user
+  }
+}
+
 export default handleActions({
   [LOAD]: updateProfile,
-  [SWITCH_ROLE]: updateProfile
+  [SWITCH_ROLE]: updateProfile,
+  [SAVE]: updateProfile2
 }, {
   profile: undefined,
   loading: true

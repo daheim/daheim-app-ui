@@ -5,6 +5,7 @@ import DefaultLayout from './containers/DefaultLayout'
 import ReadyPage from './containers/ReadyPage'
 import VideoPage from './containers/VideoPage'
 import ReviewPage from './containers/ReviewPage'
+import ProfilePage from './containers/ProfilePage'
 
 import LoginLayout from './containers/LoginLayout'
 import LoginPage from './containers/LoginPage'
@@ -21,6 +22,7 @@ export default function createRouter (history) {
         <IndexRoute component={ReadyPage} />
         <Route path='video' component={VideoPage} />
         <Route path='reviews/:reviewId' component={ReviewPage} />
+        <Route path='profile' component={ProfilePage} />
       </Route>
       <Route path='/auth' component={LoginLayout}>
         <IndexRoute component={LoginPage} />
