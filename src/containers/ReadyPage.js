@@ -9,6 +9,39 @@ import TalkAbout from '../components/TalkAbout'
 import ReadyUsers from '../components/ReadyUsers'
 import {ready as liveReady, join} from '../actions/live'
 
+class InvitationsRaw extends React.Component {
+
+  static propTypes = {
+    join: PropTypes.func.isRequired,
+    lessons: PropTypes.object.isRequired
+  }
+
+  handleClick = (e, lesson) => {
+    e.preventDefault()
+    this.props.join(lesson)
+  }
+
+  render () {
+    const {lessons} = this.props
+    return (
+      <div>
+        {Object.keys(lessons).map((id) => {
+          const lesson = lessons[id]
+          const handler = (e) => this.handleClick(e, lesson)
+          return (
+            <div key={lesson.id}>{lesson.id} {lesson.state} <a href='#' onClick={handler}>accept</a></div>
+          )
+        })}
+      </div>
+    )
+  }
+}
+
+const Invitations = connect((state, props) => {
+  const {live: {lessons}} = state
+  return {lessons}
+}, {join})(InvitationsRaw)
+
 class ReadyPage extends React.Component {
 
   static propTypes = {
@@ -53,6 +86,10 @@ class ReadyPage extends React.Component {
         </div>
         <div>
           <ReadyUsers />
+        </div>
+        <div>
+          <h2>Invitations</h2>
+          <Invitations />
         </div>
         <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', maxWidth: 1000, width: '100%', margin: '0 auto'}}>
           <ReviewList style={{flex: '0 1 600px', margin: '0 8px'}} />
