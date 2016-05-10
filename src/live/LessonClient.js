@@ -69,7 +69,7 @@ export default class LessonClient {
       debug('[%s] i am not allowed to start negotiation', this.id, err)
 
       if (err.error === 'equalPri') setImmediate(() => this.askForNegotiation())
-      else this.startBackoff()
+      else if (err.error !== 'lowerPri') this.startBackoff()
     } finally {
       this.negotiationStarting = false
     }
@@ -127,6 +127,14 @@ export default class LessonClient {
       if (negotiator !== this.negotiator) return
       this.onNegotiatorError(err)
     }
+    negotiator.onProgress = () => {
+      if (negotiator !== this.negotiator) return
+
+      const up = {}
+      if (negotiator.localStream) up.localStreamUrl = URL.createObjectURL(negotiator.localStream)
+      if (negotiator.remoteStream) up.remoteStreamUrl = URL.createObjectURL(negotiator.remoteStream)
+      this.dispatch(up)
+    }
   }
 
   onNegotiatorError (err) {
@@ -148,9 +156,6 @@ export default class LessonClient {
       const negotiator = this.negotiator
       await negotiator.start({initiator})
       if (this.negotiator !== negotiator) return
-
-      const remoteStreamUrl = URL.createObjectURL(negotiator.remoteStream)
-      this.dispatch({remoteStreamUrl})
     } catch (err) {
       // also indicated by onNegotiatorError
     }

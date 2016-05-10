@@ -1,5 +1,9 @@
 import 'webrtc-adapter'
 
+const debug = require('debug')('dhm:live:Negotiator')
+
+const CONNECT_TIMEOUT = 30000
+
 export default class Negotiator {
 
   static RELAY_TYPES = {offer: 1, answer: 1, ice: 1, error: 1}
@@ -54,6 +58,7 @@ export default class Negotiator {
   }
 
   handleTimeoutError () {
+    debug('timeout')
     const err = new Error('negotiation timeout')
     this.relayNoThrow({type: 'error', negotiationId: this.negotiationId, message: err.message || err})
     this.handleError(err)
@@ -61,7 +66,7 @@ export default class Negotiator {
 
   async negotiate ({initiator}) {
     const {negotiationId, relay, relayNoThrow} = this
-    const timeout = setTimeout(() => this.handleTimeoutError(), 60000)
+    const timeout = this.timeout = setTimeout(() => this.handleTimeoutError(), CONNECT_TIMEOUT)
 
     try {
       const offerPromise = new Promise((resolve) => { this.handleOffer = (offer) => resolve(offer) })
@@ -79,18 +84,25 @@ export default class Negotiator {
       // get media stream
       const localStream = this.localStream = await navigator.mediaDevices.getUserMedia({audio: true, video: true})
       if (this.closed) throw this.freeResourcesAndThrow()
+      if (this.onProgress) this.onProgress()
 
       // initialize RTCPeerConnection
       const remoteStreamPromise = new Promise((resolve) => { pc.onaddstream = (e) => resolve(e.stream) })
-      pc.onicecandidate = (e) => relayNoThrow({type: 'ice', negotiationId, candidate: e.candidate})
+      pc.onicecandidate = (e) => this.relayNoThrow({type: 'ice', negotiationId, candidate: e.candidate})
       pc.addStream(localStream)
-      pc.oniceconnectionstatechange = (e) => {
-        const ice = e.target.iceConnectionState
-        if (ice === 'failed' || ice === 'disconnected') {
-          this.onError(new Error('ice disconnected'))
+      const connectedPromise = new Promise((resolve) => {
+        pc.oniceconnectionstatechange = (e) => {
+          const ice = e.target.iceConnectionState
+          debug('[%s] ICE: %s', this.negotiationId, ice)
+          if (ice === 'failed' || ice === 'disconnected') {
+            this.onError(new Error('ice disconnected'))
+          } else if (ice === 'connected' || ice === 'completed') {
+            resolve(true)
+          }
         }
-      }
+      })
 
+      debug('[%s] starting dance. initiator: %s', this.negotiationId, initiator)
       // do the dance
       if (initiator) {
         const offer = await pc.createOffer()
@@ -109,6 +121,7 @@ export default class Negotiator {
         await pc.setLocalDescription(answer)
         await relay({type: 'answer', negotiationId, sdp: answer.sdp})
       }
+      debug('[%s] finished negotiation', this.negotiationId)
 
       // change ice function to real one and replay cached candidates
       this.ice = (candidate) => pc.addIceCandidate(new RTCIceCandidate(candidate))
@@ -116,9 +129,17 @@ export default class Negotiator {
 
       // wait for remote stream
       this.remoteStream = await remoteStreamPromise
+      if (this.closed) this.freeResourcesAndThrow()
+      if (this.onProgress) this.onProgress()
+      debug('[%s] got remote stream', this.negotiationId)
+
+      // wait for ICE connected
+      this.connected = await connectedPromise
+      if (this.closed) this.freeResourcesAndThrow()
+      if (this.onProgress) this.onProgress()
+      debug('[%s] connected', this.negotiationId)
 
       clearTimeout(timeout)
-      if (this.closed) this.freeResourcesAndThrow()
 
       return pc
     } catch (err) {
@@ -139,6 +160,8 @@ export default class Negotiator {
     if (this.localStream) {
       for (let track of this.localStream.getTracks()) track.stop()
     }
+
+    if (this.timeout) clearTimeout(this.timeout)
 
     if (this.pc && this.pc.signalingState !== 'closed') this.pc.close()
   }
