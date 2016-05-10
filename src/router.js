@@ -3,7 +3,7 @@ import {Router, Route, IndexRoute} from 'react-router'
 
 import DefaultLayout from './containers/DefaultLayout'
 import ReadyPage from './containers/ReadyPage'
-import VideoPage from './containers/VideoPage'
+import LessonPage from './containers/LessonPage'
 import ReviewPage from './containers/ReviewPage'
 import ProfilePage from './containers/ProfilePage'
 
@@ -20,7 +20,7 @@ export default function createRouter (history) {
     <Router history={history}>
       <Route path='/' component={DefaultLayout}>
         <IndexRoute component={ReadyPage} />
-        <Route path='video' component={VideoPage} />
+        <Route path='lessons/:lessonId' component={LessonPage} />
         <Route path='reviews/:reviewId' component={ReviewPage} />
         <Route path='profile' component={ProfilePage} />
       </Route>
