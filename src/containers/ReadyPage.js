@@ -7,13 +7,12 @@ import Toggle from 'material-ui/Toggle'
 import ReviewList from '../components/ReviewList'
 import TalkAbout from '../components/TalkAbout'
 import ReadyUsers from '../components/ReadyUsers'
-import {connect as liveConnect, ready as liveReady} from '../actions/live'
+import {ready as liveReady, join} from '../actions/live'
 
 class ReadyPage extends React.Component {
 
   static propTypes = {
     push: PropTypes.func.isRequired,
-    liveConnect: PropTypes.func.isRequired,
     liveReady: PropTypes.func.isRequired,
     user: PropTypes.object,
     online: PropTypes.object,
@@ -24,10 +23,6 @@ class ReadyPage extends React.Component {
   handleReadyClick = (e) => {
     e.preventDefault()
     this.props.push('/video')
-  }
-
-  componentDidMount () {
-    this.props.liveConnect()
   }
 
   handleReadyChange = (e) => {
@@ -71,4 +66,4 @@ class ReadyPage extends React.Component {
 export default connect((state, props) => {
   const {live: {connected, ready, online}, profile: {profile: user}} = state
   return {connected, ready, online, user}
-}, {push, liveConnect, liveReady})(ReadyPage)
+}, {push, liveReady})(ReadyPage)

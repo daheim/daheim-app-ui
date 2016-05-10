@@ -1,6 +1,7 @@
-import React from 'react'
+import React, {PropTypes} from 'react'
 import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
+import {connect as liveConnect} from '../actions/live'
 
 import Header from '../components/Header'
 
@@ -8,7 +9,8 @@ class DefaultLayout extends React.Component {
 
   static propTypes = {
     children: React.PropTypes.node,
-    push: React.PropTypes.func.isRequired
+    push: React.PropTypes.func.isRequired,
+    liveConnect: PropTypes.func.isRequired
   }
 
   state = {
@@ -28,6 +30,10 @@ class DefaultLayout extends React.Component {
     if (!global.localStorage.accessToken) this.props.push('/auth/register')
   }
 
+  componentDidMount () {
+    this.props.liveConnect()
+  }
+
   render () {
     return (
       <div style={{flex: '1 1 auto'}}>
@@ -41,4 +47,4 @@ class DefaultLayout extends React.Component {
 
 }
 
-export default connect(null, {push})(DefaultLayout)
+export default connect(null, {push, liveConnect})(DefaultLayout)
