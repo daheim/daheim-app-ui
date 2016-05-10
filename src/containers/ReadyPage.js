@@ -8,6 +8,7 @@ import ReviewList from '../components/ReviewList'
 import TalkAbout from '../components/TalkAbout'
 import ReadyUsers from '../components/ReadyUsers'
 import {ready as liveReady, join} from '../actions/live'
+import WebRTC from 'webrtc-adapter'
 
 class InvitationsRaw extends React.Component {
 
@@ -68,6 +69,12 @@ class ReadyPage extends React.Component {
 
     return (
       <div style={{padding: 16}}>
+
+        {!WebRTC.browserDetails.version ? (
+          <div style={{padding: 16, border: 'solid 1px darkred', background: '#F88379', marginBottom: 16}}>
+            This browser does not support audio and video calls. You won't be able to participate in lessons. Please try a recent version of Google Chrome, Firefox or Microsoft Edge.
+          </div>
+        ) : undefined}
 
         {role === 'student' ? (
           <div style={{display: 'flex', alignItems: 'center'}}>
