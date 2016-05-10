@@ -22,3 +22,31 @@ export const ready = createAction(CALL_METHOD, (...args) => {
     args
   }
 })
+
+export const startLesson = createAction(CALL_METHOD, (...args) => {
+  return {
+    method: 'startLesson',
+    args
+  }
+})
+
+export const join = createAction(CALL_METHOD, (...args) => {
+  return {
+    method: 'join',
+    args
+  }
+})
+
+export const relay = createAction(CALL_METHOD, (...args) => {
+  return {
+    method: 'relay',
+    args
+  }
+})
+
+export const leave = createAction(CALL_METHOD, (...args) => {
+  return {
+    method: 'leave',
+    args
+  }
+})
