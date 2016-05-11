@@ -30,8 +30,8 @@ var common = {
     path: PATHS.build,
     // TODO: Cannot use [chunkhash] for chunk in '/bundle-[chunkhash].js' (use [hash] instead)
     filename: '[name]-[hash].js',
-    chunkFilename: '[name]-[chunkhash].js'
-    // publicPath: 'http://' + host + ':' + port + '/'
+    chunkFilename: '[name]-[chunkhash].js',
+    publicPath: 'http://' + process.env.DEV_PUBLIC + ':' + port + '/'
   },
   progress: true,
   devtool: (ENV === 'development' ? 'eval' : 'source-map'),
@@ -100,6 +100,9 @@ var common = {
 
 if (process.env.USE_HTTPS === '1') {
   common = merge(common, {
+    output: {
+      publicPath: 'https://' + process.env.DEV_PUBLIC + ':' + port + '/'
+    },
     devServer: {
       https: true,
       cert: fs.readFileSync(process.env.SSL_CERT),
