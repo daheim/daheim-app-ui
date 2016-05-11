@@ -1,5 +1,4 @@
 import React, {PropTypes} from 'react'
-import RaisedButton from 'material-ui/RaisedButton'
 import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
 import Toggle from 'material-ui/Toggle'
@@ -54,11 +53,6 @@ class ReadyPage extends React.Component {
     connected: PropTypes.bool
   }
 
-  handleReadyClick = (e) => {
-    e.preventDefault()
-    this.props.push('/video')
-  }
-
   handleReadyChange = (e) => {
     this.props.liveReady({ready: e.target.checked})
   }
@@ -86,11 +80,6 @@ class ReadyPage extends React.Component {
         <div>{this.props.connected ? 'connected' : 'not connected'}</div>
         <div>Online teachers: {teachers} | Online students: {students}</div>
 
-        <div style={{textAlign: 'center'}}>
-          <div style={{display: 'inline-block', margin: '20px auto'}}>
-            <RaisedButton primary label='Start a Lesson' onClick={this.handleReadyClick}/>
-          </div>
-        </div>
         <div>
           <ReadyUsers />
         </div>
