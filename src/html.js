@@ -78,7 +78,7 @@ export default class Html extends Component {
               s.parentNode.insertBefore(wf, s);
             })(); </script>
           `}}></script>
-          <script dangerouslySetInnerHTML={{__html: `window.__INIT=${JSON.stringify({API_URL: 'http://localhost:8080/api'})}`}} charSet='UTF-8'/>
+          <script dangerouslySetInnerHTML={{__html: `window.__INIT=${JSON.stringify({SIO_URL: process.env.SIO_URL})}`}} charSet='UTF-8'/>
           <script src={assets.javascript.main} charSet='UTF-8'/>
         </body>
       </html>
