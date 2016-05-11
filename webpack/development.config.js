@@ -1,12 +1,12 @@
 const merge = require('webpack-merge')
 const path = require('path')
 const webpack = require('webpack')
+var fs = require('fs')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 var WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin')
 var webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./universal'))
 
-var host = (process.env.HOST || 'localhost')
 var port = (+process.env.PORT + 1) || 3001
 
 // const ENV = require('./env')
@@ -18,7 +18,7 @@ const PATHS = {
 
 process.env.BABEL_ENV = ENV
 
-const common = {
+var common = {
   context: path.resolve(__dirname, '..'),
 
   entry: {
@@ -30,8 +30,8 @@ const common = {
     path: PATHS.build,
     // TODO: Cannot use [chunkhash] for chunk in '/bundle-[chunkhash].js' (use [hash] instead)
     filename: '[name]-[hash].js',
-    chunkFilename: '[name]-[chunkhash].js',
-    publicPath: 'http://' + host + ':' + port + '/'
+    chunkFilename: '[name]-[chunkhash].js'
+    // publicPath: 'http://' + host + ':' + port + '/'
   },
   progress: true,
   devtool: (ENV === 'development' ? 'eval' : 'source-map'),
@@ -83,18 +83,30 @@ const common = {
     hot: true,
     inline: true,
     progress: true,
+    publicPath: 'http://' + process.env.DEV_PUBLIC + ':' + port + '/',
 
     // Display only errors to reduce the amount of output.
     stats: 'errors-only',
     // stats: {colors: true},
 
     // Parse host and port from env so this is easy to customize.
-    host,
+    host: '0.0.0.0',
     port
   },
   node: {
     fs: 'empty'
   }
+}
+
+if (process.env.USE_HTTPS === '1') {
+  common = merge(common, {
+    devServer: {
+      https: true,
+      cert: fs.readFileSync(process.env.SSL_CERT),
+      key: fs.readFileSync(process.env.SSL_KEY),
+      publicPath: 'https://' + process.env.DEV_PUBLIC + ':' + port + '/'
+    }
+  })
 }
 
 if (ENV === 'development') {

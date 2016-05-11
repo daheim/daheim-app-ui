@@ -43,7 +43,10 @@
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
     "coverageDirectory": "<rootDir>/tmp/coverage",
-    "testPathDirs": ["<rootDir>/src", "<rootDir>/__mocks__"],
+    "testPathDirs": [
+      "<rootDir>/src",
+      "<rootDir>/__mocks__"
+    ],
     "unmockedModulePathPatterns": [
       "react",
       "core.js",
@@ -122,6 +125,7 @@
     "redux-thunk": "^2.0.1",
     "screenfull": "^3.0.0",
     "socket.io-client": "^1.4.6",
+    "spdy": "^3.3.2",
     "webpack-isomorphic-tools": "^2.2.50",
     "webrtc-adapter": "^1.1.0",
     "webrtc-adapter-test": "^0.2.10",
