@@ -80,9 +80,10 @@ class ReadyPage extends React.Component {
         <div>{this.props.connected ? 'connected' : 'not connected'}</div>
         <div>Online teachers: {teachers} | Online students: {students}</div>
 
-        <div>
+        {role === 'teacher' ? (
           <ReadyUsers />
-        </div>
+        ) : undefined}
+
         <div>
           <h2>Invitations</h2>
           <Invitations />
