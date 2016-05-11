@@ -22,7 +22,7 @@ export default class Live {
     if (this.socket) return
 
     this.dispatchState({active: true})
-    const socket = this.socket = io(window.__INIT.SIO_URL, {multiplex: false}) // TODO: configure URL
+    const socket = this.socket = io(window.__INIT.SIO_URL, {multiplex: false, transports: ['websocket']}) // TODO: configure URL
     socket.on('connect', async () => {
       try {
         const data = await api.post('/realtimeToken')
