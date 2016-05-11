@@ -34,7 +34,8 @@
   "env": {
     "mocha": true,
     "jasmine": true,
-    "browser": true
+    "browser": true,
+    "jest": true
   },
   "globals": {
     "fetch": true,

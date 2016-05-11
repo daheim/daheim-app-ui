@@ -1,5 +1,12 @@
-import promiseMiddleware from '  /'
+jest.unmock('../index.js')
+
+import promiseMiddleware from '../index.js'
 import { spy } from 'sinon'
+import chai from 'chai'
+import chaiAsPromised from 'chai-as-promised'
+
+global.expect = chai.expect
+chai.use(chaiAsPromised)
 
 function noop() {}
 const GIVE_ME_META = 'GIVE_ME_META'
@@ -26,7 +33,7 @@ describe('promiseMiddleware', () => {
     err = new Error()
   })
 
-  it('handles Flux standard actions', async () => {
+  pit('handles Flux standard actions', async () => {
     const meta = { 'do': 'wop' }
 
     await dispatch({
@@ -69,7 +76,7 @@ describe('promiseMiddleware', () => {
     expect(action3.sequence.id).to.equal(action4.sequence.id)
   })
 
-  it('handles promises', async () => {
+  pit('handles promises', async () => {
     await dispatch(Promise.resolve(foobar))
     expect(baseDispatch.calledOnce).to.be.true
     expect(baseDispatch.firstCall.args[0]).to.equal(foobar)
@@ -77,7 +84,7 @@ describe('promiseMiddleware', () => {
     await expect(dispatch(Promise.reject(err))).to.eventually.be.rejectedWith(err)
   })
 
-  it('ignores non-promises', async () => {
+  pit('ignores non-promises', async () => {
     dispatch(foobar)
     expect(baseDispatch.calledOnce).to.be.true
     expect(baseDispatch.firstCall.args[0]).to.equal(foobar)
@@ -90,7 +97,7 @@ describe('promiseMiddleware', () => {
     })
   })
 
-  it('starts async dispatches from beginning of middleware chain', async () => {
+  pit('starts async dispatches from beginning of middleware chain', async () => {
     await dispatch(Promise.resolve({ type: GIVE_ME_META }))
     dispatch({ type: GIVE_ME_META })
     expect(baseDispatch.args.map(args => args[0].meta)).to.eql([
