@@ -141,7 +141,7 @@ export default class Live {
   }
 
   async startLesson ({userId}) {
-    if (!this.socket) return
+    if (!this.socket) throw new Error('live not active')
     return new Promise((resolve) => {
       this.socket.emit('Lesson.create', {userId}, (res) => {
         resolve(res)
@@ -183,14 +183,19 @@ export default class Live {
   }
 
   async leave ({id}) {
-    if (!this.socket) return
-    const lesson = this.state.lessons[id]
-    if (!lesson) return console.warn('lesson not found in state', id)
+    if (!this.socket) throw new Error('live not active')
     return new Promise((resolve) => {
       this.socket.emit('lesson.leave', {id}, (res) => {
         resolve(res)
       })
     })
+  }
+
+  async leaveIfNotStarted ({id}) {
+    const lesson = this.state.lessons[id]
+    if (!lesson || !lesson.connected) { // TODO: should check for lesson.active
+      return this.leave({id})
+    }
   }
 
   async relay ({id, connectionId, data}) {

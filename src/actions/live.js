@@ -9,6 +9,10 @@ export const setActive = createAction(SET_ACTIVE)
 export const CALL_METHOD = 'live/callMethod'
 export const callMethod = createAction(CALL_METHOD)
 
+function createCallMethodAction (method) {
+  return createAction(CALL_METHOD, (...args) => ({method, args}))
+}
+
 export const connect = createAction(CALL_METHOD, (...args) => {
   return {
     method: 'connect',
@@ -50,3 +54,5 @@ export const leave = createAction(CALL_METHOD, (...args) => {
     args
   }
 })
+
+export const leaveIfNotStarted = createCallMethodAction('leaveIfNotStarted')

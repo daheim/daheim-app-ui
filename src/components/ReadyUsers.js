@@ -1,6 +1,7 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
 
+import StartLesson from './StartLesson'
 import {startLesson} from '../actions/live'
 
 import style from './ReadyUsers.style'
@@ -10,13 +11,13 @@ class ReadyUser extends Component {
 
   static propTypes = {
     user: PropTypes.object.isRequired,
-    startLesson: PropTypes.func.isRequired
+    startLesson: PropTypes.func.isRequired,
+    onSelect: PropTypes.func
   }
 
   handleClick = async (e) => {
     e.preventDefault()
-    const result = await this.props.startLesson({userId: this.props.user.id})
-    console.log('startLesson result', result)
+    if (this.props.onSelect) this.props.onSelect(this.props.user)
   }
 
   render () {
@@ -40,16 +41,32 @@ export default class ReadyUsers extends Component {
     startLesson: PropTypes.func.isRequired
   }
 
+  state = {
+    selectedUser: undefined
+  }
+
+  unselectUser = () => {
+    this.setState({selectedUser: undefined})
+  }
+
+  selectUser = (user) => {
+    this.setState({selectedUser: user})
+  }
+
   render () {
     const {readyUsers, startLesson} = this.props
+    const {selectedUser} = this.state
+
     return (
       <div>
         <h2>Ready Students</h2>
         {readyUsers.length === 0 ? (
           <div>There are no students waiting for a lesson</div>
         ) : (
-          readyUsers.map((user) => <ReadyUser key={user.id} user={user} startLesson={startLesson} />)
+          readyUsers.map((user) => <ReadyUser key={user.id} user={user} startLesson={startLesson} onSelect={this.selectUser} />)
         )}
+
+        {selectedUser ? <StartLesson key={selectedUser.id} user={selectedUser} onRequestClose={this.unselectUser} /> : undefined}
       </div>
     )
   }
