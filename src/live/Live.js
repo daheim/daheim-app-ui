@@ -153,7 +153,8 @@ export default class Live {
           [id]: {
             ...lesson,
             id,
-            state: 'inviting'
+            state: 'inviting',
+            participating: true
           }
         }
         this.dispatchState({lessons})

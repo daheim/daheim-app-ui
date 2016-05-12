@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {connect as liveConnect} from '../actions/live'
 
 import Header from '../components/Header'
+import InvitedToLesson from '../components/InvitedToLesson'
 
 class DefaultLayout extends React.Component {
 
@@ -41,6 +42,7 @@ class DefaultLayout extends React.Component {
         <div style={{clear: 'both', background: 'white', maxWidth: 960, margin: '0 auto', border: 'solid 1px #DDD', zIndex: 1, position: 'relative'}}>
           {this.props.children}
         </div>
+        <InvitedToLesson />
       </div>
     )
   }

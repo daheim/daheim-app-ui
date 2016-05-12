@@ -6,6 +6,35 @@ import CircularProgress from 'material-ui/CircularProgress'
 
 import {startLesson, leaveIfNotStarted} from '../actions/live'
 
+class LessonGuardRaw extends Component {
+
+  static propTypes = {
+    lesson: PropTypes.object
+  }
+
+  render () {
+    const {lesson} = this.props
+
+    if (lesson) {
+      return (
+        <div style={{display: 'flex', alignItems: 'center'}}>
+          <CircularProgress />
+          <div style={{margin: 10, fontWeight: 700}}>Waiting for student to accept</div>
+        </div>
+      )
+    } else {
+      return (
+        <div style={{background: '#FA8072', border: 'solid 1px darkred', padding: 16, color: 'black', margin: '10px 0', borderRadius: 2}}>Student did not accept lesson</div>
+      )
+    }
+  }
+}
+
+const LessonGuard = connect((state, props) => {
+  const lesson = state.live.lessons[props.lessonId]
+  return {lesson}
+}, {})(LessonGuardRaw)
+
 class StartLesson extends Component {
 
   static propTypes = {
@@ -77,10 +106,7 @@ class StartLesson extends Component {
           <div style={{background: '#FA8072', border: 'solid 1px darkred', padding: 16, color: 'black', margin: '10px 0', borderRadius: 2}}>{error}</div>
         ) : undefined}
         {lessonId ? (
-          <div style={{display: 'flex', alignItems: 'center'}}>
-            <CircularProgress />
-            <div style={{margin: 10, fontWeight: 700}}>Waiting for student to accept</div>
-          </div>
+          <LessonGuard lessonId={lessonId} />
         ) : undefined}
         {startLessonPromise ? (
           <div style={{display: 'flex', alignItems: 'center'}}>
@@ -88,7 +114,7 @@ class StartLesson extends Component {
             <div style={{margin: 10, fontWeight: 700}}>Requesting...</div>
           </div>
         ) : undefined}
-        <div>There will be information about the student here... Kommt gleich :)</div>
+        <div>There will be information about the teacher here... Kommt gleich :)</div>
       </Dialog>
     )
   }
