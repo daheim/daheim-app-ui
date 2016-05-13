@@ -4,6 +4,56 @@ import {push} from 'react-router-redux'
 import api from '../api_client'
 import {setState} from '../actions/live'
 import LessonClient from './LessonClient'
+const debug = require('debug')('dhm:live:Live')
+
+class Connection {
+
+  async start (configureSocket) {
+    try {
+      const data = await api.post('/realtimeToken')
+      if (this.closed) return
+      const accessToken = data.token
+      const socket = this.socket = io(window.__INIT.SIO_URL, {
+        reconnection: false,
+        multiplex: false,
+        transports: ['websocket'],
+        query: {
+          'access_token': accessToken
+        }
+      }) // TODO: configure URL
+      configureSocket(socket)
+
+      socket.on('connect', () => {
+        if (this.closed) return
+        this.onConnect()
+      })
+      for (let event of ['disconnect', 'error', 'connect_error', 'connect_timeout', 'reconnect_error', 'reconnect_failed']) {
+        socket.on(event, (...args) => {
+          if (this.closed) return
+          debug('sio connect error. event: %s', ...args)
+          this.close()
+        })
+      }
+    } catch (err) {
+      debug('sio connect error', err)
+      this.close()
+    }
+  }
+
+  close () {
+    if (this.closed) return
+    this.closed = true
+
+    if (this.socket) {
+      this.socket.close()
+      for (let id of Object.keys(this.socket.acks)) {
+        this.socket.onack({id, data: [{error: 'disconnected'}]})
+      }
+    }
+
+    this.onClose()
+  }
+}
 
 export default class Live {
 
@@ -19,26 +69,27 @@ export default class Live {
   dispatchState (...args) { return this.store.dispatch(setState(...args)) }
 
   connect () {
-    if (this.socket) return
-
-    this.dispatchState({active: true})
-    const socket = this.socket = io(window.__INIT.SIO_URL, {multiplex: false, transports: ['websocket']}) // TODO: configure URL
-    socket.on('connect', async () => {
-      try {
-        const data = await api.post('/realtimeToken')
-        this.socket.emit('auth', {token: data.token}, (data) => console.warn('handle auth result', data))
-        this.dispatchState({connected: true})
-        this.replayState()
-      } catch (err) {
-        // TODO: handle auth error
-        console.error(err.stack)
-      }
-    })
-    socket.on('disconnect', () => {
-      // TODO: check reconnect logic
+    if (this.connection) this.connection.close()
+    const connection = this.connection = new Connection()
+    connection.onConnect = () => {
+      if (this.connection !== connection) return
+      this.socket = connection.socket
+      this.dispatchState({connected: true})
+      delete this.connectionBackoff
+    }
+    connection.onClose = () => {
+      if (this.connection !== connection) return
+      delete this.socket
       this.dispatchState({connected: false})
-    })
 
+      this.connectionBackoff = Math.floor(Math.min((this.connectionBackoff || 1000) * (1 + Math.random()), 60000))
+      debug('sio reconnecting in %s ms', this.connectionBackoff)
+      setTimeout(() => this.connect(), this.connectionBackoff)
+    }
+    connection.start((socket) => this.configureSocket(socket))
+  }
+
+  configureSocket(socket) {
     socket.on('online', (online) => this.dispatchState({online}))
     socket.on('readyUsers', (users) => this.dispatchState({readyUsers: users}))
 
@@ -132,7 +183,7 @@ export default class Live {
   }
 
   ready ({ready}) {
-    if (!this.socket) return
+    if (!this.socket) throw new Error('live not active')
 
     this.dispatchState({ready})
     this.socket.emit('ready', {ready}, (res) => {
@@ -163,7 +214,7 @@ export default class Live {
   }
 
   async join ({id}) {
-    if (!this.socket) return
+    if (!this.socket) throw new Error('live not active')
     const lesson = this.state.lessons[id]
     if (!lesson) return console.warn('lesson not found in state', id)
     return new Promise((resolve) => {
@@ -200,7 +251,7 @@ export default class Live {
   }
 
   async relay ({id, connectionId, data}) {
-    if (!this.socket) return
+    if (!this.socket) throw new Error('live not active')
     return new Promise((resolve, reject) => {
       this.socket.emit('lesson.relay', {id, connectionId, data}, (res) => {
         if ((res || {}).error) return reject(res) // TODO: ugly
