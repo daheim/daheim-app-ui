@@ -182,12 +182,15 @@ export default class Live {
     if (ready) this.ready({ready})
   }
 
-  ready ({ready}) {
+  async ready ({ready}) {
     if (!this.socket) throw new Error('live not active')
 
-    this.dispatchState({ready})
-    this.socket.emit('ready', {ready}, (res) => {
-      console.warn('handle ready response', res) // TODO: handle result
+    return new Promise((resolve, reject) => {
+      this.socket.emit('ready', {ready}, (res) => {
+        if (res.error) return reject(new Error(res.error))
+        this.dispatchState({ready})
+        resolve()
+      })
     })
   }
 
