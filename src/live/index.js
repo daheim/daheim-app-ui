@@ -35,11 +35,14 @@ export const liveReducer = handleActions({
       lessons
     }
 
+    if (state.connected !== newState.connected) newState.connectionId++
+
     return newState
   }
 }, {
   active: true,
   connected: false,
+  connectionId: 1,
   ready: false,
   readyUsers: [],
   online: {},
