@@ -1,4 +1,5 @@
 import ExtendableError from 'es6-error'
+import cookie from 'cookie'
 
 export class ApiError extends ExtendableError {
   constructor (message, code) {
@@ -48,8 +49,10 @@ class ApiClient {
 
   async do (url, opt = {}) {
     try {
+      const csrfToken = cookie.parse(document.cookie)._csrf
       opt.headers = opt.headers || {}
       opt.headers['Accept'] = 'application/json'
+      opt.headers['X-CSRF-Token'] = csrfToken
       opt.credentials = 'same-origin'
       const response = await fetch('/api' + url, opt)
       if (!response.ok) {
