@@ -17,6 +17,7 @@ import './dhm_profile_camera.css'
 import {loadProfile} from './actions/profile'
 
 import { browserHistory } from 'react-router'
+import withScroll from 'scroll-behavior'
 import { syncHistoryWithStore } from 'react-router-redux'
 
 class App extends React.Component {
@@ -43,7 +44,7 @@ class App extends React.Component {
 
 function main () {
   const store = createStore(browserHistory)
-  const history = syncHistoryWithStore(browserHistory, store)
+  const history = syncHistoryWithStore(withScroll(browserHistory), store)
 
   injectTapEventPlugin()
 
