@@ -2,6 +2,7 @@ import React, {PropTypes} from 'react'
 import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
 import {connect as liveConnect} from '../actions/live'
+import {loadProfile} from '../actions/profile'
 
 import Header from '../components/Header'
 import InvitedToLesson from '../components/InvitedToLesson'
@@ -9,9 +10,11 @@ import InvitedToLesson from '../components/InvitedToLesson'
 class DefaultLayout extends React.Component {
 
   static propTypes = {
+    profile: PropTypes.object,
     children: React.PropTypes.node,
     push: React.PropTypes.func.isRequired,
-    liveConnect: PropTypes.func.isRequired
+    liveConnect: PropTypes.func.isRequired,
+    loadProfile: PropTypes.func.isRequired
   }
 
   state = {
@@ -20,6 +23,7 @@ class DefaultLayout extends React.Component {
 
   componentDidMount () {
     this.props.liveConnect() // TODO: handle unmount
+    if (!this.props.profile) this.props.loadProfile()
   }
 
   render () {
@@ -36,4 +40,7 @@ class DefaultLayout extends React.Component {
 
 }
 
-export default connect(null, {push, liveConnect})(DefaultLayout)
+export default connect((state, props) => {
+  const {profile} = state.profile
+  return {profile}
+}, {push, liveConnect, loadProfile})(DefaultLayout)
