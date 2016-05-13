@@ -110,12 +110,20 @@ export default class Negotiator {
         await relay({type: 'offer', negotiationId, sdp: offer.sdp})
 
         const answerSdp = await answerPromise
-        const answer = new RTCSessionDescription({sdp: answerSdp, type: 'answer'})
-        pc.setRemoteDescription(answer)
+        try {
+          const answer = new RTCSessionDescription({sdp: answerSdp, type: 'answer'})
+          pc.setRemoteDescription(answer)
+        } catch (err) {
+          console.error('cannot set remote description answer', answerSdp, err)
+        }
       } else {
         const offerSdp = await offerPromise
-        const offer = new RTCSessionDescription({sdp: offerSdp, type: 'offer'})
-        await pc.setRemoteDescription(offer)
+        try {
+          const offer = new RTCSessionDescription({sdp: offerSdp, type: 'offer'})
+          await pc.setRemoteDescription(offer)
+        } catch (err) {
+          console.error('cannot set remote description offer', offerSdp, err)
+        }
 
         const answer = await pc.createAnswer()
         await pc.setLocalDescription(answer)
