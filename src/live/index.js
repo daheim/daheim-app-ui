@@ -17,10 +17,25 @@ export const liveMiddleware = (store) => (next) => {
 
 export const liveReducer = handleActions({
   [SET_STATE]: (state, action) => {
-    return {
-      ...state,
-      ...action.payload
+
+    const newLessons = action.payload.lessons || {}
+    const lessons = {...state.lessons}
+    for (let key of Object.keys(newLessons)) {
+      const newLesson = newLessons[key]
+      if (newLesson === undefined) {
+        delete lessons[key]
+      } else {
+        lessons[key] = {...lessons[key], ...newLesson}
+      }
     }
+
+    const newState = {
+      ...state,
+      ...action.payload,
+      lessons
+    }
+
+    return newState
   }
 }, {
   active: true,

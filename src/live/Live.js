@@ -113,17 +113,14 @@ export default class Live {
 
     socket.on('lesson.onConnectionChanged', (req) => {
       const {id, connected} = req
-      const lesson = this.state.lessons[id]
       const lessons = {
-        ...this.state.lessons,
         [id]: {
-          ...lesson,
           participating: true,
           connected
         }
       }
       this.dispatchState({lessons})
-      this.store.dispatch(push(`/lessons/${lesson.id}`))
+      this.store.dispatch(push(`/lessons/${id}`))
 
       if (!this.lessonClients[id]) {
         const lessonClient = new LessonClient(this, id)
@@ -145,11 +142,8 @@ export default class Live {
         delete this.lessonClients[id]
       }
 
-      const lesson = this.state.lessons[id]
       const lessons = {
-        ...this.state.lessons,
         [id]: {
-          ...lesson,
           participating: false,
           connected: false
         }
@@ -165,13 +159,9 @@ export default class Live {
         delete this.lessonClients[id]
       }
 
-      const lesson = this.state.lessons[id]
+      // TODO: move lesson to closed one
       const lessons = {
-        ...this.state.lessons,
-        [id]: {
-          ...lesson,
-          closed: true
-        }
+        [id]: undefined
       }
       this.dispatchState({lessons})
     })
@@ -201,11 +191,8 @@ export default class Live {
         resolve(res)
 
         const {id} = res
-        const lesson = this.state.lessons[id]
         const lessons = {
-          ...this.state.lessons,
           [id]: {
-            ...lesson,
             id,
             state: 'inviting',
             participating: true
@@ -224,11 +211,8 @@ export default class Live {
       this.socket.emit('lesson.join', {id}, (res) => {
         resolve(res)
 
-        const lesson = this.state.lessons[id]
         const lessons = {
-          ...this.state.lessons,
-          [lesson.id]: {
-            ...lesson,
+          [id]: {
             state: 'accepted'
           }
         }
