@@ -40,7 +40,7 @@ class Connection {
     }
   }
 
-  close () {
+  close (...args) {
     if (this.closed) return
     this.closed = true
 
@@ -51,7 +51,7 @@ class Connection {
       }
     }
 
-    this.onClose()
+    this.onClose(...args)
   }
 }
 
@@ -69,7 +69,7 @@ export default class Live {
   dispatchState (...args) { return this.store.dispatch(setState(...args)) }
 
   connect () {
-    if (this.connection) this.connection.close()
+    if (this.connection) this.connection.close({replaced: true})
     const connection = this.connection = new Connection()
     connection.onConnect = () => {
       if (this.connection !== connection) return
@@ -77,10 +77,13 @@ export default class Live {
       this.dispatchState({connected: true})
       delete this.connectionBackoff
     }
-    connection.onClose = () => {
+    connection.onClose = ({replaced} = {}) => {
       if (this.connection !== connection) return
       delete this.socket
+      delete this.connection
       this.dispatchState({connected: false})
+
+      if (replaced) return
 
       this.connectionBackoff = Math.floor(Math.min((this.connectionBackoff || 1000) * (1 + Math.random()), 60000))
       debug('sio reconnecting in %s ms', this.connectionBackoff)
