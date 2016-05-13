@@ -89,7 +89,7 @@ export default class Live {
     connection.start((socket) => this.configureSocket(socket))
   }
 
-  configureSocket(socket) {
+  configureSocket (socket) {
     socket.on('online', (online) => this.dispatchState({online}))
     socket.on('readyUsers', (users) => this.dispatchState({readyUsers: users}))
 

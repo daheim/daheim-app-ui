@@ -17,7 +17,6 @@ export const liveMiddleware = (store) => (next) => {
 
 export const liveReducer = handleActions({
   [SET_STATE]: (state, action) => {
-
     const newLessons = action.payload.lessons || {}
     const lessons = {...state.lessons}
     for (let key of Object.keys(newLessons)) {
