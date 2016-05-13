@@ -34,7 +34,7 @@ class LoginForm extends React.Component {
     this.setState({loading: true})
     try {
       const result = await this.props.login({
-        email: this.state.email,
+        username: this.state.email,
         password: this.state.password
       })
       if (result.error) throw result.payload

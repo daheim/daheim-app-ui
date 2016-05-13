@@ -2,9 +2,8 @@ import {createAction} from 'redux-actions'
 import api from '../api_client'
 
 export const LOGIN = 'auth/login'
-export const login = createAction(LOGIN, async (payload) => {
-  const result = await api.post('/login', payload)
-  global.localStorage.accessToken = result.accessToken
+export const login = createAction(LOGIN, (payload) => {
+  return api.post('/login', payload)
 })
 
 export const REGISTER = 'auth/register'

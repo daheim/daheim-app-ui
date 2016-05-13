@@ -40,7 +40,7 @@ class RegistrationForm extends React.Component {
     this.setState({loading: true})
     try {
       const result = await this.props.register({
-        email: this.state.email,
+        username: this.state.email,
         password: this.state.password,
         newsletter: this.state.newsletter
       })

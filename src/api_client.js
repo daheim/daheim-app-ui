@@ -20,23 +20,14 @@ export class ApiError extends ExtendableError {
 class ApiClient {
 
   get (url) {
-    return this.do(url, {
-      credentials: 'same-origin',
-      headers: {
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ' + global.localStorage.accessToken
-      }
-    })
+    return this.do(url)
   }
 
   post (url, body) {
     return this.do(url, {
       method: 'POST',
-      credentials: 'same-origin',
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json; charset=UTF-8',
-        'Authorization': 'Bearer ' + global.localStorage.accessToken
+        'Content-Type': 'application/json; charset=UTF-8'
       },
       body: JSON.stringify(body)
     })
@@ -51,18 +42,18 @@ class ApiClient {
 
     return this.do(url, {
       method: 'POST',
-      credentials: 'same-origin',
-      headers: {
-        'Accept': 'application/json'
-      },
       body: formData
     })
   }
 
-  async do (url, opt) {
+  async do (url, opt = {}) {
     try {
+      opt.headers = opt.headers || {}
+      opt.headers['Accept'] = 'application/json'
+      opt.credentials = 'same-origin'
       const response = await fetch('/api' + url, opt)
       if (!response.ok) {
+        if (response.status === 401) throw new ApiError('Unauthorized', 'unauthorized')
         const json = await response.json()
         const code = json.code || 'network'
         const message = json.error || 'Network error'

@@ -18,21 +18,8 @@ class DefaultLayout extends React.Component {
 
   }
 
-  handleSignOutClick = (eIgnored) => {
-    global.localStorage.accessToken = undefined
-    this.props.push('/auth/register')
-  }
-
-  componentWillMount () {
-    if (!global.localStorage.accessToken) this.props.push('/auth/register')
-  }
-
-  componentWillUpdate () {
-    if (!global.localStorage.accessToken) this.props.push('/auth/register')
-  }
-
   componentDidMount () {
-    this.props.liveConnect()
+    this.props.liveConnect() // TODO: handle unmount
   }
 
   render () {
