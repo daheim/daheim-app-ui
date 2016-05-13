@@ -57,6 +57,11 @@ app.use((req, res) => {
     universal.refresh()
   }
 
+  if (req.originalUrl !== '/auth' && !req.cookies.sid) { // TODO: proper sid check
+    res.redirect('/auth')
+    return
+  }
+
   // const store = createStore(history, client)
 
   function hydrateOnClient () {
