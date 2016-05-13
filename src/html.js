@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react'
 import ReactDOM from 'react-dom/server'
 import Helmet from 'react-helmet'
+import serialize from 'serialize-javascript'
 
 /**
  * Wrapper component containing HTML metadata and boilerplate tags.
@@ -19,7 +20,7 @@ export default class Html extends Component {
   }
 
   render () {
-    const {assets, component} = this.props
+    const {assets, component, store} = this.props
     const content = component ? ReactDOM.renderToString(component) : ''
     const head = Helmet.rewind()
 
@@ -79,11 +80,10 @@ export default class Html extends Component {
             })(); </script>
           `}}></script>
           <script dangerouslySetInnerHTML={{__html: `window.__INIT=${JSON.stringify({SIO_URL: process.env.SIO_URL})}`}} charSet='UTF-8'/>
+          <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())}`}} charSet='UTF-8'/>
           <script src={assets.javascript.main} charSet='UTF-8'/>
         </body>
       </html>
     )
   }
 }
-
-// <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())}`}} charSet='UTF-8'/>

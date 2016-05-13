@@ -43,7 +43,7 @@ class App extends React.Component {
 }
 
 function main () {
-  const store = createStore(browserHistory)
+  const store = createStore(browserHistory, window.__data)
   const history = syncHistoryWithStore(withScroll(browserHistory), store)
 
   injectTapEventPlugin()

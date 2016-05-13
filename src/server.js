@@ -7,6 +7,8 @@ import ReactDOM from 'react-dom/server'
 import httpProxy from 'http-proxy'
 import cookieParser from 'cookie-parser'
 import path from 'path'
+import request from 'request-promise'
+import cookie from 'cookie'
 
 import universal from './universal'
 import Html from './html'
@@ -50,7 +52,7 @@ proxy.on('error', (error, req, res) => {
   res.end(JSON.stringify(json))
 })
 
-app.use((req, res) => {
+app.use(async (req, res) => {
   if (process.env.NODE_ENV === 'development') {
     // Do not cache webpack stats: the script file would change since
     // hot module replacement is enabled in the development env
@@ -62,11 +64,28 @@ app.use((req, res) => {
     return
   }
 
+  let state = {}
+
+  try {
+    const profile = JSON.parse(await request({
+      url: targetUrl + '/profile',
+      strictSSL: process.env.INSECURE_API_PROXY !== '1',
+      headers: {
+        'Cookie': cookie.serialize('sid', req.cookies.sid)
+      }
+    }))
+    state.profile = {profile}
+  } catch (err) {
+    // TODO: handle cannot load profile
+  }
+
+  const store = {getState: () => state}
+
   // const store = createStore(history, client)
 
   function hydrateOnClient () {
     res.send('<!doctype html>\n' +
-      ReactDOM.renderToString(<Html assets={universal.assets()} />))
+      ReactDOM.renderToString(<Html assets={universal.assets()} store={store} />))
   }
 
   hydrateOnClient()
