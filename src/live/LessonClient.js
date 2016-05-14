@@ -139,6 +139,7 @@ export default class LessonClient {
 
   onNegotiatorError (err) {
     debug('[%s] negotiation error', this.id, err)
+    this.dispatch({localStreamUrl: undefined, remoteStreamUrl: undefined})
     this.startBackoff()
   }
 
