@@ -156,6 +156,7 @@ export default class LessonClient {
       const negotiator = this.negotiator
       await negotiator.start({initiator})
       if (this.negotiator !== negotiator) return
+      this.resetBackoff()
     } catch (err) {
       // also indicated by onNegotiatorError
     }
