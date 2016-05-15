@@ -74,7 +74,7 @@ export default connect((state, props) => {
   const keys = Object.keys(lessons)
   let lesson = keys.length ? lessons[keys[0]] : undefined
   if (lesson) {
-    if (lesson.participating) lesson = undefined
+    if (lesson.connected || lesson.participating) lesson = undefined
   }
   return {lesson}
 }, {join, leave})(InvitedToLesson)
