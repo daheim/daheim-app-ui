@@ -2,9 +2,10 @@ import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 import CircularProgress from 'material-ui/CircularProgress'
 
-import {relay, leave, join} from '../actions/live'
+import {leave, join} from '../actions/live'
 
 class ResizedVideo extends Component {
 
@@ -29,7 +30,6 @@ class LessionPage extends React.Component {
 
   static propTypes = {
     lesson: PropTypes.object.isRequired,
-    relay: PropTypes.func.isRequired,
     leave: PropTypes.func.isRequired,
     join: PropTypes.func.isRequired
   }
@@ -41,10 +41,6 @@ class LessionPage extends React.Component {
 
   handleLeave = () => {
     this.props.leave({id: this.props.lesson.id})
-  }
-
-  handleJoin = () => {
-    this.props.join({id: this.props.lesson.id})
   }
 
   componentDidMount () {
@@ -108,9 +104,6 @@ class LessionPage extends React.Component {
             <div style={{position: 'absolute', bottom: 10, right: 10}}>
               <video height='100' style={{transform: 'rotateY(180deg)'}} autoPlay muted src={localStreamUrl} />
             </div>
-            <div style={{position: 'absolute', bottom: 10, left: 0, right: 0, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-              <RaisedButton label='Finish Lesson' primary onClick={this.handleLeave} />
-            </div>
           </div>
         ) : (
           <div>
@@ -118,26 +111,104 @@ class LessionPage extends React.Component {
             <div style={{textAlign: 'center'}}>Connecting...</div>
           </div>
         )}
+        <div style={{position: 'absolute', bottom: 10, left: 0, right: 0, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+          <RaisedButton label='Finish Lesson' primary onClick={this.handleLeave} />
+        </div>
       </div>
     )
   }
-
 }
 
-class LessonOrLoading extends React.Component {
+class ClosedLesson extends Component {
+  static propTypes = {
+    closeReason: PropTypes.string.isRequired
+  }
+
+  render () {
+    const {closeReason} = this.props
+
+    return (
+      <div style={{margin: 16}}>
+        <h1>Lesson has ended</h1>
+        <p><Link to='/'>Click here to go back to the main page</Link></p>
+        <p style={{color: 'rgba(0, 0, 0, 0)'}}>Reason: {closeReason}</p>
+      </div>
+    )
+  }
+}
+
+class NotParticipating extends Component {
+
+  static propTypes = {
+    lesson: PropTypes.object.isRequired,
+    leave: PropTypes.func.isRequired,
+    join: PropTypes.func.isRequired
+  }
+
+  handleLeave = () => {
+    this.props.leave({id: this.props.lesson.id})
+  }
+
+  handleJoin = () => {
+    this.props.join({id: this.props.lesson.id})
+  }
+
+  render () {
+    return (
+      <div style={{margin: 16}}>
+        <h1>Join Lesson</h1>
+        <div>
+          <RaisedButton label='Join Lesson' primary onClick={this.handleJoin} />
+          <FlatButton label='Close Lesson' onClick={this.handleLeave} />
+        </div>
+      </div>
+    )
+  }
+}
+
+class NotActive extends Component {
+  static propTypes = {
+    lesson: PropTypes.object.isRequired,
+    leave: PropTypes.func.isRequired
+  }
+
+  handleLeave = () => {
+    this.props.leave({id: this.props.lesson.id})
+  }
+
+  render () {
+    return (
+      <div style={{margin: 16}}>
+        <h1>Waiting for student to connect...</h1>
+        <div>
+          <RaisedButton label='Close Lesson' primary onClick={this.handleLeave} />
+        </div>
+      </div>
+    )
+  }
+}
+
+class LessonOrLoading extends Component {
   static propTypes = {
     lesson: PropTypes.object
   }
 
   render () {
     const {lesson} = this.props
-    if (lesson) return <LessionPage key={lesson.connectionId} {...this.props} />
-    else return <div><Link to='/'>Lesson not found...</Link></div>
+    if (lesson) {
+      if (!lesson.participating) return <NotParticipating {...this.props} />
+      else if (!lesson.active) return <NotActive {...this.props} />
+      else return <LessionPage {...this.props} />
+    } else {
+      return <ClosedLesson {...this.props} />
+    }
   }
 }
 
 export default connect((state, props) => {
   const {lessonId} = props.params
   const lesson = state.live.lessons[lessonId]
-  return {lesson}
-}, {relay, leave, join})(LessonOrLoading)
+  const closedLesson = state.live.closedLessons[lessonId]
+  const closeReason = closedLesson ? closedLesson.closeReason : 'notFound'
+  return {lesson, closeReason}
+}, {leave, join})(LessonOrLoading)

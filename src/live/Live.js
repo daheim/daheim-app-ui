@@ -196,7 +196,7 @@ export default class Live {
 
         const lessons = {
           [id]: {
-            state: 'accepted'
+            participating: true
           }
         }
         this.dispatchState({lessons})
