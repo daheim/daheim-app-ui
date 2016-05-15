@@ -96,22 +96,18 @@ export default class Live {
     socket.on('online', (online) => this.dispatchState({online}))
     socket.on('readyUsers', (users) => this.dispatchState({readyUsers: users}))
 
-    socket.on('Lesson.onUpdated', (newLessons) => {
-      const lessons = {...this.state.lessons}
-      Object.keys(lessons).forEach((id) => { lessons[id]._deleted = true })
-      Object.keys(newLessons).forEach((id) => {
-        lessons[id] = Object.assign(lessons[id] || {}, newLessons[id])
-        delete lessons[id]._deleted
-      })
-      Object.keys(lessons).forEach((id) => {
-        if (!lessons[id]._deleted) return
-        delete lessons[id]
-        if (this.lessonClients[id]) {
-          this.lessonClients[id].close()
-          delete this.lessonClients[id]
+    socket.on('Lesson.onUpdated', ({lessons, closedLessons}) => {
+      for (let id in lessons) {
+        const lesson = lessons[id]
+        if (!lesson || lesson.closed) {
+          if (this.lessonClients[id]) {
+            this.lessonClients[id].close()
+            delete this.lessonClients[id]
+          }
         }
-      })
-      this.dispatchState({lessons})
+      }
+
+      this.dispatchState({lessons, closedLessons})
     })
 
     socket.on('lesson.onConnectionChanged', (req) => {
@@ -147,24 +143,8 @@ export default class Live {
 
       const lessons = {
         [id]: {
-          participating: false,
-          connected: false
+          participating: false
         }
-      }
-      this.dispatchState({lessons})
-    })
-
-    socket.on('lesson.onClose', (req) => {
-      const {id} = req
-
-      if (this.lessonClients[id]) {
-        this.lessonClients[id].close()
-        delete this.lessonClients[id]
-      }
-
-      // TODO: move lesson to closed one
-      const lessons = {
-        [id]: undefined
       }
       this.dispatchState({lessons})
     })
@@ -226,6 +206,11 @@ export default class Live {
 
   async leave ({id}) {
     if (!this.socket) throw new Error('live not active')
+    this.dispatchState({
+      lessons: {
+        [id]: undefined
+      }
+    })
     return new Promise((resolve) => {
       this.socket.emit('lesson.leave', {id}, (res) => {
         resolve(res)

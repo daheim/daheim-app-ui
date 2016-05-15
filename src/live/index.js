@@ -21,17 +21,21 @@ export const liveReducer = handleActions({
     const lessons = {...state.lessons}
     for (let key of Object.keys(newLessons)) {
       const newLesson = newLessons[key]
-      if (newLesson === undefined) {
+      if (newLesson == null) {
         delete lessons[key]
       } else {
         lessons[key] = {...lessons[key], ...newLesson}
       }
     }
 
+    const newClosedLessons = action.payload.closedLessons || {}
+    const closedLessons = {...state.closedLessons, ...newClosedLessons}
+
     const newState = {
       ...state,
       ...action.payload,
-      lessons
+      lessons,
+      closedLessons
     }
 
     if (state.connected !== newState.connected) newState.connectionId++
@@ -45,5 +49,6 @@ export const liveReducer = handleActions({
   ready: false,
   readyUsers: [],
   online: {},
-  lessons: {}
+  lessons: {},
+  closedLessons: {}
 })
