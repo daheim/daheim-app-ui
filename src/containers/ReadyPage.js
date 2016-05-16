@@ -6,6 +6,7 @@ import ReviewList from '../components/review/ReviewList'
 import TalkAbout from '../components/TalkAbout'
 import ReadyUsers from '../components/ReadyUsers'
 import ReadySwitch from '../components/ready/ReadySwitch'
+import TimeToChoose from '../components/ready/TimeToChoose'
 import WebRTC from 'webrtc-adapter'
 
 class ReadyPage extends React.Component {
@@ -22,6 +23,8 @@ class ReadyPage extends React.Component {
 
     return (
       <div style={{padding: 16}}>
+
+        <TimeToChoose />
 
         {!WebRTC.browserDetails.version ? (
           <div style={{padding: 16, border: 'solid 1px darkred', background: '#F88379', marginBottom: 16}}>
