@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router'
 
 import Logo from './Logo'
 import UserMenu from './UserMenu'
@@ -11,7 +12,7 @@ export default class Header extends React.Component {
         <div className={style.head2}>
           <div className={style.topbar}>
             <div className={style.logo}>
-              <Logo />
+              <Link to='/'><Logo /></Link>
             </div>
             <div className={style.spacer}></div>
             <div className={style.profile}>
