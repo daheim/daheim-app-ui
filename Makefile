@@ -1,4 +1,4 @@
-NAME ?= egergo/pnr-ui
+NAME ?= egergo/daheim-app-ui
 VERSION ?= 0.1
 
 .PHONY: all build tag_latest release builder_image builder run
@@ -11,7 +11,7 @@ builder_image:
 build/builder/Dockerfile: builder_image
 	rm -rf build/builder
 	mkdir -p build/builder
-	docker run $(NAME)-builder | tar -C build/builder -xv -
+	docker run $(NAME)-builder | tar -C build/builder -x -
 
 builder: build/builder/Dockerfile
 

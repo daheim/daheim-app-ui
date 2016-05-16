@@ -2,6 +2,7 @@ Dockerfile
 .git
 .dockerignore
 Makefile
+cert
 
 build
 .DS_Store
