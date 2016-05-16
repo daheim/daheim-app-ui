@@ -5,7 +5,6 @@ import StartLesson from './StartLesson'
 import {startLesson} from '../actions/live'
 
 import style from './ReadyUsers.style'
-console.log('style', style)
 
 class ReadyUser extends Component {
 
