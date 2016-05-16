@@ -1,5 +1,6 @@
 import React from 'react'
 import {Router, Route, IndexRoute} from 'react-router'
+import Helmet from 'react-helmet'
 
 import DefaultLayout from './containers/DefaultLayout'
 import ReadyPage from './containers/ReadyPage'
@@ -17,22 +18,28 @@ import NotFoundPage from './containers/NotFoundPage'
 
 export default function createRouter (history) {
   return (
-    <Router history={history}>
-      <Route path='/' component={DefaultLayout}>
-        <IndexRoute component={ReadyPage} />
-        <Route path='lessons/:lessonId' component={LessonPage} />
-        <Route path='reviews/:reviewId' component={ReviewPage} />
-        <Route path='profile' component={ProfilePage} />
-      </Route>
-      <Route path='/auth' component={LoginLayout}>
-        <IndexRoute component={LoginPage} />
-        <Route path='register' component={RegistrationPage} />
-        <Route path='forgot' component={ForgotPasswordPage} />
-        <Route path='reset' component={ResetPasswordPage} />
-      </Route>
-      <Route path='*' component={LoginLayout}>
-        <IndexRoute component={NotFoundPage} />
-      </Route>
-    </Router>
+    <div>
+      <Helmet
+        defaultTitle='Daheim | Reden. Lernen. Leben.'
+        titleTemplate='%s | Daheim'
+      />
+      <Router history={history}>
+        <Route path='/' component={DefaultLayout}>
+          <IndexRoute component={ReadyPage} />
+          <Route path='lessons/:lessonId' component={LessonPage} />
+          <Route path='reviews/:reviewId' component={ReviewPage} />
+          <Route path='profile' component={ProfilePage} />
+        </Route>
+        <Route path='/auth' component={LoginLayout}>
+          <IndexRoute component={LoginPage} />
+          <Route path='register' component={RegistrationPage} />
+          <Route path='forgot' component={ForgotPasswordPage} />
+          <Route path='reset' component={ResetPasswordPage} />
+        </Route>
+        <Route path='*' component={LoginLayout}>
+          <IndexRoute component={NotFoundPage} />
+        </Route>
+      </Router>
+    </div>
   )
 }
