@@ -15,6 +15,10 @@ import { browserHistory } from 'react-router'
 import withScroll from 'scroll-behavior'
 import { syncHistoryWithStore } from 'react-router-redux'
 
+import moment from 'moment'
+
+moment.locale('de') // TODO: find a better place to init
+
 class App extends React.Component {
 
   static childContextTypes = {
