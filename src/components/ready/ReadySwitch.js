@@ -7,11 +7,22 @@ import {ready as setReady} from '../../actions/live'
 import style from './ReadySwitch.style'
 
 class Connecting extends Component {
+  static propTypes = {
+    error: PropTypes.string
+  }
+
   render () {
+    const {error} = this.props
+
     return (
       <div style={{display: 'flex', alignItems: 'center'}}>
         <div style={{margin: 20}}><CircularProgress /></div>
-        <div className={style.connecting} style={{margin: 8}}>Connecting to Daheim network. Please wait a few moments...</div>
+        <div style={{margin: 8}}>
+          <div className={style.connecting}>Connecting to Daheim network. Please wait a few moments...</div>
+          {error ? (
+            <div className={style.error}>Fehler: {error}</div>
+          ) : null}
+        </div>
       </div>
     )
   }
@@ -44,6 +55,6 @@ class ReadySwitch extends Component {
 }
 
 export default connect((state, props) => {
-  const {live: {connected, ready}} = state
-  return {connected, ready}
+  const {live: {connected, ready, error}} = state
+  return {connected, ready, error}
 }, {setReady})(ReadySwitch)

@@ -31,12 +31,13 @@ class Connection {
         socket.on(event, (...args) => {
           if (this.closed) return
           debug('sio connect error. event: %s', ...args)
-          this.close()
+          const error = args[0] ? (args[0].message ? args[0].message : '' + args[0]) : undefined
+          this.close({error})
         })
       }
     } catch (err) {
       debug('sio connect error', err)
-      this.close()
+      this.close({error: err.message})
     }
   }
 
@@ -74,16 +75,18 @@ export default class Live {
     connection.onConnect = () => {
       if (this.connection !== connection) return
       this.socket = connection.socket
-      this.dispatchState({connected: true})
+      this.dispatchState({connected: true, error: null})
       delete this.connectionBackoff
     }
-    connection.onClose = ({replaced} = {}) => {
+    connection.onClose = ({replaced, error} = {}) => {
       if (this.connection !== connection) return
       delete this.socket
       delete this.connection
       this.dispatchState({connected: false})
 
       if (replaced) return
+
+      if (error) this.dispatchState({error})
 
       this.connectionBackoff = Math.floor(Math.min((this.connectionBackoff || 1000) * (1 + Math.random()), 60000))
       debug('sio reconnecting in %s ms', this.connectionBackoff)
