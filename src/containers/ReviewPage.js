@@ -34,7 +34,7 @@ export class ProficiencyRating extends React.Component {
     values: {
       1: 'Einige Wörter',
       2: 'Einige Sätze',
-      3: 'Fähig, ein fließendes Gespräch über einfach Themen zu führen',
+      3: 'Fähig, ein fließendes Gespräch über einfache Themen zu führen',
       4: 'Fähig, ein Gespräch über komplexe Themen zu führen',
       5: 'Deutsch-Profi'
     }
@@ -49,10 +49,12 @@ export class ProficiencyRating extends React.Component {
       return <div style={this.props.itemStyle}>{this.props.values[this.props.value] || 'N/A'}</div>
     }
 
+    const itemStyle = this.props.itemStyle || {margin: '4px 0'}
+
     return (
       <RadioButtonGroup style={this.props.style} name='shipSpeed' valueSelected={this.props.value} onChange={this.handleChange}>
         {Object.keys(this.props.values).map((key) =>
-          <RadioButton key={key} style={this.props.itemStyle} value={key} label={this.props.values[key]} />
+          <RadioButton key={key} style={itemStyle} value={key} label={this.props.values[key]} />
         )}
       </RadioButtonGroup>
     )
