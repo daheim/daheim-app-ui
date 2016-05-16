@@ -2,7 +2,7 @@ import React, {PropTypes} from 'react'
 import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
 
-import ReviewList from '../components/ReviewList'
+import ReviewList from '../components/review/ReviewList'
 import TalkAbout from '../components/TalkAbout'
 import ReadyUsers from '../components/ReadyUsers'
 import ReadySwitch from '../components/ready/ReadySwitch'
@@ -39,9 +39,7 @@ class ReadyPage extends React.Component {
           <ReadyUsers />
         ) : undefined}
 
-        <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', maxWidth: 1000, width: '100%', margin: '0 auto'}}>
-          <ReviewList style={{flex: '0 1 600px', margin: '0 8px'}} />
-        </div>
+        <ReviewList />
         <TalkAbout />
       </div>
     )
