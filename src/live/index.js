@@ -46,7 +46,7 @@ export const liveReducer = handleActions({
   active: true,
   connected: false,
   connectionId: 1,
-  ready: false,
+  ready: window.sessionStorage.ready === '1',
   readyUsers: [],
   online: {},
   lessons: {},

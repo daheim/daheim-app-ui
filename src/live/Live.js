@@ -165,6 +165,7 @@ export default class Live {
       this.socket.emit('ready', {ready}, (res) => {
         if (res.error) return reject(new Error(res.error))
         this.dispatchState({ready})
+        window.sessionStorage.ready = ready ? '1' : '0'
         resolve()
       })
     })
