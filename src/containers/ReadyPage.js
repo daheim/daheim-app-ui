@@ -1,27 +1,19 @@
 import React, {PropTypes} from 'react'
 import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
-import Toggle from 'material-ui/Toggle'
 
 import ReviewList from '../components/ReviewList'
 import TalkAbout from '../components/TalkAbout'
 import ReadyUsers from '../components/ReadyUsers'
-import {ready as liveReady} from '../actions/live'
+import ReadySwitch from '../components/ready/ReadySwitch'
 import WebRTC from 'webrtc-adapter'
 
 class ReadyPage extends React.Component {
 
   static propTypes = {
     push: PropTypes.func.isRequired,
-    liveReady: PropTypes.func.isRequired,
     user: PropTypes.object,
-    online: PropTypes.object,
-    ready: PropTypes.bool,
-    connected: PropTypes.bool
-  }
-
-  handleReadyChange = (e) => {
-    this.props.liveReady({ready: e.target.checked})
+    online: PropTypes.object
   }
 
   render () {
@@ -38,13 +30,9 @@ class ReadyPage extends React.Component {
         ) : undefined}
 
         {role === 'student' ? (
-          <div style={{display: 'flex', alignItems: 'center'}}>
-            <div style={{margin: 20}}><Toggle toggled={this.props.ready} onToggle={this.handleReadyChange} /></div>
-            <div style={{margin: 8, color: this.props.ready ? 'darkgreen' : 'darkred'}}>{this.props.ready ? 'You are ready' : 'You are not ready'}</div>
-          </div>
+          <ReadySwitch />
         ) : undefined}
 
-        <div>{this.props.connected ? 'connected' : 'not connected'}</div>
         <div>Online teachers: {teachers} | Online students: {students}</div>
 
         {role === 'teacher' ? (
@@ -61,6 +49,6 @@ class ReadyPage extends React.Component {
 }
 
 export default connect((state, props) => {
-  const {live: {connected, ready, online}, profile: {profile: user}} = state
-  return {connected, ready, online, user}
-}, {push, liveReady})(ReadyPage)
+  const {live: {online}, profile: {profile: user}} = state
+  return {online, user}
+}, {push})(ReadyPage)
