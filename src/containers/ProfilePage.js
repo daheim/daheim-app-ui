@@ -42,7 +42,7 @@ class ProfilePage extends React.Component {
     const {username = ''} = user
     const hash = md5(username.trim().toLowerCase())
     // const {devicePixelRatio = 1} = window || {}
-    const gr = `https://secure.gravatar.com/avatar/${hash}?s=256`
+    const gr = `https://secure.gravatar.com/avatar/${hash}?s=256&d=monsterid&r=x`
     return gr
   })()
 
