@@ -125,14 +125,12 @@
     "redux-actions": "^0.9.1",
     "redux-thunk": "^2.0.1",
     "request-promise": "^3.0.0",
-    "screenfull": "^3.0.0",
     "scroll-behavior": "^0.7.0",
     "serialize-javascript": "^1.2.0",
     "socket.io-client": "^1.4.6",
     "spdy": "^3.3.2",
     "webpack-isomorphic-tools": "^2.2.50",
     "webrtc-adapter": "^1.1.0",
-    "webrtc-adapter-test": "^0.2.10",
     "whatwg-fetch": "^1.0.0"
   }
 }
