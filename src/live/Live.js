@@ -238,4 +238,14 @@ export default class Live {
       })
     })
   }
+
+  async getIceServers ({id}) {
+    if (!this.socket) throw new Error('live not active')
+    return new Promise((resolve, reject) => {
+      this.socket.emit('lesson.getIceServers', {id}, (res) => {
+        if ((res || {}).error) return reject(res) // TODO: ugly
+        resolve(res)
+      })
+    })
+  }
 }

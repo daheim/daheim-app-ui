@@ -80,6 +80,10 @@ export default class LessonClient {
     return this.live.relay({id: this.id, data})
   }
 
+  getIceServers () {
+    return this.live.getIceServers({id: this.id})
+  }
+
   handleRelay (data, cb) {
     const {type} = data
     if (type === 'startNegotiation') {
@@ -122,7 +126,8 @@ export default class LessonClient {
     if (this.negotiator) this.negotiator.close()
 
     const relay = (data) => this.relay(data)
-    const negotiator = this.negotiator = new Negotiator({negotiationId, relay})
+    const getIceServers = () => this.getIceServers()
+    const negotiator = this.negotiator = new Negotiator({negotiationId, relay, getIceServers})
     negotiator.onError = (err) => {
       if (negotiator !== this.negotiator) return
       this.onNegotiatorError(err)

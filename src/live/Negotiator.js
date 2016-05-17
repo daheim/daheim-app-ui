@@ -8,8 +8,9 @@ export default class Negotiator {
 
   static RELAY_TYPES = {offer: 1, answer: 1, ice: 1, error: 1}
 
-  constructor ({negotiationId, relay}) {
+  constructor ({negotiationId, relay, getIceServers}) {
     this.relay = relay
+    this.getIceServers = getIceServers
     this.negotiationId = negotiationId
   }
 
@@ -75,11 +76,15 @@ export default class Negotiator {
       const iceBox = []
       this.ice = (candidate) => iceBox.push(candidate)
 
-      const pc = this.pc = new window.RTCPeerConnection({iceServers: [{url: 'stun:stun.easyrtc.com:3478'}]})
-
       //
       // this is the first point of return
       //
+
+      const iceServers = await this.getIceServers()
+      if (this.closed) throw this.freeResourcesAndThrow()
+
+      debug('ice servers', iceServers)
+      const pc = this.pc = new window.RTCPeerConnection(iceServers)
 
       // get media stream
       const localStream = this.localStream = await navigator.mediaDevices.getUserMedia({audio: true, video: true})
