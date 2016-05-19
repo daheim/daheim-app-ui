@@ -4,7 +4,6 @@ import {LOAD_USER} from '../actions/users'
 
 export default handleActions({
   [LOAD_USER]: (state, action) => {
-    console.log('reducer', action)
     const {id} = action.meta.api.body
 
     return {

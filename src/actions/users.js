@@ -1,5 +1,3 @@
-import {createAction} from 'redux-actions'
-import api from '../api_client'
 
 export const LOAD_USER = 'users.loadUser'
 export const loadUser = ({id}) => {

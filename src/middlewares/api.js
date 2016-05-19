@@ -1,10 +1,10 @@
 import uniqueId from 'lodash/uniqueId'
 
-export default function createApiMiddleware(apiClient) {
+export default function createApiMiddleware (apiClient) {
   return ({dispatch}) => (next) => async (action) => {
     const {meta = {}} = action
     const {api, apiId} = meta
-    if (!api || apiId != undefined) return next(action)
+    if (!api || apiId != null) return next(action)
 
     const newMeta = {...meta, apiId: uniqueId()}
 
