@@ -11,7 +11,7 @@ import {
 } from '../actions/auth'
 
 function updateProfile (state, action) {
-  if (action.error) return state
+  if (action.error) return {...state, error: action.payload.message}
   if (!action.payload) return state
   const profile = action.payload
   return {
@@ -22,7 +22,7 @@ function updateProfile (state, action) {
 }
 
 function updateProfile2 (state, action) {
-  if (action.error) return state
+  if (action.error) return {...state, error: action.payload.message}
   if (!action.payload) return state
   const payload = action.payload
   return {
@@ -33,7 +33,7 @@ function updateProfile2 (state, action) {
 }
 
 function updateAfterAuth (state, action) {
-  if (action.error) return state
+  if (action.error) return {...state, error: action.payload.message}
   if (!action.payload) return state
   const {profile} = action.payload
   return {
@@ -52,5 +52,6 @@ export default handleActions({
   [LOGIN]: updateAfterAuth
 }, {
   profile: undefined,
-  loading: true
+  loading: true,
+  error: null
 })

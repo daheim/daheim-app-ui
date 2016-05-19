@@ -1,5 +1,4 @@
-import React, {PropTypes} from 'react'
-import {push} from 'react-router-redux'
+import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
 import {connect as liveConnect} from '../actions/live'
 import {loadProfile} from '../actions/profile'
@@ -10,20 +9,12 @@ import InvitedToLesson from '../components/InvitedToLesson'
 class DefaultLayout extends React.Component {
 
   static propTypes = {
-    profile: PropTypes.object,
     children: React.PropTypes.node,
-    push: React.PropTypes.func.isRequired,
-    liveConnect: PropTypes.func.isRequired,
-    loadProfile: PropTypes.func.isRequired
-  }
-
-  state = {
-
+    liveConnect: PropTypes.func.isRequired
   }
 
   componentDidMount () {
     this.props.liveConnect() // TODO: handle unmount
-    if (!this.props.profile) this.props.loadProfile()
   }
 
   render () {
@@ -37,10 +28,41 @@ class DefaultLayout extends React.Component {
       </div>
     )
   }
+}
 
+class DefaultLayoutOrLoad extends Component {
+
+  static propTypes = {
+    profile: PropTypes.object,
+    error: PropTypes.string,
+    loadProfile: PropTypes.func.isRequired
+  }
+
+  componentDidMount () {
+    if (!this.props.profile) this.props.loadProfile()
+  }
+
+  render () {
+    const {profile, error} = this.props
+
+    if (profile) return <DefaultLayout {...this.props} />
+
+    if (error) {
+      return (
+        <div style={{marginTop: 100, textAlign: 'center'}}>
+          <div>Fehler: {error}</div>
+          <div><a href='javascript:location.reload()'>Neuladen</a></div>
+        </div>
+      )
+    }
+
+    return (
+      <div>Laden...</div>
+    )
+  }
 }
 
 export default connect((state, props) => {
-  const {profile} = state.profile
-  return {profile}
-}, {push, liveConnect, loadProfile})(DefaultLayout)
+  const {profile, error} = state.profile
+  return {profile, error}
+}, {liveConnect, loadProfile})(DefaultLayoutOrLoad)
