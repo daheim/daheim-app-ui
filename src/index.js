@@ -6,6 +6,7 @@ import { Provider } from 'react-redux'
 import createRouter from './router'
 import muiTheme from './theme'
 import createStore from './store'
+import api from './api_client'
 
 import './default.css'
 import './effects.css'
@@ -42,7 +43,7 @@ class App extends React.Component {
 }
 
 function main () {
-  const store = createStore(browserHistory, window.__data)
+  const store = createStore(browserHistory, api, window.__data)
   const history = syncHistoryWithStore(withScroll(browserHistory), store)
 
   injectTapEventPlugin()
