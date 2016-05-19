@@ -1,6 +1,7 @@
 import {handleActions} from 'redux-actions'
 
 import {LOAD_USER} from '../actions/users'
+import {SEND_REVIEW} from '../actions/reviews'
 
 export default handleActions({
   [LOAD_USER]: (state, action) => {
@@ -37,6 +38,16 @@ export default handleActions({
       usersMeta: {
         ...state.usersMeta,
         [id]: {loading: true}
+      }
+    }
+  },
+
+  [SEND_REVIEW]: (state, action) => {
+    return {
+      ...state,
+      users: {
+        ...state.users,
+        ...action.payload.users
       }
     }
   }
