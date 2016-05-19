@@ -24,6 +24,7 @@ export default function createApiMiddleware (apiClient) {
         payload: result,
         meta: newMeta
       })
+      return result
     } catch (err) {
       dispatch({
         ...action,
@@ -32,6 +33,7 @@ export default function createApiMiddleware (apiClient) {
         error: true,
         meta: newMeta
       })
+      throw err
     }
   }
 }
