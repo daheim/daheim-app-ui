@@ -38,7 +38,7 @@ class ReviewList extends React.Component {
   }
 
   handleRowClick (e, encounter) {
-    this.props.push(`/reviews/${encounter.id}`)
+    this.props.push(`/users/${encounter.partnerId}`)
   }
 
   render () {
