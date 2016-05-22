@@ -2,6 +2,7 @@ import React, {PropTypes, Component} from 'react'
 import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
 
+import loader from '../../loader'
 import {loadUser} from '../../actions/users'
 import {sendReview} from '../../actions/reviews'
 
@@ -112,30 +113,26 @@ class ProfilePage extends Component {
   }
 }
 
-class Loader extends Component {
+const loaded = loader({
+  shouldReload (prevProps, nextProps) {
+    return prevProps.userId !== nextProps.userId
+  },
 
-  static propTypes = {
-    user: PropTypes.object,
-    userMeta: PropTypes.object,
-    userId: PropTypes.string.isRequired,
-    loadUser: PropTypes.func.isRequired
-  }
+  isLoaded (props) {
+    return props.user
+  },
 
-  componentWillMount () {
-    const {user, userMeta} = this.props
+  load (nextProps) {
+    const {user, userMeta} = nextProps
     const {loading} = userMeta || {}
 
-    // TODO: this is very not kosher
-    if (!user && !loading) this.props.loadUser({id: this.props.userId})
-  }
+    if (!user && !loading) nextProps.loadUser({id: nextProps.userId})
+  },
 
-  render () {
-    const {user} = this.props
-
-    if (!user) return <div>Loading...</div>
-    return <ProfilePage {...this.props} />
+  key (props) {
+    return props.user.id
   }
-}
+})(ProfilePage)
 
 export default connect((state, props) => {
   let {userId} = props.params
@@ -146,4 +143,4 @@ export default connect((state, props) => {
   const {profile: {profile}} = state
   const me = profile.id === userId
   return {me, user, userMeta, userId}
-}, {push, loadUser, sendReview})(Loader)
+}, {push, loadUser, sendReview})(loaded)
