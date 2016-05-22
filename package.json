@@ -115,6 +115,7 @@
     "moment": "^2.12.0",
     "node-uuid": "^1.4.7",
     "react": "^15.0.2",
+    "react-addons-pure-render-mixin": "^15.1.0",
     "react-dom": "^15.0.2",
     "react-dropzone": "^3.4.0",
     "react-helmet": "^3.0.1",

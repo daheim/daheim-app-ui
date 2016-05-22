@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
 import md5 from 'md5'
 import Dropzone from 'react-dropzone'
@@ -9,6 +9,7 @@ import {push} from 'react-router-redux'
 import DropDownMenu from 'material-ui/DropDownMenu'
 import MenuItem from 'material-ui/MenuItem'
 import FlatButton from 'material-ui/FlatButton'
+import PureRenderMixin from 'react-addons-pure-render-mixin'
 
 import {saveProfile} from '../actions/profile'
 import RoleSwitch from '../components/RoleSwitch'
@@ -24,6 +25,136 @@ const avatars = {
   scotland6: 'http://pickaface.net/avatar/adel_benacer572e1177c83ff.png'
 }
 
+class Languages extends Component {
+
+  static propTypes = {
+    inGermanySince: PropTypes.string.isRequired,
+    languages: PropTypes.object.isRequired,
+    germanLevel: PropTypes.number.isRequired,
+    onChange: PropTypes.func
+  }
+
+  shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
+
+  handleInGermanySinceChange = (e, key, inGermanySince) => {
+    if (this.props.onChange) this.props.onChange({inGermanySince})
+  }
+
+  handleLanguageCheck = (languages) => {
+    if (this.props.onChange) this.props.onChange({languages})
+  }
+
+  handleGermanLevelChange = (e) => {
+    const germanLevel = parseInt(e.target.value)
+    if (this.props.onChange) this.props.onChange({germanLevel})
+  }
+
+  render () {
+    const {inGermanySince, germanLevel, languages} = this.props
+
+    return (
+      <div style={{display: 'flex', flexWrap: 'wrap', maxWidth: 700, marginTop: 20}}>
+        <div style={{fontSize: 15, fontWeight: 700, marginBottom: 8, marginRight: 10, flex: '0 0 150px'}}>
+          Sprache
+        </div>
+        <div style={{flex: '1 1 400px'}}>
+          <div style={{marginBottom: 8, fontWeight: 700, fontSize: 14}}>Seit wann wohnst du in Deutschland?</div>
+          <div>
+            <DropDownMenu value={inGermanySince} style={{marginTop: -10, marginLeft: -20}} onChange={this.handleInGermanySinceChange}>
+              <MenuItem value='2016' primaryText='2016' />
+              <MenuItem value='2015' primaryText='2015' />
+              <MenuItem value='2014' primaryText='2014' />
+              <MenuItem value='earlier' primaryText='Früher als 2014' />
+            </DropDownMenu>
+          </div>
+          <div style={{marginBottom: 8, marginTop: 16, fontWeight: 700, fontSize: 14}}>Deutschkenntnis</div>
+          <div><ProficiencyRating value={'' + germanLevel} onChange={this.handleGermanLevelChange} /></div>
+          <div style={{marginBottom: 8, marginTop: 16, fontWeight: 700, fontSize: 14}}>Andere Sprachen</div>
+          <div style={{display: 'flex', flexWrap: 'wrap'}}>
+            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={languages} selector='Englisch' onCheck={this.handleLanguageCheck} /></div>
+            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={languages} selector='Spanisch' onCheck={this.handleLanguageCheck} /></div>
+            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={languages} selector='Französisch' onCheck={this.handleLanguageCheck} /></div>
+            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={languages} selector='Italienisch' onCheck={this.handleLanguageCheck} /></div>
+            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={languages} selector='Türkisch' onCheck={this.handleLanguageCheck} /></div>
+            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={languages} selector='Arabisch' onCheck={this.handleLanguageCheck} /></div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
+class Topics extends React.Component {
+
+  static propTypes = {
+    topics: PropTypes.object.isRequired,
+    introduction: PropTypes.string.isRequired,
+    onChange: PropTypes.func
+  }
+
+  shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
+
+  handleCheck = (topics) => {
+    if (this.props.onChange) this.props.onChange({topics})
+  }
+
+  handleIntroductionChage = (e) => {
+    const introduction = e.target.value
+    if (this.props.onChange) this.props.onChange({introduction})
+  }
+
+  render () {
+    const {topics, introduction} = this.props
+
+    return (
+      <div style={{display: 'flex', flexWrap: 'wrap', maxWidth: 630, marginTop: 20}}>
+        <div style={{fontSize: 15, fontWeight: 700, marginBottom: 8, marginRight: 10, flex: '0 0 150px'}}>
+          Themen
+        </div>
+        <div style={{flex: '1 1 400px'}}>
+          <div style={{marginBottom: 8, fontWeight: 700, fontSize: 14}}>Ich spreche gern über...</div>
+          <div style={{display: 'flex', flexWrap: 'wrap'}}>
+            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector='Autos' onCheck={this.handleCheck} /></div>
+            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector='Kochen' onCheck={this.handleCheck} /></div>
+            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector='Wandern' onCheck={this.handleCheck} /></div>
+            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector='Fotografie' onCheck={this.handleCheck} /></div>
+            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector='Garten' onCheck={this.handleCheck} /></div>
+            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector='Familie' onCheck={this.handleCheck} /></div>
+            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector='Politik' onCheck={this.handleCheck} /></div>
+            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector='Kunst' onCheck={this.handleCheck} /></div>
+            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector='Sport' onCheck={this.handleCheck} /></div>
+          </div>
+          <div>
+            <TextField value={introduction} style={{marginTop: -8}} fullWidth multiLine floatingLabelText='Ein Paar Worte über dich' rows={1} rowsMax={8} onChange={this.handleIntroductionChage} />
+          </div>
+        </div>
+      </div>
+    )
+  }
+}
+
+class ValuedCheckbox extends React.Component {
+
+  static propTypes = {
+    values: PropTypes.object.isRequired,
+    selector: PropTypes.string.isRequired,
+    onCheck: PropTypes.func.isRequired
+  }
+
+  shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
+
+  handleCheck = (e, checked) => {
+    const {values, selector} = this.props
+    const copy = {...values, [selector]: checked}
+    this.props.onCheck(copy)
+  }
+
+  render () {
+    const {values, selector} = this.props
+    return <Checkbox checked={!!values[selector]} label={selector} onCheck={this.handleCheck} />
+  }
+}
+
 class ProfilePage extends React.Component {
 
   static propTypes = {
@@ -32,9 +163,24 @@ class ProfilePage extends React.Component {
     push: React.PropTypes.func.isRequired
   }
 
-  state = {
-    picture: this.props.user.profile.picture,
-    name: this.props.user.profile.name
+  constructor (props) {
+    super(props)
+
+    const {profile} = this.props.user
+
+    this.state = {
+      picture: profile.picture,
+      name: profile.name || '',
+      topics: profile.topics || {},
+      languages: profile.languages || {},
+      inGermanySince: profile.inGermanySince || '2016',
+      germanLevel: profile.germanLevel || 1,
+      introduction: profile.introduction || ''
+    }
+  }
+
+  handleChange = (opt) => {
+    this.setState(opt)
   }
 
   gravatarUrl = (() => {
@@ -46,13 +192,20 @@ class ProfilePage extends React.Component {
     return gr
   })()
 
-  handleSave = (e) => {
-    this.props.saveProfile({
-      name: this.state.name,
+  handleSave = async (e) => {
+    const prof = {
+      ...this.state,
+      picture: undefined,
       pictureType: this.pictureType,
       pictureData: this.pictureData
-    })
-    this.props.push('/')
+    }
+
+    try {
+      await this.props.saveProfile(prof)
+      this.props.push('/')
+    } catch (err) {
+      console.error(err) // TODO: handle error
+    }
   }
 
   handleBack = (e) => {
@@ -106,7 +259,7 @@ class ProfilePage extends React.Component {
   }
 
   render () {
-    const {name, picture} = this.state
+    const {name, picture, topics, languages, inGermanySince, germanLevel, introduction} = this.state
 
     return (
       <div style={{margin: 16}}>
@@ -147,56 +300,8 @@ class ProfilePage extends React.Component {
             </div>
           </div>
 
-          <div style={{display: 'flex', flexWrap: 'wrap', maxWidth: 700, marginTop: 20}}>
-            <div style={{fontSize: 15, fontWeight: 700, marginBottom: 8, marginRight: 10, flex: '0 0 150px'}}>
-              Sprache
-            </div>
-            <div style={{flex: '1 1 400px'}}>
-              <div style={{marginBottom: 8, fontWeight: 700, fontSize: 14}}>Seit wann wohnst du in Deutschland?</div>
-              <div>
-                <DropDownMenu value={1} style={{marginTop: -10, marginLeft: -20}}>
-                  <MenuItem value={1} primaryText='2016' />
-                  <MenuItem value={2} primaryText='2015' />
-                  <MenuItem value={3} primaryText='2014' />
-                  <MenuItem value={4} primaryText='Früher als 2014' />
-                </DropDownMenu>
-              </div>
-              <div style={{marginBottom: 8, marginTop: 16, fontWeight: 700, fontSize: 14}}>Deutschkenntnis</div>
-              <div><ProficiencyRating /></div>
-              <div style={{marginBottom: 8, marginTop: 16, fontWeight: 700, fontSize: 14}}>Andere Sprachen</div>
-              <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                <div style={{flex: '0 0 150px', margin: '4px 0'}}><Checkbox label='Englisch' /></div>
-                <div style={{flex: '0 0 150px', margin: '4px 0'}}><Checkbox label='Spanisch' /></div>
-                <div style={{flex: '0 0 150px', margin: '4px 0'}}><Checkbox label='Französisch' /></div>
-                <div style={{flex: '0 0 150px', margin: '4px 0'}}><Checkbox label='Italienisch' /></div>
-                <div style={{flex: '0 0 150px', margin: '4px 0'}}><Checkbox label='Türkisch' /></div>
-                <div style={{flex: '0 0 150px', margin: '4px 0'}}><Checkbox label='Arabisch' /></div>
-              </div>
-            </div>
-          </div>
-
-          <div style={{display: 'flex', flexWrap: 'wrap', maxWidth: 630, marginTop: 20}}>
-            <div style={{fontSize: 15, fontWeight: 700, marginBottom: 8, marginRight: 10, flex: '0 0 150px'}}>
-              Themen
-            </div>
-            <div style={{flex: '1 1 400px'}}>
-              <div style={{marginBottom: 8, fontWeight: 700, fontSize: 14}}>Ich spreche gern über...</div>
-              <div style={{display: 'flex', flexWrap: 'wrap'}}>
-                <div style={{flex: '0 0 150px', margin: '4px 0'}}><Checkbox label='Autos' /></div>
-                <div style={{flex: '0 0 150px', margin: '4px 0'}}><Checkbox label='Kochen' /></div>
-                <div style={{flex: '0 0 150px', margin: '4px 0'}}><Checkbox label='Wandern' /></div>
-                <div style={{flex: '0 0 150px', margin: '4px 0'}}><Checkbox label='Fotografie' /></div>
-                <div style={{flex: '0 0 150px', margin: '4px 0'}}><Checkbox label='Garten' /></div>
-                <div style={{flex: '0 0 150px', margin: '4px 0'}}><Checkbox label='Familie' /></div>
-                <div style={{flex: '0 0 150px', margin: '4px 0'}}><Checkbox label='Politik' /></div>
-                <div style={{flex: '0 0 150px', margin: '4px 0'}}><Checkbox label='Kunst' /></div>
-                <div style={{flex: '0 0 150px', margin: '4px 0'}}><Checkbox label='Sport' /></div>
-              </div>
-              <div>
-                <TextField style={{marginTop: -8}} fullWidth multiLine floatingLabelText='Ein Paar Worte über dich' rows={1} rowsMax={4} />
-              </div>
-            </div>
-          </div>
+          <Languages languages={languages} inGermanySince={inGermanySince} germanLevel={germanLevel} onChange={this.handleChange} />
+          <Topics topics={topics} introduction={introduction} onChange={this.handleChange} />
 
         </div>
 
