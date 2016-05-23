@@ -1,3 +1,5 @@
+import './bootstrap'
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import injectTapEventPlugin from 'react-tap-event-plugin'
@@ -7,6 +9,7 @@ import createRouter from './router'
 import muiTheme from './theme'
 import createStore from './store'
 import api from './api_client'
+import reporter from './reporter'
 
 import './default.css'
 import './effects.css'
@@ -47,6 +50,7 @@ function main () {
   const history = syncHistoryWithStore(withScroll(browserHistory), store)
 
   injectTapEventPlugin()
+  reporter.watchStore(store)
 
   const dest = document.getElementById('content')
   ReactDOM.render(<App store={store} history={history} />, dest)
