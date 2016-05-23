@@ -1,10 +1,13 @@
 import React, {PropTypes, Component} from 'react'
 import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
+import Helmet from 'react-helmet'
+import moment from 'moment'
 
 import loader from '../../loader'
 import {loadUser} from '../../actions/users'
 import {sendReview} from '../../actions/reviews'
+import {ProficiencyRating} from '../../containers/ReviewPage'
 
 import Review from './Review'
 import SendReview from './SendReview'
@@ -16,6 +19,16 @@ function roleToTitle (role) {
     case 'student': return 'Daheim SchülerIn'
     case 'teacher': return 'Daheim SprachcoachIn'
     default: return 'Daheim BenutzerIn'
+  }
+}
+
+function seitToText (seit) {
+  switch (seit) {
+    case '2017': return '2017'
+    case '2016': return '2016'
+    case '2015': return '2015'
+    case '2014': return '2014'
+    default: return 'Früher als 2014'
   }
 }
 
@@ -40,12 +53,18 @@ class ProfilePage extends Component {
 
   render () {
     const {user, me} = this.props
-    const {id, name, picture, role, myReview, receivedReviews} = user
+    const {id, name, picture, role, introduction, inGermanySince, userSince, germanLevel, topics, languages, myReview, receivedReviews} = user
 
     const editorOpen = !me && (!myReview || this.state.editorOpen)
+    const userSinceText = moment(userSince).format('LL')
+
+    const topicsArr = Object.keys(topics)
+    const languagesArr = Object.keys(languages)
 
     return (
       <div key={id} style={{margin: 16}}>
+
+        <Helmet title={name} />
 
         <div style={{lineHeight: '150%', display: 'flex', alignItems: 'center', marginBottom: 20, maxWidth: '100%', padding: 10, borderBottom: 'solid 1px #EEE'}}>
           <img src={picture} style={{width: 68, height: 68, borderRadius: '50%', marginTop: 6, boxShadow: '0 1px 1px 1px rgba(0,0,0,.1)', border: 'solid 2px white'}} />
@@ -59,24 +78,46 @@ class ProfilePage extends Component {
 
           <div className={css.section}>
             <div className={css.sectionTitle}>Personendaten</div>
-            <div>
+            <div className={css.sectionContent}>
               <div className={css.field}>
                 <div className={css.fieldTitle}>Ein Paar Worte über mich</div>
-                <div className={css.fieldText}>Personal quote</div>
+                <div className={css.fieldText}>
+                  {introduction || <i>Benutzer hat noch keine Vorstellung</i>}
+                </div>
               </div>
               <div className={css.field}>
                 <div className={css.fieldTitle}>Ich wohne in Deutschland seit</div>
-                <div className={css.fieldText}>2016</div>
+                <div className={css.fieldText}>{seitToText(inGermanySince)}</div>
+              </div>
+              <div className={css.field}>
+                <div className={css.fieldTitle}>Ich spreche gern über...</div>
+                <div className={css.fieldText}>
+                  {topicsArr.length === 0 ? <i>Noch keine Themen</i> : (
+                    topicsArr.map((topic) => <span key={topic} style={{border: 'solid 1px black', padding: 3, margin: 4, display: 'inline-block'}}>{topic}</span>)
+                  )}
+                </div>
               </div>
             </div>
           </div>
 
           <div className={css.section}>
             <div className={css.sectionTitle}>Erfahrung</div>
-            <div>
+            <div className={css.sectionContent}>
+              <div className={css.field}>
+                <div className={css.fieldTitle}>Deutschkenntnis</div>
+                <div className={css.fieldText}><ProficiencyRating value={'' + germanLevel} readOnly /></div>
+              </div>
+              <div className={css.field}>
+                <div className={css.fieldTitle}>Ich spreche auch...</div>
+                <div className={css.fieldText}>
+                  {languagesArr.length === 0 ? <i>Keine andere Sprachen</i> : (
+                    languagesArr.map((language) => <span key={language} style={{border: 'solid 1px black', padding: 3, margin: 4, display: 'inline-block'}}>{language}</span>)
+                  )}
+                </div>
+              </div>
               <div className={css.field}>
                 <div className={css.fieldTitle}>Ich nutze Daheim seit</div>
-                <div className={css.fieldText}>17. Febr. 2016</div>
+                <div className={css.fieldText}>{userSinceText}</div>
               </div>
               <div className={css.field}>
                 <div className={css.fieldTitle}>Daheim Lektionen</div>

@@ -4,6 +4,7 @@
   flex-wrap: wrap;
   max-width: 630px;
   margin-bottom: 16px;
+  overflow: hidden;
 }
 
 .sectionTitle {
@@ -15,7 +16,7 @@
 }
 
 .sectionContent {
-  flex: 1 1 auto;
+  flex: 1 1 300px;
 }
 
 .field {
