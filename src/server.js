@@ -9,11 +9,21 @@ import cookieParser from 'cookie-parser'
 import path from 'path'
 import request from 'request-promise'
 import cookie from 'cookie'
+import raven from 'raven'
 
 import universal from './universal'
 import Html from './html'
 
+if (process.env.RAVEN_PRIVATE_DSN) {
+  const ravenClient = new raven.Client(process.env.RAVEN_PRIVATE_DSN)
+  ravenClient.patchGlobal()
+}
+
 const app = new Express()
+
+if (process.env.RAVEN_PRIVATE_DSN) {
+  app.use(raven.middleware.express.requestHandler(process.env.RAVEN_PRIVATE_DSN))
+}
 
 function createServer () {
   if (process.env.USE_HTTPS === '1') {
@@ -52,7 +62,7 @@ proxy.on('error', (error, req, res) => {
   res.end(JSON.stringify(json))
 })
 
-app.use(async (req, res) => {
+app.use(async (req, res, next) => {
   if (process.env.NODE_ENV === 'development') {
     // Do not cache webpack stats: the script file would change since
     // hot module replacement is enabled in the development env
@@ -91,6 +101,10 @@ app.use(async (req, res) => {
   hydrateOnClient()
   return
 })
+
+if (process.env.RAVEN_PRIVATE_DSN) {
+  app.use(raven.middleware.express.errorHandler(process.env.RAVEN_PRIVATE_DSN))
+}
 
 const listener = server.listen(process.env.PORT || 8080, (err) => {
   if (err) {
