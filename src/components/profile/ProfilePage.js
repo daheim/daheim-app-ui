@@ -123,10 +123,10 @@ const loaded = loader({
   },
 
   load (nextProps) {
-    const {user, userMeta} = nextProps
+    const {userMeta} = nextProps
     const {loading} = userMeta || {}
 
-    if (!user && !loading) nextProps.loadUser({id: nextProps.userId})
+    if (!loading) nextProps.loadUser({id: nextProps.userId})
   },
 
   key (props) {
