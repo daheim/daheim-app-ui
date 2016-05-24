@@ -109,7 +109,7 @@ class ReviewList extends React.Component {
 
                     return (
                       <tr key={lesson.id} className={css.line} onClick={handler}>
-                        <td style={{padding: '4px 0'}}>{moment(lesson.createDate).format('lll')}</td>
+                        <td style={{padding: '4px 0'}}>{moment(lesson.createdTime).format('lll')}</td>
                         <td>{partner ? <img src={partner.picture} style={{borderRadius: '50%', width: 32, height: 32}} /> : ' '}</td>
                         <td>{partner ? partner.name || '[kein Name]' : 'loading...'}</td>
                         <td>{this.msToString(lesson.duration)}</td>
