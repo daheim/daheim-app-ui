@@ -5,6 +5,7 @@ import FlatButton from 'material-ui/FlatButton'
 import CircularProgress from 'material-ui/CircularProgress'
 
 import {startLesson, leaveIfNotStarted} from '../actions/live'
+import ProfilePage from './profile/ProfilePage'
 
 class LessonGuardRaw extends Component {
 
@@ -101,7 +102,6 @@ class StartLesson extends Component {
 
     return (
       <Dialog autoScrollBodyContent open onRequestClose={onRequestClose} actions={actions}>
-        <h2>{name}</h2>
         {error ? (
           <div style={{background: '#FA8072', border: 'solid 1px darkred', padding: 16, color: 'black', margin: '10px 0', borderRadius: 2}}>{error}</div>
         ) : undefined}
@@ -114,7 +114,8 @@ class StartLesson extends Component {
             <div style={{margin: 10, fontWeight: 700}}>Requesting...</div>
           </div>
         ) : undefined}
-        <div>There will be information about the teacher here... Kommt gleich :)</div>
+
+        <ProfilePage params={{userId: user.id}} />
       </Dialog>
     )
   }
