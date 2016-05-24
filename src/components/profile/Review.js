@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import moment from 'moment'
 
-import {ProficiencyRating} from '../../containers/ReviewPage'
+import ProficiencyRating from '../ProficiencyRating'
 
 import css from './ProfilePage.style'
 

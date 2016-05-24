@@ -13,7 +13,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 
 import {saveProfile} from '../actions/profile'
 import RoleSwitch from '../components/RoleSwitch'
-import {ProficiencyRating} from './ReviewPage'
+import ProficiencyRating from '../components/ProficiencyRating'
 
 const avatars = {
   avatar1: 'https://assets.daheimapp.de/public/assets/avatar-1.svg',

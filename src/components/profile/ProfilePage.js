@@ -7,7 +7,7 @@ import moment from 'moment'
 import loader from '../../loader'
 import {loadUser} from '../../actions/users'
 import {sendReview} from '../../actions/reviews'
-import {ProficiencyRating} from '../../containers/ReviewPage'
+import ProficiencyRating from '../ProficiencyRating'
 
 import Review from './Review'
 import SendReview from './SendReview'
