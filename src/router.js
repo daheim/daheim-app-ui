@@ -5,7 +5,6 @@ import Helmet from 'react-helmet'
 import DefaultLayout from './containers/DefaultLayout'
 import ReadyPage from './containers/ReadyPage'
 import LessonPage from './containers/LessonPage'
-import ReviewPage from './containers/ReviewPage'
 import ProfilePage from './containers/ProfilePage'
 
 import LoginLayout from './containers/LoginLayout'
@@ -29,7 +28,6 @@ export default function createRouter (history) {
         <Route path='/' component={DefaultLayout}>
           <IndexRoute component={ReadyPage} />
           <Route path='lessons/:lessonId' component={LessonPage} />
-          <Route path='reviews/:reviewId' component={ReviewPage} />
           <Route path='profile' component={ProfilePage} />
           <Route path='users/:userId' component={PublicProfilePage} />
         </Route>
