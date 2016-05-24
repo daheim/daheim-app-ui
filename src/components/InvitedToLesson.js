@@ -2,6 +2,7 @@ import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
+import {Howl} from 'howler'
 
 import {join, leave} from '../actions/live'
 import ProfilePage from './profile/ProfilePage'
@@ -12,6 +13,24 @@ class InvitedToLessonDialog extends Component {
     lesson: PropTypes.object.isRequired,
     join: PropTypes.func.isRequired,
     leave: PropTypes.func.isRequired
+  }
+
+  componentDidMount () {
+    if (!this.sound) {
+      this.sound = new Howl({
+        urls: ['https://assets.daheimapp.de/public/assets/lesson.mp3']
+      })
+    }
+
+    this.soundInterval = setInterval(() => {
+      this.sound.play()
+    }, 5000)
+    this.sound.play()
+  }
+
+  componentWillUnmount () {
+    if (this.soundInterval) clearInterval(this.soundInterval)
+    this.sound.unload()
   }
 
   handleRequestClose = () => {
