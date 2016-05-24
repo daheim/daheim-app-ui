@@ -1,7 +1,6 @@
 import {handleActions} from 'redux-actions'
 
-import {LOAD_USER} from '../actions/users'
-import {SEND_REVIEW} from '../actions/reviews'
+import {LOAD_USER, SEND_REVIEW} from '../actions/users'
 
 export default handleActions({
   [LOAD_USER]: (state, action) => {

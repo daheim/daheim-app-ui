@@ -10,3 +10,13 @@ export const loadUser = ({id}) => {
     }
   }
 }
+
+export const SEND_REVIEW = 'users.sendReview'
+export const sendReview = (body) => {
+  return {
+    type: SEND_REVIEW,
+    meta: {
+      api: {body}
+    }
+  }
+}

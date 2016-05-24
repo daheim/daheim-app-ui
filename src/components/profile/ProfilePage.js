@@ -5,8 +5,7 @@ import Helmet from 'react-helmet'
 import moment from 'moment'
 
 import loader from '../../loader'
-import {loadUser} from '../../actions/users'
-import {sendReview} from '../../actions/reviews'
+import {loadUser, sendReview} from '../../actions/users'
 import ProficiencyRating from '../ProficiencyRating'
 
 import Review from './Review'
