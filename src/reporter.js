@@ -16,9 +16,11 @@ class Reporter {
     }
 
     window.addEventListener('unhandledrejection', (e) => {
-      e.preventDefault()
-      const {reason} = e.detail
-      this.error(reason)
+      if (e) {
+        e.preventDefault()
+        const reason = e.reason || (e.detail && e.detail.reason)
+        this.error(reason)
+      }
     })
 
     window.__reporter = this
