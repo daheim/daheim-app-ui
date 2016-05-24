@@ -7,6 +7,7 @@ import TalkAbout from '../components/TalkAbout'
 import ReadyUsers from '../components/ReadyUsers'
 import ReadySwitch from '../components/ready/ReadySwitch'
 import TimeToChoose from '../components/ready/TimeToChoose'
+import NotYetInOperation from '../components/NotYetInOperation'
 import WebRTC from 'webrtc-adapter'
 
 class ReadyPage extends React.Component {
@@ -31,6 +32,8 @@ class ReadyPage extends React.Component {
             This browser does not support audio and video calls. You won't be able to participate in lessons. Please try a recent version of Google Chrome, Firefox or Microsoft Edge.
           </div>
         ) : undefined}
+
+        <NotYetInOperation />
 
         {role === 'student' ? (
           <ReadySwitch />
