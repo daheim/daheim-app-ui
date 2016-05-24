@@ -4,6 +4,7 @@ import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 
 import {join, leave} from '../actions/live'
+import ProfilePage from './profile/ProfilePage'
 
 class InvitedToLessonDialog extends Component {
 
@@ -27,11 +28,11 @@ class InvitedToLessonDialog extends Component {
 
     const actions = [
       <FlatButton
-        label='Reject'
+        label='Verlassen'
         onTouchTap={this.handleRequestClose}
       />,
       <FlatButton
-        label='Accept'
+        label='Lektion Starten'
         primary
         onTouchTap={this.handleAccept}
       />
@@ -39,8 +40,8 @@ class InvitedToLessonDialog extends Component {
 
     return (
       <Dialog autoScrollBodyContent open modal onRequestClose={this.handleRequestClose} actions={actions}>
-        <h2>Invited to Lesson</h2>
-        <div>There will be information about the student here... Kommt gleich :)</div>
+        <h2>Neue Lektion</h2>
+        <ProfilePage params={{userId: this.props.lesson.teacherId}} />
       </Dialog>
     )
   }
