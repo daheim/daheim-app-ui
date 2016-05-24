@@ -20,7 +20,6 @@ class ReadyPage extends React.Component {
 
   render () {
     const {user: {profile: {role} = {}} = {}} = this.props
-    const {teachers = 0, students = 0} = this.props.online
 
     return (
       <div style={{padding: 16}}>
@@ -38,8 +37,6 @@ class ReadyPage extends React.Component {
         {role === 'student' ? (
           <ReadySwitch />
         ) : undefined}
-
-        <div>Online teachers: {teachers} | Online students: {students}</div>
 
         {role === 'teacher' ? (
           <ReadyUsers />

@@ -82,9 +82,6 @@ class StartLesson extends Component {
 
   render () {
     const {user, onRequestClose} = this.props
-    const {profile} = user
-    const {name} = profile
-
     const {startLessonPromise, error, lessonId} = this.state
 
     const actions = [
