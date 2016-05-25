@@ -99,6 +99,9 @@ export default class Live {
     socket.on('online', (online) => this.dispatchState({online}))
     socket.on('readyUsers', (users) => this.dispatchState({readyUsers: users}))
 
+    socket.on('userIsReady', ({topic}) => this.dispatchState({ready: true, readyTopic: topic}))
+    socket.on('userIsNotReady', () => this.dispatchState({ready: false}))
+
     socket.on('Lesson.onUpdated', ({lessons, closedLessons}) => {
       for (let id in lessons) {
         const lesson = lessons[id]
@@ -158,14 +161,12 @@ export default class Live {
     if (ready) this.ready({ready})
   }
 
-  async ready ({ready}) {
+  async ready ({ready, topic}) {
     if (!this.socket) throw new Error('live not active')
 
     return new Promise((resolve, reject) => {
-      this.socket.emit('ready', {ready}, (res) => {
+      this.socket.emit('ready', {ready, topic}, (res) => {
         if (res.error) return reject(new Error(res.error))
-        this.dispatchState({ready})
-        window.sessionStorage.ready = ready ? '1' : '0'
         resolve()
       })
     })
