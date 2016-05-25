@@ -1,8 +1,10 @@
 import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
+import PureRenderMixin from 'react-addons-pure-render-mixin'
 
 import StartLesson from './StartLesson'
 import {startLesson} from '../actions/live'
+import {loadUser} from '../actions/users'
 
 import style from './ReadyUsers.style'
 
@@ -10,9 +12,12 @@ class ReadyUser extends Component {
 
   static propTypes = {
     user: PropTypes.object.isRequired,
+    topic: PropTypes.string,
     startLesson: PropTypes.func.isRequired,
     onSelect: PropTypes.func
   }
+
+  shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
 
   handleClick = async (e) => {
     e.preventDefault()
@@ -20,14 +25,16 @@ class ReadyUser extends Component {
   }
 
   render () {
-    const {user, ...props} = this.props
-    const {profile} = user
-    const {picture, name} = profile
+    const {user, topic, ...props} = this.props
+    const {picture, name, germanLevel} = user
     return (
       <div href='#' className={style.readyUser} onClick={this.handleClick} {...props}>
         <img className={style.picture} src={picture} />
-        <div className={style.name}>{name}</div>
-        <a href='#' onClick={this.handleClick}>start lesson</a>
+        <div className={style.content}>
+          <div className={style.name}>{name}</div>
+          <div className={style.level}>Stufe: {germanLevel} / 5</div>
+          <div className={style.topic}>Theme: {topic}</div>
+        </div>
       </div>
     )
   }
@@ -36,8 +43,32 @@ class ReadyUser extends Component {
 export default class ReadyUsers extends Component {
 
   static propTypes = {
-    readyUsers: PropTypes.array,
+    readyUsers: PropTypes.array.isRequired,
+    users: PropTypes.object.isRequired,
+    loadUser: PropTypes.func.isRequired,
     startLesson: PropTypes.func.isRequired
+  }
+
+  shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
+
+  componentWillMount () {
+    this.checkUsers(this.props)
+  }
+
+  componentWillReceiveProps (nextProps) {
+    if (this.props.readyUsers !== nextProps.readyUsers) this.checkUsers(nextProps)
+  }
+
+  checkUsers (props) {
+    const usersToLoad = {}
+    const {readyUsers, users, usersMeta} = props
+
+    for (let {id} of readyUsers) {
+      if (users[id] || (usersMeta[id] && usersMeta[id].loading)) continue
+      usersToLoad[id] = 1
+    }
+
+    for (let id in usersToLoad) this.props.loadUser({id}).suppressUnhandledRejections()
   }
 
   state = {
@@ -53,16 +84,20 @@ export default class ReadyUsers extends Component {
   }
 
   render () {
-    const {readyUsers, startLesson} = this.props
+    const {users, readyUsers, startLesson} = this.props
     const {selectedUser} = this.state
 
     return (
       <div>
-        <h2>Ready Students</h2>
+        <h2>Online Schülern</h2>
         {readyUsers.length === 0 ? (
-          <div>There are no students waiting for a lesson</div>
+          <div>Es gibt keine Schülern bereit</div>
         ) : (
-          readyUsers.map((user) => <ReadyUser key={user.id} user={user} startLesson={startLesson} onSelect={this.selectUser} />)
+          readyUsers.map(({id, topic}) => {
+            const user = users[id]
+            if (!user) return
+            return <ReadyUser key={user.id} user={user} startLesson={startLesson} topic={topic} onSelect={this.selectUser} />
+          })
         )}
 
         {selectedUser ? <StartLesson key={selectedUser.id} user={selectedUser} onRequestClose={this.unselectUser} /> : undefined}
@@ -72,7 +107,7 @@ export default class ReadyUsers extends Component {
 }
 
 export default connect((state) => {
-  const {readyUsers} = state.live
-  return {readyUsers}
-}, {startLesson})(ReadyUsers)
+  const {users: {users, usersMeta}, live: {readyUsers}} = state
+  return {users, usersMeta, readyUsers}
+}, {startLesson, loadUser})(ReadyUsers)
 
