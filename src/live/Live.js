@@ -75,7 +75,7 @@ export default class Live {
     connection.onConnect = () => {
       if (this.connection !== connection) return
       this.socket = connection.socket
-      this.dispatchState({connected: true, error: null})
+      this.dispatchState({connected: true, error: null, ready: false})
       delete this.connectionBackoff
     }
     connection.onClose = ({replaced, error} = {}) => {
