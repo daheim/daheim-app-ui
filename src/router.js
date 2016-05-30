@@ -7,7 +7,7 @@ import ReadyPage from './containers/ReadyPage'
 import LessonPage from './containers/LessonPage'
 import ProfilePage from './containers/ProfilePage'
 
-import LoginLayout from './containers/LoginLayout'
+import AuthLayout from './components/auth/AuthLayout'
 import LoginPage from './containers/LoginPage'
 import RegistrationPage from './containers/RegistrationPage'
 import ForgotPasswordPage from './containers/ForgotPasswordPage'
@@ -31,12 +31,16 @@ export default function createRouter (history) {
           <Route path='profile' component={ProfilePage} />
           <Route path='users/:userId' component={PublicProfilePage} />
         </Route>
+
+        <Route path='/auth' component={AuthLayout}>
         <Route path='/auth' component={LoginLayout}>
           <IndexRoute component={LoginPage} />
           <Route path='register' component={RegistrationPage} />
           <Route path='forgot' component={ForgotPasswordPage} />
           <Route path='reset' component={ResetPasswordPage} />
         </Route>
+
+        <Route path='*' component={AuthLayout}>
         <Route path='*' component={LoginLayout}>
           <IndexRoute component={NotFoundPage} />
         </Route>
