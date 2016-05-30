@@ -5,15 +5,15 @@ import {Link} from 'react-router'
 import {replace} from 'react-router-redux'
 import {connect} from 'react-redux'
 
-import {reset} from '../actions/auth'
-import LoadingPanel from '../components/LoadingPanel'
+import {reset} from '../../actions/auth'
+import LoadingPanel from '../LoadingPanel'
 
 class ResetPasswordFormRaw extends React.Component {
 
   static propTypes = {
     token: React.PropTypes.string.isRequired,
     onLogin: React.PropTypes.func,
-    forgot: React.PropTypes.func.isRequired
+    reset: React.PropTypes.func.isRequired
   }
 
   state = {
@@ -34,10 +34,10 @@ class ResetPasswordFormRaw extends React.Component {
     let success = true
     this.setState({loading: true})
     try {
-      const result = await this.props.forgot({
-        password: this.state.password
-      }, this.props.token)
-      if (result.error) throw result.payload
+      await this.props.reset({
+        password: this.state.password,
+        token: this.props.token
+      })
       this.setState({error: null})
     } catch (err) {
       success = false
@@ -103,11 +103,11 @@ class ResetPasswordFormRaw extends React.Component {
     return (
       <LoadingPanel loading={this.state.loading}>
         <form onSubmit={this.handleLoginClick}>
-          <h1 style={{fontSize: 22}}>Passwort zurückzusetzen</h1>
+          <h1 style={{fontSize: 22}}>Passwort zurücksetzen</h1>
           {error}
           <TextField ref='password' style={{marginTop: -10}} type='password' fullWidth errorText={this.state.errorPassword} floatingLabelText='Passwort' value={this.state.password} onChange={this.handlePasswordChange} />
           <TextField ref='password2' style={{marginTop: -10}} type='password' fullWidth errorText={this.state.errorPassword2} floatingLabelText='Passwort bestätigen' value={this.state.password2} onChange={this.handlePassword2Change} />
-          <RaisedButton type='submit' style={{marginTop: 20}} fullWidth secondary label='Password ändern' />
+          <div style={{textAlign: 'center'}}><RaisedButton type='submit' style={{marginTop: 20}} fullWidth primary label='Passwort ändern' /></div>
         </form>
       </LoadingPanel>
     )
@@ -138,9 +138,7 @@ class ResetPasswordPage extends React.Component {
   render () {
     return (
       <div style={{maxWidth: 400, margin: '0 auto', padding: '16px 10px'}}>
-        <div style={{background: 'rgba(255,255,255,0.9)', borderRadius: 10, padding: 20, paddingTop: 12}}>
-          <ResetPasswordForm onLogin={this.handleLogin} token={this.props.location.query.token} />
-        </div>
+        <ResetPasswordForm onLogin={this.handleLogin} token={this.props.location.query.token} />
       </div>
     )
   }

@@ -11,7 +11,7 @@ import AuthLayout from './components/auth/AuthLayout'
 import LoginPage from './components/auth/LoginPage'
 import RegistrationPage from './containers/RegistrationPage'
 import ForgotPasswordPage from './components/auth/ForgotPasswordPage'
-import ResetPasswordPage from './containers/ResetPasswordPage'
+import ResetPasswordPage from './components/auth/ResetPasswordPage'
 
 import PublicProfilePage from './components/profile/ProfilePage'
 

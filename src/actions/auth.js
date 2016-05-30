@@ -14,8 +14,5 @@ export const register = createAction(REGISTER, async (payload) => {
 export const FORGOT = 'auth.requestNewPassword'
 export const forgot = createApiAction(FORGOT)
 
-console.warn('bearer token in auth/reset')
-export const RESET = 'auth/reset'
-export const reset = createAction(RESET, (payload) => {
-  return api.post('/reset', payload)
-})
+export const RESET = 'auth.resetPassword'
+export const reset = createApiAction(RESET)
