@@ -86,6 +86,10 @@ app.use(async (req, res, next) => {
     }))
     state.profile = {profile}
   } catch (err) {
+    if (req.originalUrl !== '/auth' && err.statusCode === 401) {
+      res.redirect('/auth')
+      return
+    }
     // TODO: handle cannot load profile
   }
 
