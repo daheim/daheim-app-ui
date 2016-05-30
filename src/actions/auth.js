@@ -11,10 +11,8 @@ export const register = createAction(REGISTER, async (payload) => {
   global.localStorage.accessToken = result.accessToken
 })
 
-export const FORGOT = 'auth/forgot'
-export const forgot = createAction(FORGOT, (payload) => {
-  return api.post('/forgot', payload)
-})
+export const FORGOT = 'auth.requestNewPassword'
+export const forgot = createApiAction(FORGOT)
 
 console.warn('bearer token in auth/reset')
 export const RESET = 'auth/reset'

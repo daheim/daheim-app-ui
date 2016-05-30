@@ -10,7 +10,7 @@ import ProfilePage from './containers/ProfilePage'
 import AuthLayout from './components/auth/AuthLayout'
 import LoginPage from './components/auth/LoginPage'
 import RegistrationPage from './containers/RegistrationPage'
-import ForgotPasswordPage from './containers/ForgotPasswordPage'
+import ForgotPasswordPage from './components/auth/ForgotPasswordPage'
 import ResetPasswordPage from './containers/ResetPasswordPage'
 
 import PublicProfilePage from './components/profile/ProfilePage'

@@ -4,8 +4,8 @@ import RaisedButton from 'material-ui/RaisedButton'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 
-import {forgot} from '../actions/auth'
-import LoadingPanel from '../components/LoadingPanel'
+import {forgot} from '../../actions/auth'
+import LoadingPanel from '../LoadingPanel'
 
 console.warn('fix network error in ForgotPasswordPage')
 
@@ -33,14 +33,17 @@ class ForgotPasswordFormRaw extends React.Component {
     let success = true
     this.setState({loading: true})
     try {
-      const result = await this.props.forgot({
-        email: this.state.email
+      await this.props.forgot({
+        username: this.state.email
       })
-      if (result.error) throw result.payload
       this.setState({error: null})
     } catch (err) {
       success = false
-      this.setState({error: err.message})
+      if (err.code === 'user_not_found') {
+        this.setState({error: 'Benutzer nicht gefunden'})
+      } else {
+        this.setState({error: err.message})
+      }
     } finally {
       this.setState({loading: false})
     }
@@ -93,7 +96,7 @@ class ForgotPasswordFormRaw extends React.Component {
           <h2 style={{fontSize: 14, fontWeight: 400, lineHeight: '150%'}}>Geben Sie Ihre E-Mail-Adresse ein und wir helfen Ihnen, Ihr Passwort zurückzusetzen.</h2>
           {error}
           <TextField ref='email' fullWidth floatingLabelText='E-Mail-Addresse' errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
-          <RaisedButton type='submit' style={{marginTop: 20}} fullWidth secondary label='Weiter' />
+          <div style={{textAlign: 'center'}}><RaisedButton type='submit' style={{marginTop: 20}} fullWidth primary label='Weiter' /></div>
         </form>
       </LoadingPanel>
     )
@@ -137,13 +140,11 @@ export default class ForgotPasswordPage extends React.Component {
   render () {
     return (
       <div style={{maxWidth: 400, margin: '0 auto', padding: '16px 10px'}}>
-        <div style={{background: 'rgba(255,255,255,0.9)', borderRadius: 10, padding: 20, paddingTop: 12}}>
           {!this.state.sent ? (
             <ForgotPasswordForm onLogin={this.handleLogin} defaultUsername={this.props.location.query.username} />
           ) : (
             <EmailSent style={{paddingTop: 8}} />
           )}
-        </div>
       </div>
     )
   }
