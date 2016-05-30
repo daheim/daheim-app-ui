@@ -8,7 +8,7 @@ import LessonPage from './containers/LessonPage'
 import ProfilePage from './containers/ProfilePage'
 
 import AuthLayout from './components/auth/AuthLayout'
-import LoginPage from './containers/LoginPage'
+import LoginPage from './components/auth/LoginPage'
 import RegistrationPage from './containers/RegistrationPage'
 import ForgotPasswordPage from './containers/ForgotPasswordPage'
 import ResetPasswordPage from './containers/ResetPasswordPage'
@@ -33,7 +33,6 @@ export default function createRouter (history) {
         </Route>
 
         <Route path='/auth' component={AuthLayout}>
-        <Route path='/auth' component={LoginLayout}>
           <IndexRoute component={LoginPage} />
           <Route path='register' component={RegistrationPage} />
           <Route path='forgot' component={ForgotPasswordPage} />
@@ -41,7 +40,6 @@ export default function createRouter (history) {
         </Route>
 
         <Route path='*' component={AuthLayout}>
-        <Route path='*' component={LoginLayout}>
           <IndexRoute component={NotFoundPage} />
         </Route>
       </Router>

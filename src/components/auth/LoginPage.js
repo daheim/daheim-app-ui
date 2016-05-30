@@ -1,18 +1,21 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
+import {push} from 'react-router-redux'
 
-import LoadingPanel from './LoadingPanel'
-import {login} from '../actions/auth'
+import LoadingPanel from '../LoadingPanel'
+import {login} from '../../actions/auth'
 
-class LoginForm extends React.Component {
+console.warn('fix error messges in LoginPage')
+
+class LoginForm extends Component {
 
   static propTypes = {
-    defaultUsername: React.PropTypes.string,
-    onLogin: React.PropTypes.func,
-    login: React.PropTypes.func.isRequired
+    defaultUsername: PropTypes.string,
+    onLogin: PropTypes.func,
+    login: PropTypes.func.isRequired
   }
 
   state = {
@@ -33,15 +36,18 @@ class LoginForm extends React.Component {
     let success = true
     this.setState({loading: true})
     try {
-      const result = await this.props.login({
+      await this.props.login({
         username: this.state.email,
         password: this.state.password
       })
-      if (result.error) throw result.payload
       this.setState({error: null})
     } catch (err) {
       success = false
-      this.setState({error: err.message})
+      if (err.code === 'unauthorized') {
+        this.setState({error: 'Das Passwort und die E-Mail-Adresse, die Sie eingegeben haben, stimmen nicht überein.'})
+      } else {
+        this.setState({error: err.message})
+      }
     } finally {
       this.setState({loading: false})
     }
@@ -100,7 +106,7 @@ class LoginForm extends React.Component {
           {error}
           <TextField ref='email' type='email' fullWidth floatingLabelText='E-Mail-Addresse' errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
           <TextField ref='password' style={{marginTop: -10}} type='password' fullWidth errorText={this.state.errorPassword} floatingLabelText='Passwort' value={this.state.password} onChange={this.handlePasswordChange} />
-          <RaisedButton type='submit' style={{marginTop: 20}} fullWidth secondary label='Einloggen' />
+          <div style={{textAlign: 'center'}}><RaisedButton type='submit' style={{marginTop: 20}} fullWidth primary label='Einloggen' /></div>
           <div style={{fontSize: 14, textAlign: 'center', paddingTop: 20}}>
             <Link to={{pathname: '/auth/forgot', query: {username: this.state.email || undefined}}}>Password vergessen?</Link> oder <Link to={{pathname: '/auth/register', query: {username: this.state.email || undefined}}}>Neu anmelden</Link>
           </div>
@@ -110,4 +116,32 @@ class LoginForm extends React.Component {
   }
 }
 
-export default connect(null, {login})(LoginForm)
+class LoginPage extends Component {
+
+  static propTypes = {
+    location: PropTypes.shape({
+      query: PropTypes.shape({
+        username: PropTypes.string
+      }).isRequired
+    }).isRequired,
+    push: PropTypes.func.isRequired,
+    login: PropTypes.func.isRequired
+  }
+
+  handleLogin = () => {
+    this.props.push('/')
+  }
+
+  render () {
+    return (
+      <div style={{maxWidth: 400, padding: '16px 10px'}}>
+        <div>
+          <LoginForm onLogin={this.handleLogin} login={this.props.login} defaultUsername={this.props.location.query.username} />
+        </div>
+      </div>
+    )
+  }
+
+}
+
+export default connect(null, {push, login})(LoginPage)
