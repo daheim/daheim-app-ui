@@ -114,6 +114,7 @@ a.dropDownItem {
   font-size: 14px;
 
   &:hover, &:active, &:visited {
+    color: inherit;
     text-decoration: none;
   }
   &:hover {
