@@ -81,7 +81,7 @@ app.use(async (req, res, next) => {
     }))
     state.profile = {profile}
   } catch (err) {
-    if ((req.originalUrl !== '/auth' && req.originalUrl !== '/auth/register') && err.statusCode === 401) {
+    if ((req.originalUrl !== '/auth' && req.originalUrl !== '/auth/register' && req.originalUrl.indexOf('/auth/reset') !== 0) && err.statusCode === 401) {
       res.redirect('/auth')
       return
     }
