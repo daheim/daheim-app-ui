@@ -12,6 +12,7 @@ import LoginPage from './components/auth/LoginPage'
 import RegistrationPage from './containers/RegistrationPage'
 import ForgotPasswordPage from './components/auth/ForgotPasswordPage'
 import ResetPasswordPage from './components/auth/ResetPasswordPage'
+import LogoutPage from './components/auth/LogoutPage'
 
 import PublicProfilePage from './components/profile/ProfilePage'
 
@@ -37,6 +38,7 @@ export default function createRouter (history) {
           <Route path='register' component={RegistrationPage} />
           <Route path='forgot' component={ForgotPasswordPage} />
           <Route path='reset' component={ResetPasswordPage} />
+          <Route path='logout' component={LogoutPage} />
         </Route>
 
         <Route path='*' component={AuthLayout}>

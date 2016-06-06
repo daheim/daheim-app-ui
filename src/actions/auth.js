@@ -16,3 +16,6 @@ export const forgot = createApiAction(FORGOT)
 
 export const RESET = 'auth.resetPassword'
 export const reset = createApiAction(RESET)
+
+export const LOGOUT = 'auth.logout'
+export const logout = createApiAction(LOGOUT)
