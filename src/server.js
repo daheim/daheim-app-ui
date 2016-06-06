@@ -69,11 +69,6 @@ app.use(async (req, res, next) => {
     universal.refresh()
   }
 
-  if (req.originalUrl !== '/auth' && !req.cookies.sid) { // TODO: proper sid check
-    res.redirect('/auth')
-    return
-  }
-
   let state = {}
 
   try {
@@ -86,7 +81,7 @@ app.use(async (req, res, next) => {
     }))
     state.profile = {profile}
   } catch (err) {
-    if (req.originalUrl !== '/auth' && err.statusCode === 401) {
+    if ((req.originalUrl !== '/auth' && req.originalUrl !== '/auth/register') && err.statusCode === 401) {
       res.redirect('/auth')
       return
     }

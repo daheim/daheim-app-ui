@@ -1,25 +1,26 @@
-import React from 'react'
+import React, {Component, PropTypes} from 'react'
+import {push} from 'react-router-redux'
+import {connect} from 'react-redux'
 import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import Checkbox from 'material-ui/Checkbox'
 import {Link} from 'react-router'
-import {connect} from 'react-redux'
 
-import LoadingPanel from './LoadingPanel'
-import {register} from '../actions/auth'
+import LoadingPanel from '../LoadingPanel'
+import {register} from '../../actions/auth'
 
-class RegistrationForm extends React.Component {
+class RegistrationFormRaw extends Component {
 
   static propTypes = {
-    defaultUsername: React.PropTypes.string,
-    onLogin: React.PropTypes.func,
-    register: React.PropTypes.func.isRequired
+    defaultUsername: PropTypes.string,
+    onLogin: PropTypes.func,
+    register: PropTypes.func.isRequired
   }
 
   state = {
     email: this.props.defaultUsername || '',
     password: '',
-    newsletter: false,
+    newsletter: true,
     agree: false,
     loading: false,
     error: null,
@@ -110,19 +111,46 @@ class RegistrationForm extends React.Component {
     return (
       <LoadingPanel loading={this.state.loading}>
         <form noValidate onSubmit={this.handleRegisterClick}>
-          <h1 style={{fontSize: 22}}>Jetzt kostenlos Mitglied werden!</h1>
+          <h1 style={{fontSize: 22, marginTop: 40}}>Jetzt kostenlos Mitglied werden!</h1>
           {error}
           <TextField ref='email' type='email' fullWidth floatingLabelText='E-Mail-Addresse' errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
           <TextField ref='password' style={{marginTop: -10}} type='password' fullWidth errorText={this.state.errorPassword} floatingLabelText='Passwort' value={this.state.password} onChange={this.handlePasswordChange} />
           <Checkbox style={{marginTop: 20}} label='Ja, ich möchte zum Newsletter anmelden' checked={this.state.newsletter} onCheck={this.handleNewsletterChange} />
           <Checkbox style={{marginTop: 10}} label='Ja, ich akzeptiere die AGB' checked={this.state.agree} onCheck={this.handleAgreeChange} />
-          <RaisedButton disabled={!this.state.agree} type='submit' style={{marginTop: 20}} fullWidth secondary label='Jetzt registrieren' />
-          <p style={{fontSize: 14, marginTop: 20, lineHeight: '150%'}}>Klicken Sie hier, um <Link to={{pathname: '/auth', query: {username: this.state.email || undefined}}}>sich anzumelden</Link>. <a href='#'>Allgemeinen Geschäftsbedingungen</a> und <a href='#'>Datenschutzrichtlinien</a></p>
+          <div style={{textAlign: 'center'}}><RaisedButton disabled={!this.state.agree} type='submit' style={{marginTop: 20}} fullWidth primary label='Jetzt registrieren' /></div>
+          <div style={{fontSize: 14, textAlign: 'center', paddingTop: 20}}>
+            Klick hier, um <Link to={{pathname: '/auth', query: {username: this.state.email || undefined}}}>sich anzumelden</Link>.
+          </div>
         </form>
       </LoadingPanel>
     )
   }
 }
 
-export default connect(null, {register})(RegistrationForm)
+const RegistrationForm = connect(null, {register})(RegistrationFormRaw)
 
+class RegistrationPage extends Component {
+
+  static propTypes = {
+    location: PropTypes.shape({
+      query: PropTypes.shape({
+        username: PropTypes.string
+      }).isRequired
+    }).isRequired,
+    push: PropTypes.func.isRequired
+  };
+
+  handleLogin = () => {
+    this.props.push('/profile')
+  };
+
+  render () {
+    return (
+      <div style={{width: 400}}>
+        <RegistrationForm onLogin={this.handleLogin} defaultUsername={this.props.location.query.username} />
+      </div>
+    )
+  }
+}
+
+export default connect(null, {push})(RegistrationPage)
