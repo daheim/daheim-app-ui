@@ -21,6 +21,7 @@ export default class RoleSwitch extends React.Component {
       <RadioButtonGroup name='role' onChange={this.handleChange} valueSelected={role}>
         <RadioButton value='teacher' label='Teacher' />
         <RadioButton value='student' label='Student' />
+        <RadioButton value='not-yet-chosen' label='Not yet chosen' />
       </RadioButtonGroup>
     )
   }
