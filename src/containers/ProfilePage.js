@@ -14,6 +14,7 @@ import PureRenderMixin from 'react-addons-pure-render-mixin'
 import {saveProfile} from '../actions/profile'
 import RoleSwitch from '../components/RoleSwitch'
 import ProficiencyRating from '../components/ProficiencyRating'
+import TimeToChoose from '../components/ready/TimeToChoose'
 
 const avatars = {
   avatar1: 'https://assets.daheimapp.de/public/assets/avatar-1.svg',
@@ -269,6 +270,8 @@ class ProfilePage extends React.Component {
       <div style={{margin: 16}}>
         <h1>Profile</h1>
         <div>
+
+          <TimeToChoose />
 
           <div style={{display: 'flex', flexWrap: 'wrap', maxWidth: 630}}>
             <div style={{fontSize: 15, fontWeight: 700, marginBottom: 8, marginRight: 10, flex: '0 0 150px'}}>
