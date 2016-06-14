@@ -14,6 +14,8 @@ import ForgotPasswordPage from './components/auth/ForgotPasswordPage'
 import ResetPasswordPage from './components/auth/ResetPasswordPage'
 import LogoutPage from './components/auth/LogoutPage'
 
+import AdminPage from './components/admin/AdminPage'
+
 import PublicProfilePage from './components/profile/ProfilePage'
 
 import NotFoundPage from './containers/NotFoundPage'
@@ -31,6 +33,7 @@ export default function createRouter (history) {
           <Route path='lessons/:lessonId' component={LessonPage} />
           <Route path='profile' component={ProfilePage} />
           <Route path='users/:userId' component={PublicProfilePage} />
+          <Route path='admin' component={AdminPage} />
         </Route>
 
         <Route path='/auth' component={AuthLayout}>
