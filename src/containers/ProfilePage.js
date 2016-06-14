@@ -12,7 +12,6 @@ import FlatButton from 'material-ui/FlatButton'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 
 import {saveProfile} from '../actions/profile'
-import RoleSwitch from '../components/RoleSwitch'
 import ProficiencyRating from '../components/ProficiencyRating'
 import TimeToChoose from '../components/ready/TimeToChoose'
 
@@ -315,10 +314,6 @@ class ProfilePage extends React.Component {
         <div style={{marginTop: 20, maxWidth: 630, display: 'flex', alignItems: 'center', justifyContent: 'flex-end'}}>
           <FlatButton style={{margin: '0 10px'}} label='Zurück' onClick={this.handleBack} />
           <RaisedButton style={{margin: '0 10px'}} label='Speichern' primary onClick={this.handleSave} />
-        </div>
-        <div style={{marginTop: 50, borderTop: 'dashed 1px #CCC'}}>
-          <h2>Debug</h2>
-          <div><RoleSwitch /></div>
         </div>
       </div>
     )
