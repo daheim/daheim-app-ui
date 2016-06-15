@@ -74,10 +74,10 @@ class RegistrationFormRaw extends Component {
 
     if (!this.state.email) {
       valid.hasErrors = true
-      valid.errorEmail = valid.error = 'Bitte E-Mail-Addresse eingeben'
+      valid.errorEmail = valid.error = 'Bitte E-Mail-Adresse eingeben'
     } else if (this.state.email.indexOf('@') === -1) {
       valid.hasErrors = true
-      valid.errorEmail = valid.error = 'E-Mail-Addresse ist nicht gültig'
+      valid.errorEmail = valid.error = 'E-Mail-Adresse ist nicht gültig'
     }
 
     this.setState(valid)
@@ -113,13 +113,13 @@ class RegistrationFormRaw extends Component {
         <form noValidate onSubmit={this.handleRegisterClick}>
           <h1 style={{fontSize: 22, marginTop: 40}}>Jetzt kostenlos Mitglied werden!</h1>
           {error}
-          <TextField ref='email' type='email' fullWidth floatingLabelText='E-Mail-Addresse' errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
+          <TextField ref='email' type='email' fullWidth floatingLabelText='E-Mail-Adresse' errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
           <TextField ref='password' style={{marginTop: -10}} type='password' fullWidth errorText={this.state.errorPassword} floatingLabelText='Passwort' value={this.state.password} onChange={this.handlePasswordChange} />
-          <Checkbox style={{marginTop: 20}} label='Ja, ich möchte zum Newsletter anmelden' checked={this.state.newsletter} onCheck={this.handleNewsletterChange} />
+          <Checkbox style={{marginTop: 20}} label='Ich möchte mich für den Newsletter anmelden' checked={this.state.newsletter} onCheck={this.handleNewsletterChange} />
           <Checkbox style={{marginTop: 10}} label='Ja, ich akzeptiere die AGB' checked={this.state.agree} onCheck={this.handleAgreeChange} />
           <div style={{textAlign: 'center'}}><RaisedButton disabled={!this.state.agree} type='submit' style={{marginTop: 20}} fullWidth primary label='Jetzt registrieren' /></div>
           <div style={{fontSize: 14, textAlign: 'center', paddingTop: 20}}>
-            Klick hier, um <Link to={{pathname: '/auth', query: {username: this.state.email || undefined}}}>sich anzumelden</Link>.
+            Klick hier, um <Link to={{pathname: '/auth', query: {username: this.state.email || undefined}}}>dich anzumelden</Link>.
           </div>
         </form>
       </LoadingPanel>

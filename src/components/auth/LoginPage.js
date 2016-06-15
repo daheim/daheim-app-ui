@@ -69,7 +69,7 @@ class LoginForm extends Component {
 
     if (!this.state.email) {
       valid.hasErrors = true
-      valid.errorEmail = valid.error = 'Bitte E-Mail-Addresse eingeben'
+      valid.errorEmail = valid.error = 'Bitte E-Mail-Adresse eingeben'
     }
 
     this.setState(valid)
@@ -104,11 +104,11 @@ class LoginForm extends Component {
       <LoadingPanel loading={this.state.loading}>
         <form noValidate onSubmit={this.handleLoginClick}>
           {error}
-          <TextField ref='email' type='email' fullWidth floatingLabelText='E-Mail-Addresse' errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
+          <TextField ref='email' type='email' fullWidth floatingLabelText='E-Mail-Adresse' errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
           <TextField ref='password' style={{marginTop: -10}} type='password' fullWidth errorText={this.state.errorPassword} floatingLabelText='Passwort' value={this.state.password} onChange={this.handlePasswordChange} />
           <div style={{textAlign: 'center'}}><RaisedButton type='submit' style={{marginTop: 20}} fullWidth primary label='Einloggen' /></div>
           <div style={{fontSize: 14, textAlign: 'center', paddingTop: 20}}>
-            <Link to={{pathname: '/auth/forgot', query: {username: this.state.email || undefined}}}>Password vergessen?</Link> oder <Link to={{pathname: '/auth/register', query: {username: this.state.email || undefined}}}>Neu anmelden</Link>
+            <Link to={{pathname: '/auth/forgot', query: {username: this.state.email || undefined}}}>Passwort vergessen?</Link> oder <Link to={{pathname: '/auth/register', query: {username: this.state.email || undefined}}}>Neu registrieren</Link>
           </div>
         </form>
       </LoadingPanel>

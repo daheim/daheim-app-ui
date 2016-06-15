@@ -89,7 +89,7 @@ class ResetPasswordFormRaw extends React.Component {
     if (this.state.error === 'user_not_found') {
       error = (
         <div style={{padding: '15px 30px 15px 15px', margin: '20px 0', backgroundColor: 'rgba(204,122,111,0.1)', borderLeft: '5px solid rgba(191,87,73,0.2)'}}>
-          Kein Mitglied gefunden. Klicken Sie hier, um <Link to={{pathname: '/auth/register', query: {username: this.state.email || undefined}}}>neu anzumelden</Link>.
+          Kein Mitglied gefunden. Klick hier, um <Link to={{pathname: '/auth/register', query: {username: this.state.email || undefined}}}>neu anzumelden</Link>.
         </div>
       )
     } else if (this.state.error) {

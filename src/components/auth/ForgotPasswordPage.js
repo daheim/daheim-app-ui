@@ -59,7 +59,7 @@ class ForgotPasswordFormRaw extends React.Component {
 
     if (!this.state.email) {
       valid.hasErrors = true
-      valid.errorEmail = valid.error = 'Bitte E-Mail-Addresse eingeben'
+      valid.errorEmail = valid.error = 'Bitte E-Mail-Adresse eingeben'
     }
 
     this.setState(valid)
@@ -93,9 +93,9 @@ class ForgotPasswordFormRaw extends React.Component {
       <LoadingPanel loading={this.state.loading}>
         <form onSubmit={this.handleLoginClick}>
           <h1 style={{fontSize: 22}}>Passwort vergessen?</h1>
-          <h2 style={{fontSize: 14, fontWeight: 400, lineHeight: '150%'}}>Geben Sie Ihre E-Mail-Adresse ein und wir helfen Ihnen, Ihr Passwort zurückzusetzen.</h2>
+          <h2 style={{fontSize: 14, fontWeight: 400, lineHeight: '150%'}}>Gib deine E-Mail-Adresse ein und wir helfen dir, ein neues Passwort zu bekommen.</h2>
           {error}
-          <TextField ref='email' fullWidth floatingLabelText='E-Mail-Addresse' errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
+          <TextField ref='email' fullWidth floatingLabelText='E-Mail-Adresse' errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
           <div style={{textAlign: 'center'}}><RaisedButton type='submit' style={{marginTop: 20}} fullWidth primary label='Weiter' /></div>
         </form>
       </LoadingPanel>

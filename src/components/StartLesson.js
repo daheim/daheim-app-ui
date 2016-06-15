@@ -86,11 +86,11 @@ class StartLesson extends Component {
 
     const actions = [
       <FlatButton
-        label='Close'
+        label='Abbrechen'
         onTouchTap={onRequestClose}
       />,
       <FlatButton
-        label='Start Lesson'
+        label='Gespräch starten'
         primary
         disabled={!!(startLessonPromise || lessonId)}
         onTouchTap={this.handleStartLesson}

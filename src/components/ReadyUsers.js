@@ -33,7 +33,7 @@ class ReadyUser extends Component {
         <div className={style.content}>
           <div className={style.name}>{name}</div>
           <div className={style.level}>Stufe: {germanLevel} / 5</div>
-          <div className={style.topic}>Theme: {topic}</div>
+          <div className={style.topic}><a href='#'>Los geht's</a></div>
         </div>
       </div>
     )
@@ -89,9 +89,9 @@ export default class ReadyUsers extends Component {
 
     return (
       <div>
-        <h2>Online Schülern</h2>
+        <h2>SchülerInnen Online</h2>
         {readyUsers.length === 0 ? (
-          <div>Es gibt keine Schülern bereit</div>
+          <div>Es tut uns Leid, leider sind gerade keine passenden Gesprächspartner online.</div>
         ) : (
           readyUsers.map(({id, topic}) => {
             const user = users[id]

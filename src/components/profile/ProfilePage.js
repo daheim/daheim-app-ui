@@ -81,7 +81,7 @@ class ProfilePage extends Component {
               <div className={css.field}>
                 <div className={css.fieldTitle}>Ein Paar Worte über mich</div>
                 <div className={css.fieldText}>
-                  {introduction || <i>Benutzer hat noch keine Vorstellung</i>}
+                  {introduction || <i>Es gibt noch keine Informationen.</i>}
                 </div>
               </div>
               <div className={css.field}>
@@ -119,8 +119,8 @@ class ProfilePage extends Component {
                 <div className={css.fieldText}>{userSinceText}</div>
               </div>
               <div className={css.field}>
-                <div className={css.fieldTitle}>Daheim Lektionen</div>
-                <div className={css.fieldText}>4 Lektionen, 1 Stunde 47 Minuten</div>
+                <div className={css.fieldTitle}>Bisherige Gespräche auf Daheim</div>
+                <div className={css.fieldText}>4 Gespräche, 1 Stunde 47 Minuten</div>
               </div>
             </div>
           </div>

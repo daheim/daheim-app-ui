@@ -27,7 +27,7 @@ export default class AuthLayout extends Component {
           <span style={{padding: '0 10px'}}><a style={{color: 'rgba(255, 255, 255, 0.8)'}} href='https://daheimapp.de/privacy/' target='_blank'>Datenschutz</a></span>
         </div>
         <div style={{textAlign: 'center', textShadow: '1px 1px 5px black', color: 'rgba(255, 255, 255, 0.6)', fontSize: 12, lineHeight: '22px', position: 'relative', marginBottom: 30}}>
-          Copyright © 2015–2016 Daheim. Alle Rechte vorbehalten.
+          Copyright © 2015–2016 Daheim gUG (haftungsbeschränkt). Alle Rechte vorbehalten.
         </div>
 
       </div>

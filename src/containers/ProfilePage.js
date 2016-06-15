@@ -267,7 +267,7 @@ class ProfilePage extends React.Component {
 
     return (
       <div style={{margin: 16}}>
-        <h1>Profile</h1>
+        <h1>Profil</h1>
         <div>
 
           <TimeToChoose />

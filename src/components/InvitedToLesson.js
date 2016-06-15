@@ -47,11 +47,11 @@ class InvitedToLessonDialog extends Component {
 
     const actions = [
       <FlatButton
-        label='Verlassen'
+        label='Abbrechen'
         onTouchTap={this.handleRequestClose}
       />,
       <FlatButton
-        label='Lektion Starten'
+        label='Gespräch starten'
         primary
         onTouchTap={this.handleAccept}
       />

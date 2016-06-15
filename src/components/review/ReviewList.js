@@ -84,7 +84,7 @@ class ReviewList extends React.Component {
 
     return (
       <div {...this.props} style={mergedStyle}>
-        <h2>Vorherige Lektionen</h2>
+        <h2>Vorherige Gespräche</h2>
         <LoadingPanel loading={lessonList.meta.loading && !lessonList.meta.loaded}>
           {error ? (
             <p style={{textAlign: 'center', color: 'darkred'}}>{error}. <a href='#' onClick={this.retry}>nochmal versuchen</a></p>

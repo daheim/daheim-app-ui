@@ -22,6 +22,7 @@ class UserDropdown extends React.Component {
 
     return (
       <div style={{width: 200, overflowY: 'auto'}}>
+        <Link to='/' className={style.dropDownItem} onClick={this.handleClick}>Gespräche führen</Link>
         <Link to={`/users/${user.id}`} className={style.dropDownItem} onClick={this.handleClick}>Mein Profil</Link>
         <Link to='/profile' className={style.dropDownItem} onClick={this.handleClick}>Profil bearbeiten</Link>
         <Link to='/password' className={style.dropDownItem} onClick={this.handleClick}>Passwort ändern</Link>
