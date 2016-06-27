@@ -12,7 +12,6 @@ class ReadyUser extends Component {
 
   static propTypes = {
     user: PropTypes.object.isRequired,
-    topic: PropTypes.string,
     startLesson: PropTypes.func.isRequired,
     onSelect: PropTypes.func
   }
@@ -25,7 +24,7 @@ class ReadyUser extends Component {
   }
 
   render () {
-    const {user, topic, ...props} = this.props
+    const {user, ...props} = this.props
     const {picture, name, germanLevel} = user
     return (
       <div href='#' className={style.readyUser} onClick={this.handleClick} {...props}>
@@ -93,10 +92,10 @@ export default class ReadyUsers extends Component {
         {readyUsers.length === 0 ? (
           <div>Es tut uns Leid, leider sind gerade keine passenden Gesprächspartner online.</div>
         ) : (
-          readyUsers.map(({id, topic}) => {
+          readyUsers.map(({id}) => {
             const user = users[id]
             if (!user) return
-            return <ReadyUser key={user.id} user={user} startLesson={startLesson} topic={topic} onSelect={this.selectUser} />
+            return <ReadyUser key={user.id} user={user} startLesson={startLesson} onSelect={this.selectUser} />
           })
         )}
 
