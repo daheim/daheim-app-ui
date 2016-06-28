@@ -84,7 +84,7 @@ class ReadySwitch extends Component {
     if (!ready && !busy) {
       return (
         <div style={{textAlign: 'center', margin: '40px 20px'}}>
-          <RaisedButton label={'Los geht\'s - Gesprächpartner suchen'} primary onClick={this.goOnline} />
+          <RaisedButton label={'Los geht\'s - Gesprächspartner suchen'} primary onClick={this.goOnline} />
         </div>
       )
     } else {
