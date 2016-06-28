@@ -10,6 +10,7 @@ import muiTheme from './theme'
 import createStore from './store'
 import api from './api_client'
 import reporter from './reporter'
+import {hydrateNotYetOpen} from './actions/not_yet_open'
 
 import './default.css'
 import './effects.css'
@@ -51,6 +52,7 @@ function main () {
 
   injectTapEventPlugin()
   reporter.watchStore(store)
+  store.dispatch(hydrateNotYetOpen())
 
   const dest = document.getElementById('content')
   ReactDOM.render(<App store={store} history={history} />, dest)

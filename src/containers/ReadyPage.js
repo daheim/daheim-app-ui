@@ -1,7 +1,8 @@
-import React, {PropTypes} from 'react'
+import React, {Component, PropTypes} from 'react'
 import {push} from 'react-router-redux'
 import {connect} from 'react-redux'
 
+import NotYetOpenPage from '../components/ready/NotYetOpenPage'
 import ReviewList from '../components/review/ReviewList'
 import TalkAbout from '../components/TalkAbout'
 import ReadyUsers from '../components/ReadyUsers'
@@ -10,7 +11,7 @@ import TimeToChoose from '../components/ready/TimeToChoose'
 import NotYetInOperation from '../components/NotYetInOperation'
 import WebRTC from 'webrtc-adapter'
 
-class ReadyPage extends React.Component {
+class ReadyPageRaw extends React.Component {
 
   static propTypes = {
     push: PropTypes.func.isRequired,
@@ -49,7 +50,23 @@ class ReadyPage extends React.Component {
   }
 }
 
-export default connect((state, props) => {
+const ReadyPage = connect((state, props) => {
   const {live: {online}, profile: {profile: user}} = state
   return {online, user}
-}, {push})(ReadyPage)
+}, {push})(ReadyPageRaw)
+
+class ReadyOrNotYetOpen extends Component {
+  static propTypes = {
+    accepted: PropTypes.bool
+  }
+
+  render () {
+    if (this.props.accepted) return <ReadyPage />
+    return <NotYetOpenPage />
+  }
+}
+
+export default connect((state) => {
+  const {notYetOpen: {accepted}} = state
+  return {accepted}
+})(ReadyOrNotYetOpen)
