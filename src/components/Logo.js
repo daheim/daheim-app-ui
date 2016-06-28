@@ -37,8 +37,7 @@ export default class Logo extends React.Component {
 
     return (
       <div {...rest}>
-        <DaheimIcon className={style.logo} color={color} />
-        <DaheimIcon className={style.logoMini} mini color={color} />
+        <img src='/daheim-horizontal-logo3.svg' style={{height: 36, marginTop: 4, marginLeft: 8}} />
         <span className={style.motto} style={{color}}>Reden. Lernen. Leben.</span>
       </div>
     )
