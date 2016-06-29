@@ -18,9 +18,9 @@ class LessonGuardRaw extends Component {
 
     if (lesson) {
       return (
-        <div style={{display: 'flex', alignItems: 'center'}}>
+        <div style={{display: 'flex', alignItems: 'center', marginTop: 20, marginLeft: 16}}>
           <CircularProgress />
-          <div style={{margin: 10, fontWeight: 700}}>Waiting for student to accept</div>
+          <div style={{margin: 10, fontWeight: 700}}>Warten auf Gesprächspartner</div>
         </div>
       )
     } else {
@@ -99,6 +99,9 @@ class StartLesson extends Component {
 
     return (
       <Dialog autoScrollBodyContent open onRequestClose={onRequestClose} actions={actions}>
+        <div style={{borderBottom: 'solid 1px rgb(224, 224, 224)', paddingBottom: 8}}>
+          {actions}
+        </div>
         {error ? (
           <div style={{background: '#FA8072', border: 'solid 1px darkred', padding: 16, color: 'black', margin: '10px 0', borderRadius: 2}}>{error}</div>
         ) : undefined}
@@ -108,7 +111,7 @@ class StartLesson extends Component {
         {startLessonPromise ? (
           <div style={{display: 'flex', alignItems: 'center'}}>
             <CircularProgress />
-            <div style={{margin: 10, fontWeight: 700}}>Requesting...</div>
+            <div style={{margin: 10, fontWeight: 700}}>Läuft...</div>
           </div>
         ) : undefined}
 

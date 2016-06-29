@@ -59,7 +59,10 @@ class InvitedToLessonDialog extends Component {
 
     return (
       <Dialog autoScrollBodyContent open modal onRequestClose={this.handleRequestClose} actions={actions}>
-        <h2>Neue Lektion</h2>
+        <div style={{borderBottom: 'solid 1px rgb(224, 224, 224)', paddingBottom: 8}}>
+          {actions}
+        </div>
+        <h2>Neues Gespräch</h2>
         <ProfilePage params={{userId: this.props.lesson.teacherId}} />
       </Dialog>
     )
