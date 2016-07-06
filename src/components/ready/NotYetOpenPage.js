@@ -4,7 +4,6 @@ import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 
 import {acceptNotYetOpen} from '../../actions/not_yet_open'
-import underConstruction from 'raw!./under_construction.svg'
 
 class NotYetOpenPage extends Component {
 
@@ -25,14 +24,24 @@ class NotYetOpenPage extends Component {
   render () {
     return (
       <div style={{textAlign: 'center'}}>
-        <h1>Nur noch wenige Tage</h1>
-        <div style={{marginBottom: 30}} dangerouslySetInnerHTML={{__html: underConstruction}} />
+        <h1>Schön, dass du da bist!</h1>
+        <div style={{marginBottom: 30}}><img style={{width: 200}} src='https://assets.daheimapp.de/media/Daheim_Baustelle.svg' /></div>
         <div style={{lineHeight: '150%', marginBottom: 30}}>
-          Bald dann könnt ihr unsere Videotelefonie-Plattform nutzen!<br />
-          Wann genau das sein wird, geben wir rechtzeitig über unseren <b>Newsletter</b> bekannt.<br />
+          Du willst noch vor Beginn dabei sein und testen?<br/>
+          Sag uns gern Bescheid: <a href='mailto:hallo@daheimapp.de'>hallo@daheimapp.de</a>!
+        </div>
+
+        <div style={{lineHeight: '150%', marginBottom: 10}}>
+          Du willst den offiziellen Start nicht verpassen? Melde dich für den Newsletter an:<br/>
         </div>
         <div style={{marginBottom: 30}}>
           <RaisedButton style={{margin: '0 20px'}} label='Für unseren Newsletter anmelden' primary onClick={this.newsletter} />
+        </div>
+
+        <div style={{lineHeight: '150%', marginBottom: 10}}>
+          Du willst Dich trotzdem umschauen? Viel Spaß!<br/>
+        </div>
+        <div style={{marginBottom: 30}}>
           <FlatButton style={{margin: '0 20px'}} label='Fortfahren' onClick={this.accept} />
         </div>
       </div>
