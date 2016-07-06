@@ -11,6 +11,10 @@ export const hydrateNotYetOpen = () => (dispatch) => {
 export const ACCEPT_NOT_YET_OPEN = 'notYetOpen.accept'
 export const acceptNotYetOpenAction = createAction(ACCEPT_NOT_YET_OPEN)
 export const acceptNotYetOpen = () => (dispatch) => {
-  if (window && window.sessionStorage) window.sessionStorage.notYetOpenAccepted = '1'
+  try {
+    if (window && window.sessionStorage) window.sessionStorage.notYetOpenAccepted = '1'
+  } catch (err) {
+    // e.g. iPad throws QuotaExceeded exception, just ignore
+  }
   dispatch(acceptNotYetOpenAction())
 }
