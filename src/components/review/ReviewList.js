@@ -113,7 +113,7 @@ class ReviewList extends React.Component {
                         <td>{partner ? <img src={partner.picture} style={{borderRadius: '50%', width: 32, height: 32}} /> : ' '}</td>
                         <td>{partner ? partner.name || '[kein Name]' : 'loading...'}</td>
                         <td>{this.msToString(lesson.duration)}</td>
-                        <td style={{textAlign: 'right'}}>{partner && (partner.myReview ? 'reviewed' : 'needs review')}</td>
+                        <td style={{textAlign: 'right'}}>{partner && (partner.myReview ? 'Feedback fertig' : <a href='#'>Feedback abgeben</a>)}</td>
                       </tr>
                     )
                   })}
