@@ -3,6 +3,8 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router'
 import Popover, {PopoverAnimationVertical} from 'material-ui/Popover'
 import classnames from 'classnames'
+import ArrowDropDown from 'material-ui/svg-icons/navigation/arrow-drop-down'
+import ArrowDropUp from 'material-ui/svg-icons/navigation/arrow-drop-up'
 
 import style from './Header.style'
 
@@ -54,10 +56,11 @@ class UserItemRaw extends React.Component {
   }
 
   render () {
+    const {open} = this.state
     const {user: {profile: {name, picture} = {}} = {}} = this.props
     const classes = classnames({
       [style.headerItem]: true,
-      [style.headerItemActive]: this.state.open
+      [style.headerItemActive]: open
     })
     return (
       <div>
@@ -66,6 +69,7 @@ class UserItemRaw extends React.Component {
             {name}
           </div>
           <img className={style.avatar} src={picture} />
+          {open ? <ArrowDropUp style={{height: 24}} /> : <ArrowDropDown style={{height: 24}} />}
         </Link>
         <Popover
           open={this.state.open}
