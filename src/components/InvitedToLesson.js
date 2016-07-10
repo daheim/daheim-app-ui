@@ -30,7 +30,9 @@ class InvitedToLessonDialog extends Component {
 
   componentWillUnmount () {
     if (this.soundInterval) clearInterval(this.soundInterval)
-    this.sound.unload()
+    if (this.sound) {
+      this.sound.unload()
+    }
   }
 
   handleRequestClose = () => {
