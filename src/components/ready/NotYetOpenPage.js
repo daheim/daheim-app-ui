@@ -28,7 +28,7 @@ class NotYetOpenPage extends Component {
         <div style={{marginBottom: 30}}><img style={{width: 200}} src='https://assets.daheimapp.de/media/Daheim_Baustelle.svg' /></div>
         <div style={{lineHeight: '150%', marginBottom: 30}}>
           Du willst noch vor Beginn dabei sein und testen?<br/>
-          Sag uns gern Bescheid: <a href='mailto:hallo@daheimapp.de'>hallo@daheimapp.de</a>!
+          Sag uns gern Bescheid: <a href='mailto:hallo@willkommen-daheim.org'>hallo@willkommen-daheim.org</a>!
         </div>
 
         <div style={{lineHeight: '150%', marginBottom: 10}}>
