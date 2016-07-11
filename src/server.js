@@ -72,6 +72,12 @@ app.use(async (req, res, next) => {
   let state = {}
 
   try {
+    if (!req.cookies.sid) { // to avoid spamming the API server with 401s
+      const e = new Error('no session id cookie')
+      e.statusCode = 401
+      throw e
+    }
+
     const profile = JSON.parse(await request({
       url: targetUrl + '/profile',
       strictSSL: process.env.INSECURE_API_PROXY !== '1',
