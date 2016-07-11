@@ -1,3 +1,4 @@
+import './optional_newrelic'
 import Express from 'express'
 import http from 'http'
 import spdy from 'spdy'
