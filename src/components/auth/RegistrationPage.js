@@ -25,7 +25,8 @@ class RegistrationFormRaw extends Component {
     loading: false,
     error: null,
     errorPassword: null,
-    errorEmail: null
+    errorEmail: null,
+    firstName: null
   }
 
   handleNewsletterChange = (e) => this.setState({newsletter: e.target.checked})
@@ -43,7 +44,8 @@ class RegistrationFormRaw extends Component {
       const result = await this.props.register({
         username: this.state.email,
         password: this.state.password,
-        newsletter: this.state.newsletter
+        newsletter: this.state.newsletter,
+        firstName: this.state.firstName
       })
       if (result.error) throw result.payload
       this.setState({error: null})
@@ -86,11 +88,12 @@ class RegistrationFormRaw extends Component {
   }
 
   componentDidMount () {
-    (this.state.email ? this.refs.password : this.refs.email).focus()
+    this.refs.firstName.focus()
   }
 
   handleEmailChange = (e) => this.setState({email: e.target.value})
   handlePasswordChange = (e) => this.setState({password: e.target.value})
+  handleFirstNameChange = (e) => this.setState({firstName: e.target.value})
 
   render () {
     let error
@@ -113,6 +116,7 @@ class RegistrationFormRaw extends Component {
         <form noValidate onSubmit={this.handleRegisterClick}>
           <h1 style={{fontSize: 22, marginTop: 40}}>Jetzt kostenlos Mitglied werden!</h1>
           {error}
+          <TextField ref='firstName' fullWidth floatingLabelText='Vorname' value={this.state.firstName} onChange={this.handleFirstNameChange} />
           <TextField ref='email' type='email' fullWidth floatingLabelText='E-Mail-Adresse' errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
           <TextField ref='password' style={{marginTop: -10}} type='password' fullWidth errorText={this.state.errorPassword} floatingLabelText='Passwort' value={this.state.password} onChange={this.handlePasswordChange} />
           <Checkbox style={{marginTop: 20}} label='Ich möchte mich für den Newsletter anmelden' checked={this.state.newsletter} onCheck={this.handleNewsletterChange} />
