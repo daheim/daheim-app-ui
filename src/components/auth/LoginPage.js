@@ -102,11 +102,11 @@ class LoginForm extends Component {
 
     return (
       <LoadingPanel loading={this.state.loading}>
-        <form noValidate onSubmit={this.handleLoginClick}>
+        <form noValidate onSubmit={this.handleLoginClick} className='loginForm'>
           {error}
-          <TextField ref='email' type='email' fullWidth floatingLabelText='E-Mail-Adresse' errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
-          <TextField ref='password' style={{marginTop: -10}} type='password' fullWidth errorText={this.state.errorPassword} floatingLabelText='Passwort' value={this.state.password} onChange={this.handlePasswordChange} />
-          <div style={{textAlign: 'center'}}><RaisedButton type='submit' style={{marginTop: 20}} fullWidth primary label='Einloggen' /></div>
+          <TextField className='email' ref='email' type='email' fullWidth floatingLabelText='E-Mail-Adresse' errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
+          <TextField className='password' ref='password' style={{marginTop: -10}} type='password' fullWidth errorText={this.state.errorPassword} floatingLabelText='Passwort' value={this.state.password} onChange={this.handlePasswordChange} />
+          <div style={{textAlign: 'center'}}><RaisedButton className='submit' type='submit' style={{marginTop: 20}} fullWidth primary label='Einloggen' /></div>
           <div style={{fontSize: 14, textAlign: 'center', paddingTop: 20}}>
             <Link to={{pathname: '/auth/forgot', query: {username: this.state.email || undefined}}}>Passwort vergessen?</Link> oder <Link to={{pathname: '/auth/register', query: {username: this.state.email || undefined}}}>Neu registrieren</Link>
           </div>

@@ -99,10 +99,10 @@ class LessionPage extends React.Component {
         {remoteStreamUrl ? (
           <div>
             <div style={{position: 'absolute', display: 'flex', alignItems: 'center', justifyContent: 'center', top: 0, left: 0, right: 0, bottom: 0}}>
-              <ResizedVideo width={remoteVideoWidth} height={remoteVideoHeight} autoPlay src={remoteStreamUrl} onResize={this.handleRemoteVideoResize} />
+              <ResizedVideo className='remoteVideo' width={remoteVideoWidth} height={remoteVideoHeight} autoPlay src={remoteStreamUrl} onResize={this.handleRemoteVideoResize} />
             </div>
             <div style={{position: 'absolute', bottom: 10, right: 10}}>
-              <video height='100' style={{transform: 'rotateY(180deg)'}} autoPlay muted src={localStreamUrl} />
+              <video className='localVideo' height='100' style={{transform: 'rotateY(180deg)'}} autoPlay muted src={localStreamUrl} />
             </div>
           </div>
         ) : (
@@ -112,7 +112,7 @@ class LessionPage extends React.Component {
           </div>
         )}
         <div style={{position: 'absolute', bottom: 10, left: 0, right: 0, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-          <RaisedButton label='Finish Lesson' primary onClick={this.handleLeave} />
+          <RaisedButton className='finishLesson' label='Finish Lesson' primary onClick={this.handleLeave} />
         </div>
       </div>
     )

@@ -23,7 +23,7 @@ class NotYetOpenPage extends Component {
 
   render () {
     return (
-      <div style={{textAlign: 'center'}}>
+      <div style={{textAlign: 'center'}} className='notYetOpen'>
         <h1>Schön, dass du da bist!</h1>
         <div style={{marginBottom: 30}}><img style={{width: 200}} src='https://assets.daheimapp.de/media/Daheim_Baustelle.svg' /></div>
         <div style={{lineHeight: '150%', marginBottom: 30}}>
@@ -42,7 +42,7 @@ class NotYetOpenPage extends Component {
           Du willst Dich trotzdem umschauen? Viel Spaß!<br/>
         </div>
         <div style={{marginBottom: 30}}>
-          <FlatButton style={{margin: '0 20px'}} label='Fortfahren' onClick={this.accept} />
+          <FlatButton className='accept' style={{margin: '0 20px'}} label='Fortfahren' onClick={this.accept} />
         </div>
       </div>
     )

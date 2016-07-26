@@ -27,7 +27,7 @@ class ReadyUser extends Component {
     const {user, ...props} = this.props
     const {picture, name, germanLevel} = user
     return (
-      <div href='#' className={style.readyUser} onClick={this.handleClick} {...props}>
+      <div href='#' className={`readyUser ${style.readyUser}`} onClick={this.handleClick} {...props}>
         <img className={style.picture} src={picture} />
         <div className={style.content}>
           <div className={style.name}>{name}</div>

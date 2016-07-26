@@ -86,10 +86,12 @@ class StartLesson extends Component {
 
     const actions = [
       <FlatButton
+        className='cancel'
         label='Abbrechen'
         onTouchTap={onRequestClose}
       />,
       <FlatButton
+        className='start'
         label='Gespräch starten'
         primary
         disabled={!!(startLessonPromise || lessonId)}
@@ -98,7 +100,7 @@ class StartLesson extends Component {
     ]
 
     return (
-      <Dialog autoScrollBodyContent open onRequestClose={onRequestClose} actions={actions}>
+      <Dialog className='startLessonDialog' autoScrollBodyContent open onRequestClose={onRequestClose} actions={actions}>
         <div style={{borderBottom: 'solid 1px rgb(224, 224, 224)', paddingBottom: 8}}>
           {actions}
         </div>

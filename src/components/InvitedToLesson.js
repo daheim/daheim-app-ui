@@ -49,10 +49,12 @@ class InvitedToLessonDialog extends Component {
 
     const actions = [
       <FlatButton
+        className='cancel'
         label='Abbrechen'
         onTouchTap={this.handleRequestClose}
       />,
       <FlatButton
+        className='start'
         label='Gespräch starten'
         primary
         onTouchTap={this.handleAccept}
@@ -60,7 +62,7 @@ class InvitedToLessonDialog extends Component {
     ]
 
     return (
-      <Dialog autoScrollBodyContent open modal onRequestClose={this.handleRequestClose} actions={actions}>
+      <Dialog className='invitedToLessonDialog' autoScrollBodyContent open modal onRequestClose={this.handleRequestClose} actions={actions}>
         <div style={{borderBottom: 'solid 1px rgb(224, 224, 224)', paddingBottom: 8}}>
           {actions}
         </div>
