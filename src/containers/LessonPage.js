@@ -108,11 +108,11 @@ class LessionPage extends React.Component {
         ) : (
           <div>
             <div style={{textAlign: 'center'}}><CircularProgress /></div>
-            <div style={{textAlign: 'center'}}>Connecting...</div>
+            <div style={{textAlign: 'center'}}>Du wirst verbunden...</div>
           </div>
         )}
         <div style={{position: 'absolute', bottom: 10, left: 0, right: 0, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-          <RaisedButton className='finishLesson' label='Finish Lesson' primary onClick={this.handleLeave} />
+          <RaisedButton className='finishLesson' label='Gespräch beenden' primary onClick={this.handleLeave} />
         </div>
       </div>
     )
@@ -129,8 +129,8 @@ class ClosedLesson extends Component {
 
     return (
       <div style={{margin: 16}}>
-        <h1>Lesson has ended</h1>
-        <p><Link to='/'>Click here to go back to the main page</Link></p>
+        <h1>Das Gespräch wurde beendet</h1>
+        <p><Link to='/'>Hier gelangst du zum Videoraum</Link></p>
         <p style={{color: 'rgba(0, 0, 0, 0)'}}>Reason: {closeReason}</p>
       </div>
     )

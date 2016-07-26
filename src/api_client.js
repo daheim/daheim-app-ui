@@ -59,13 +59,13 @@ class ApiClient {
         if (response.status === 401) throw new ApiError('Unauthorized', 'unauthorized')
         const json = await response.json()
         const code = json.code || 'network'
-        const message = json.error || 'Network error'
+        const message = json.error || 'Du hast derzeit keine stabile Internetverbindung. Bitte versuche es später noch einmal.'
         throw new ApiError(message, code)
       }
       return await response.json()
     } catch (err) {
       if (err instanceof ApiError) throw err
-      throw new ApiError('Network error', 'network')
+      throw new ApiError('Du hast derzeit keine stabile Internetverbindung. Bitte versuche es später noch einmal.', 'network')
     }
   }
 

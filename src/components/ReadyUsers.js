@@ -90,7 +90,7 @@ export default class ReadyUsers extends Component {
       <div>
         <h2>SchülerInnen Online</h2>
         {readyUsers.length === 0 ? (
-          <div>Es tut uns Leid, leider sind gerade keine passenden Gesprächspartner online.</div>
+          <div>Es tut uns leid, leider sind gerade keine passenden Gesprächspartner online.</div>
         ) : (
           readyUsers.map(({id}) => {
             const user = users[id]
