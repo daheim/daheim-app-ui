@@ -1,8 +1,8 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import {Howl} from 'howler'
+import Modal from 'react-modal'
 
 import {join, leave} from '../actions/live'
 import ProfilePage from './profile/ProfilePage'
@@ -49,11 +49,13 @@ class InvitedToLessonDialog extends Component {
 
     const actions = [
       <FlatButton
+        key='cancel'
         className='cancel'
         label='Abbrechen'
         onTouchTap={this.handleRequestClose}
       />,
       <FlatButton
+        key='start'
         className='start'
         label='Gespräch starten'
         primary
@@ -62,13 +64,13 @@ class InvitedToLessonDialog extends Component {
     ]
 
     return (
-      <Dialog className='invitedToLessonDialog' autoScrollBodyContent open modal onRequestClose={this.handleRequestClose} actions={actions}>
-        <div style={{borderBottom: 'solid 1px rgb(224, 224, 224)', paddingBottom: 8}}>
+      <Modal isOpen autoScrollBodyContent open modal onRequestClose={this.handleRequestClose} actions={actions}>
+        <div className='invitedToLessonDialog' style={{borderBottom: 'solid 1px rgb(224, 224, 224)', paddingBottom: 8}}>
           {actions}
         </div>
         <h2>Neues Gespräch</h2>
         <ProfilePage params={{userId: this.props.lesson.teacherId}} />
-      </Dialog>
+      </Modal>
     )
   }
 }

@@ -21,7 +21,7 @@ class DefaultLayout extends React.Component {
     return (
       <div style={{flex: '1 1 auto'}}>
         <Header />
-        <div style={{clear: 'both', background: 'white', maxWidth: 960, margin: '0 auto', border: 'solid 1px #DDD', zIndex: 1, position: 'relative'}}>
+        <div style={{clear: 'both', background: 'white', maxWidth: 960, margin: '0 auto', border: 'solid 1px #DDD', position: 'relative'}}>
           {this.props.children}
         </div>
         <InvitedToLesson />

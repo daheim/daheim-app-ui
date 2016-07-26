@@ -1,8 +1,8 @@
 import React, {Component, PropTypes} from 'react'
 import {connect} from 'react-redux'
-import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import CircularProgress from 'material-ui/CircularProgress'
+import Modal from 'react-modal'
 
 import {startLesson, leaveIfNotStarted} from '../actions/live'
 import ProfilePage from './profile/ProfilePage'
@@ -86,11 +86,13 @@ class StartLesson extends Component {
 
     const actions = [
       <FlatButton
+        key='cancel'
         className='cancel'
         label='Abbrechen'
         onTouchTap={onRequestClose}
       />,
       <FlatButton
+        key='start'
         className='start'
         label='Gespräch starten'
         primary
@@ -100,8 +102,8 @@ class StartLesson extends Component {
     ]
 
     return (
-      <Dialog className='startLessonDialog' autoScrollBodyContent open onRequestClose={onRequestClose} actions={actions}>
-        <div style={{borderBottom: 'solid 1px rgb(224, 224, 224)', paddingBottom: 8}}>
+      <Modal isOpen autoScrollBodyContent open onRequestClose={onRequestClose} actions={actions}>
+        <div className='startLessonDialog' style={{borderBottom: 'solid 1px rgb(224, 224, 224)', paddingBottom: 8}}>
           {actions}
         </div>
         {error ? (
@@ -118,7 +120,7 @@ class StartLesson extends Component {
         ) : undefined}
 
         <ProfilePage params={{userId: user.id}} />
-      </Dialog>
+      </Modal>
     )
   }
 }
