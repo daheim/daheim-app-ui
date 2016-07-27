@@ -4,6 +4,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import { Provider } from 'react-redux'
+import {IntlProvider, addLocaleData} from 'react-intl'
+import localeDe from 'react-intl/locale-data/de'
+import messagesDe from './intl/de'
 
 import createRouter from './router'
 import muiTheme from './theme'
@@ -23,6 +26,8 @@ import { syncHistoryWithStore } from 'react-router-redux'
 import moment from 'moment'
 
 moment.locale('de') // TODO: find a better place to init
+addLocaleData(localeDe) // TODO: find a better place to init Intl
+
 
 class App extends React.Component {
 
@@ -42,7 +47,13 @@ class App extends React.Component {
   router = createRouter(this.props.history)
 
   render () {
-    return <Provider store={this.props.store}>{this.router}</Provider>
+    return (
+      <Provider store={this.props.store}>
+        <IntlProvider locale='de' messages={messagesDe}>
+          {this.router}
+        </IntlProvider>
+      </Provider>
+    )
   }
 }
 

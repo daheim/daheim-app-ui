@@ -1,0 +1,4 @@
+{
+  "browserNotSupported": "Dein Browser ist leider noch nicht unterstützt",
+  "browserTooOld": "Dein {browserName} ist ein bisschen alt"
+}
