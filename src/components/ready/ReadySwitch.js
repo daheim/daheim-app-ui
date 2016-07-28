@@ -2,6 +2,7 @@ import React, {PropTypes, Component} from 'react'
 import {connect} from 'react-redux'
 import CircularProgress from 'material-ui/CircularProgress'
 import RaisedButton from 'material-ui/RaisedButton'
+import {FormattedMessage, injectIntl} from 'react-intl'
 
 import {ready as setReady} from '../../actions/live'
 import style from './ReadySwitch.style'
@@ -18,9 +19,9 @@ class Connecting extends Component {
       <div style={{display: 'flex', alignItems: 'center'}}>
         <div style={{margin: 20}}><CircularProgress /></div>
         <div style={{margin: 8}}>
-          <div className={style.connecting}>Verbinding mit Daheim Netzwerk wird hergestellt. Bitte warten!</div>
+          <div className={style.connecting}><FormattedMessage id='ready.connecting' /></div>
           {error ? (
-            <div className={style.error}>Fehler: {error}</div>
+            <div className={style.error}><FormattedMessage id='errorMessage' values={{message: error}} /></div>
           ) : null}
         </div>
       </div>
@@ -54,7 +55,7 @@ class ReadySwitch extends Component {
     try {
       await this.props.setReady({ready: true})
     } catch (err) {
-      alert('Fehler: ' + err.message)
+      alert(this.props.intl.formatMessage({id: errorMessage}, {message: err.message}))
     } finally {
       this.setState({busy: false})
     }
@@ -69,14 +70,14 @@ class ReadySwitch extends Component {
     try {
       await this.props.setReady({ready: false})
     } catch (err) {
-      alert('Fehler: ' + err.message)
+      alert(this.props.intl.formatMessage({id: errorMessage}, {message: err.message}))
     } finally {
       this.setState({busy: false})
     }
   }
 
   render () {
-    const {ready, connected} = this.props
+    const {ready, connected, intl} = this.props
     const {busy} = this.state
 
     if (!connected) return <Connecting {...this.props} />
@@ -84,7 +85,7 @@ class ReadySwitch extends Component {
     if (!ready && !busy) {
       return (
         <div style={{textAlign: 'center', margin: '40px 20px'}}>
-          <RaisedButton className='readySwitch' label={'Los geht\'s - Gesprächspartner suchen'} primary onClick={this.goOnline} />
+          <RaisedButton className='readySwitch' label={intl.formatMessage({id: 'ready.buttonCaption'})} primary onClick={this.goOnline} />
         </div>
       )
     } else {
@@ -92,7 +93,7 @@ class ReadySwitch extends Component {
         <div style={{display: 'flex', alignItems: 'center', margin: 20}}>
           <div style={{margin: 20}}><CircularProgress /></div>
           <div style={{margin: 8}}>
-            <div>Es werden passende Gesprächspartner gesucht. <a href='#' onClick={this.goOffline}>abbrechen</a></div>
+            <div><FormattedMessage id='ready.lookingForPartners' /> <a href='#' onClick={this.goOffline}><FormattedMessage id='ready.cancel' /></a></div>
           </div>
         </div>
       )
@@ -100,7 +101,7 @@ class ReadySwitch extends Component {
   }
 }
 
-export default connect((state, props) => {
+export default injectIntl(connect((state, props) => {
   const {live: {connected, ready, error, readyTopic}} = state
   return {connected, ready, error, readyTopic}
-}, {setReady})(ReadySwitch)
+}, {setReady})(ReadySwitch))

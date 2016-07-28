@@ -4,13 +4,12 @@ import RaisedButton from 'material-ui/RaisedButton'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
+import {FormattedMessage, injectIntl} from 'react-intl'
 
 import LoadingPanel from '../LoadingPanel'
 import {login} from '../../actions/auth'
 
-console.warn('fix error messges in LoginPage')
-
-class LoginForm extends Component {
+class LoginFormRaw extends Component {
 
   static propTypes = {
     defaultUsername: PropTypes.string,
@@ -44,7 +43,7 @@ class LoginForm extends Component {
     } catch (err) {
       success = false
       if (err.code === 'unauthorized') {
-        this.setState({error: 'Das Passwort und die E-Mail-Adresse, die Sie eingegeben haben, stimmen nicht überein.'})
+        this.setState({error: this.props.intl.formatMessage({id: 'loginPage.invalidPassword'})})
       } else {
         this.setState({error: err.message})
       }
@@ -115,6 +114,8 @@ class LoginForm extends Component {
     )
   }
 }
+
+const LoginForm = injectIntl(LoginFormRaw)
 
 class LoginPage extends Component {
 

@@ -1,4 +1,20 @@
 {
   "browserNotSupported": "Dein Browser ist leider noch nicht unterstützt",
-  "browserTooOld": "Dein {browserName} ist ein bisschen alt"
+  "browserTooOld": "Dein {browserName} ist ein bisschen alt",
+  "emailAddressMissing": "Bitte E-Mail-Adresse eingeben",
+  "errorMessage": "Fehler: {message}",
+
+  "forgotPasswordPage.title": "Passwort vergessen?",
+  "forgotPasswordPage.description": "Gib deine E-Mail-Adresse ein und wir helfen dir, ein neues Passwort zu bekommen.",
+  "forgotPasswordPage.userNotFound": "Kein Mitglied gefunden. Klicken Sie hier, um neu anzumelden.",
+  "forgotPasswordPage.emailAddressLabel": "E-Mail-Adresse",
+  "forgotPasswordPage.submitLabel": "Weiter",
+  "forgotPasswordPage.emailSent": "E-Mail wurde gesendet.",
+
+  "loginPage.invalidPassword": "Das Passwort und die E-Mail-Adresse, die Sie eingegeben haben, stimmen nicht überein.",
+
+  "ready.connecting": "Verbinding mit Daheim Netzwerk wird hergestellt. Bitte warten!",
+  "ready.buttonCaption": "Los geht's - Gesprächspartner suchen",
+  "ready.lookingForPartners": "Es werden passende Gesprächspartner gesucht.",
+  "ready.cancel": "abbrechen"
 }

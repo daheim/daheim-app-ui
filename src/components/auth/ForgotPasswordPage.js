@@ -3,18 +3,18 @@ import TextField from 'material-ui/TextField'
 import RaisedButton from 'material-ui/RaisedButton'
 import {Link} from 'react-router'
 import {connect} from 'react-redux'
+import {FormattedMessage, injectIntl} from 'react-intl'
 
 import {forgot} from '../../actions/auth'
 import LoadingPanel from '../LoadingPanel'
-
-console.warn('fix network error in ForgotPasswordPage')
 
 class ForgotPasswordFormRaw extends React.Component {
 
   static propTypes = {
     defaultUsername: React.PropTypes.string,
     onLogin: React.PropTypes.func,
-    forgot: React.PropTypes.func.isRequired
+    forgot: React.PropTypes.func.isRequired,
+    intl: React.PropTypes.object.isRequired
   }
 
   state = {
@@ -40,7 +40,7 @@ class ForgotPasswordFormRaw extends React.Component {
     } catch (err) {
       success = false
       if (err.code === 'user_not_found') {
-        this.setState({error: 'Benutzer nicht gefunden'})
+        this.setState({error: 'user_not_found'})
       } else {
         this.setState({error: err.message})
       }
@@ -59,7 +59,7 @@ class ForgotPasswordFormRaw extends React.Component {
 
     if (!this.state.email) {
       valid.hasErrors = true
-      valid.errorEmail = valid.error = 'Bitte E-Mail-Adresse eingeben'
+      valid.errorEmail = valid.error = this.props.intl.formatMessage({id: 'emailAddressMissing'})
     }
 
     this.setState(valid)
@@ -74,17 +74,19 @@ class ForgotPasswordFormRaw extends React.Component {
   handleEmailChange = (e) => this.setState({email: e.target.value})
 
   render () {
+    const {intl} = this.props
+
     let error
     if (this.state.error === 'user_not_found') {
       error = (
         <div style={{padding: '15px 30px 15px 15px', margin: '20px 0', backgroundColor: 'rgba(204,122,111,0.1)', borderLeft: '5px solid rgba(191,87,73,0.2)'}}>
-          Kein Mitglied gefunden. Klicken Sie hier, um <Link to={{pathname: '/auth/register', query: {username: this.state.email || undefined}}}>neu anzumelden</Link>.
+          <Link to={{pathname: '/auth/register', query: {username: this.state.email || undefined}}}><FormattedMessage id='forgotPasswordPage.userNotFound' /></Link>
         </div>
       )
     } else if (this.state.error) {
       error = (
         <div style={{padding: '15px 30px 15px 15px', margin: '20px 0', backgroundColor: 'rgba(204,122,111,0.1)', borderLeft: '5px solid rgba(191,87,73,0.2)'}}>
-          Fehler: {this.state.error}
+          <FormattedMessage id='errorMessage' values={{message: this.state.error}} />
         </div>
       )
     }
@@ -92,18 +94,18 @@ class ForgotPasswordFormRaw extends React.Component {
     return (
       <LoadingPanel loading={this.state.loading}>
         <form onSubmit={this.handleLoginClick}>
-          <h1 style={{fontSize: 22}}>Passwort vergessen?</h1>
-          <h2 style={{fontSize: 14, fontWeight: 400, lineHeight: '150%'}}>Gib deine E-Mail-Adresse ein und wir helfen dir, ein neues Passwort zu bekommen.</h2>
+          <h1 style={{fontSize: 22}}><FormattedMessage id='forgotPasswordPage.title' /></h1>
+          <h2 style={{fontSize: 14, fontWeight: 400, lineHeight: '150%'}}><FormattedMessage id='forgotPasswordPage.description' /></h2>
           {error}
-          <TextField ref='email' fullWidth floatingLabelText='E-Mail-Adresse' errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
-          <div style={{textAlign: 'center'}}><RaisedButton type='submit' style={{marginTop: 20}} fullWidth primary label='Weiter' /></div>
+          <TextField ref='email' fullWidth floatingLabelText={intl.formatMessage({id: 'forgotPasswordPage.emailAddressLabel'})} errorText={this.state.errorEmail} value={this.state.email} onChange={this.handleEmailChange} />
+          <div style={{textAlign: 'center'}}><RaisedButton type='submit' style={{marginTop: 20}} fullWidth primary label={intl.formatMessage({id: 'forgotPasswordPage.submitLabel'})} /></div>
         </form>
       </LoadingPanel>
     )
   }
 }
 
-const ForgotPasswordForm = connect(null, {forgot})(ForgotPasswordFormRaw)
+const ForgotPasswordForm = injectIntl(connect(null, {forgot})(ForgotPasswordFormRaw))
 
 export class EmailSent extends React.Component {
 
@@ -113,7 +115,7 @@ export class EmailSent extends React.Component {
 
   render () {
     return (
-      <div style={this.props.style}>E-Mail wurde gesendet.</div>
+      <div style={this.props.style}><FormattedMessage id='forgotPasswordPage.emailSent' /></div>
     )
   }
 
