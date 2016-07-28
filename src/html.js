@@ -25,7 +25,7 @@ export default class Html extends Component {
     const head = Helmet.rewind()
 
     return (
-      <html is lang='en-us' ng-app='dhm' ng-controller='SiteCtrl'>
+      <html lang={head.htmlAttributes.lang}>
         <head>
           {head.base.toComponent()}
           {head.title.toComponent()}
