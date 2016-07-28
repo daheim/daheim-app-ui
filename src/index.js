@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import {IntlProvider, addLocaleData} from 'react-intl'
 import localeDe from 'react-intl/locale-data/de'
 import messagesDe from './intl/de'
+import messagesEn from './intl/en'
 
 import createRouter from './router'
 import muiTheme from './theme'
@@ -27,6 +28,8 @@ import moment from 'moment'
 
 moment.locale('de') // TODO: find a better place to init
 addLocaleData(localeDe) // TODO: find a better place to init Intl
+const messages = {...messagesEn, ...messagesDe}
+//const messages = messagesEn
 
 
 class App extends React.Component {
@@ -49,7 +52,7 @@ class App extends React.Component {
   render () {
     return (
       <Provider store={this.props.store}>
-        <IntlProvider locale='de' messages={messagesDe}>
+        <IntlProvider locale='de' messages={messages}>
           {this.router}
         </IntlProvider>
       </Provider>
