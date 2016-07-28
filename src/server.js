@@ -11,6 +11,7 @@ import path from 'path'
 import request from 'request-promise'
 import cookie from 'cookie'
 import raven from 'raven'
+import bowser from 'bowser'
 
 import universal from './universal'
 import Html from './html'
@@ -95,6 +96,7 @@ app.use(async (req, res, next) => {
     // TODO: handle cannot load profile
   }
 
+  state.browser = bowser._detect(req.headers['user-agent'])
   const store = {getState: () => state}
 
   // const store = createStore(history, client)

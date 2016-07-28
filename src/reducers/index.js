@@ -15,5 +15,6 @@ export default combineReducers({
   lessons,
   notYetOpen,
   live: liveReducer,
-  routing: routerReducer
+  routing: routerReducer,
+  browser: (state, action) => state || {}
 })
