@@ -14,3 +14,6 @@ export const reset = createApiAction(RESET)
 
 export const LOGOUT = 'auth.logout'
 export const logout = createApiAction(LOGOUT)
+
+export const CHANGE_PASSWORD = 'auth.changePassword'
+export const changePassword = createApiAction(CHANGE_PASSWORD)

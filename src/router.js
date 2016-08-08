@@ -13,6 +13,7 @@ import RegistrationPage from './components/auth/RegistrationPage'
 import ForgotPasswordPage from './components/auth/ForgotPasswordPage'
 import ResetPasswordPage from './components/auth/ResetPasswordPage'
 import LogoutPage from './components/auth/LogoutPage'
+import ChangePasswordPage from './components/auth/ChangePasswordPage'
 
 import AdminPage from './components/admin/AdminPage'
 
@@ -34,6 +35,7 @@ export default function createRouter (history) {
           <Route path='profile' component={ProfilePage} />
           <Route path='users/:userId' component={PublicProfilePage} />
           <Route path='admin' component={AdminPage} />
+          <Route path='password' component={ChangePasswordPage} />
         </Route>
 
         <Route path='/auth' component={AuthLayout}>
