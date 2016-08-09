@@ -272,57 +272,64 @@ class ProfilePage extends React.Component {
   render () {
     const {name, picture, topics, languages, inGermanySince, germanLevel, introduction} = this.state
     const {role} = this.props.user.profile
+    const roleValid = role === 'student' || role === 'teacher'
 
     return (
       <div style={{margin: 16}}>
         <h1>Profil</h1>
         <div>
 
-          <TimeToChoose />
+          {!roleValid ? (
+            <TimeToChoose />
+          ) : (
+            <div>
 
-          <div style={{display: 'flex', flexWrap: 'wrap', maxWidth: 630}}>
-            <div style={{fontSize: 15, fontWeight: 700, marginBottom: 8, marginRight: 10, flex: '0 0 150px'}}>
-              Personendaten
-            </div>
-            <div style={{flex: '1 1 400px'}}>
-              <div style={{marginTop: -14}}>
-                <TextField fullWidth floatingLabelText='Name' value={name} onChange={this.handleNameChange} />
-              </div>
-              <div style={{marginTop: 16, marginBottom: 8, fontWeight: 700, fontSize: 14}}>Profilbild</div>
-              <div style={{display: 'flex'}}>
-                <Dropzone accept='image/*' style={{cursor: 'pointer', flex: '0 0 auto', margin: 5, padding: 5}} activeStyle={{backgroundColor: '#eee'}} onDrop={this.handleDrop}>
-                  <div>
-                    <img style={{borderRadius: '50%', width: 128, height: 128}} src={picture} />
+              <div style={{display: 'flex', flexWrap: 'wrap', maxWidth: 630}}>
+                <div style={{fontSize: 15, fontWeight: 700, marginBottom: 8, marginRight: 10, flex: '0 0 150px'}}>
+                  Personendaten
+                </div>
+                <div style={{flex: '1 1 400px'}}>
+                  <div style={{marginTop: -14}}>
+                    <TextField fullWidth floatingLabelText='Name' value={name} onChange={this.handleNameChange} />
                   </div>
-                  <div style={{textAlign: 'center'}}>
-                    <a href='#' onClick={this.cancel}>Hochladen</a>
-                  </div>
-                </Dropzone>
-                <div style={{margin: 10}}>
-                  <div style={{marginBottom: 10}}>
-                    Wähle einen Avatar:
-                  </div>
-                  <div>
-                    <a style={{margin: 5}} href='#' title='Use gravatar' onClick={this.handleGravatarClick}><img src={this.gravatarUrl} style={{borderRadius: '50%', width: 64, height: 64}} /></a>
-                    {Object.keys(avatars).map((key) => {
-                      const handler = (e) => this.handleAvatarClick(e, key)
-                      return <a key={key} style={{margin: 5}} href='#' title='Use avatar' onClick={handler}><img src={avatars[key]} style={{borderRadius: '50%', width: 64, height: 64}} /></a>
-                    })}
+                  <div style={{marginTop: 16, marginBottom: 8, fontWeight: 700, fontSize: 14}}>Profilbild</div>
+                  <div style={{display: 'flex'}}>
+                    <Dropzone accept='image/*' style={{cursor: 'pointer', flex: '0 0 auto', margin: 5, padding: 5}} activeStyle={{backgroundColor: '#eee'}} onDrop={this.handleDrop}>
+                      <div>
+                        <img style={{borderRadius: '50%', width: 128, height: 128}} src={picture} />
+                      </div>
+                      <div style={{textAlign: 'center'}}>
+                        <a href='#' onClick={this.cancel}>Hochladen</a>
+                      </div>
+                    </Dropzone>
+                    <div style={{margin: 10}}>
+                      <div style={{marginBottom: 10}}>
+                        Wähle einen Avatar:
+                      </div>
+                      <div>
+                        <a style={{margin: 5}} href='#' title='Use gravatar' onClick={this.handleGravatarClick}><img src={this.gravatarUrl} style={{borderRadius: '50%', width: 64, height: 64}} /></a>
+                        {Object.keys(avatars).map((key) => {
+                          const handler = (e) => this.handleAvatarClick(e, key)
+                          return <a key={key} style={{margin: 5}} href='#' title='Use avatar' onClick={handler}><img src={avatars[key]} style={{borderRadius: '50%', width: 64, height: 64}} /></a>
+                        })}
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+
+              <Languages role={role} languages={languages} inGermanySince={inGermanySince} germanLevel={germanLevel} onChange={this.handleChange} />
+              <Topics topics={topics} introduction={introduction} onChange={this.handleChange} />
+
+              <div style={{marginTop: 20, maxWidth: 630, display: 'flex', alignItems: 'center', justifyContent: 'flex-end'}}>
+                <FlatButton style={{margin: '0 10px'}} label='Zurück' onClick={this.handleBack} />
+                <RaisedButton style={{margin: '0 10px'}} label='Speichern' primary onClick={this.handleSave} />
+              </div>
             </div>
-          </div>
-
-          <Languages role={role} languages={languages} inGermanySince={inGermanySince} germanLevel={germanLevel} onChange={this.handleChange} />
-          <Topics topics={topics} introduction={introduction} onChange={this.handleChange} />
+          )}
 
         </div>
 
-        <div style={{marginTop: 20, maxWidth: 630, display: 'flex', alignItems: 'center', justifyContent: 'flex-end'}}>
-          <FlatButton style={{margin: '0 10px'}} label='Zurück' onClick={this.handleBack} />
-          <RaisedButton style={{margin: '0 10px'}} label='Speichern' primary onClick={this.handleSave} />
-        </div>
       </div>
     )
   }
