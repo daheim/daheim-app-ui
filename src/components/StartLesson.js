@@ -5,7 +5,7 @@ import CircularProgress from 'material-ui/CircularProgress'
 import Modal from 'react-modal'
 
 import {startLesson, leaveIfNotStarted} from '../actions/live'
-import ProfilePage from './profile/ProfilePage'
+import ProfilePage from './profile/PublicProfilePage'
 
 class LessonGuardRaw extends Component {
 

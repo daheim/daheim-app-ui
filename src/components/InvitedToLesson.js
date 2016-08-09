@@ -5,7 +5,7 @@ import {Howl} from 'howler'
 import Modal from 'react-modal'
 
 import {join, leave} from '../actions/live'
-import ProfilePage from './profile/ProfilePage'
+import ProfilePage from './profile/PublicProfilePage'
 
 class InvitedToLessonDialog extends Component {
 

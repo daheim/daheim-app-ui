@@ -11,9 +11,9 @@ import MenuItem from 'material-ui/MenuItem'
 import FlatButton from 'material-ui/FlatButton'
 import PureRenderMixin from 'react-addons-pure-render-mixin'
 
-import {saveProfile} from '../actions/profile'
-import ProficiencyRating from '../components/ProficiencyRating'
-import TimeToChoose from '../components/ready/TimeToChoose'
+import {saveProfile} from '../../actions/profile'
+import ProficiencyRating from '../ProficiencyRating'
+import TimeToChoose from '../ready/TimeToChoose'
 
 const avatars = {
   avatar1: 'https://assets.daheimapp.de/public/assets/avatar-1.svg',

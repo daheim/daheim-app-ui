@@ -5,7 +5,6 @@ import Helmet from 'react-helmet'
 import DefaultLayout from './containers/DefaultLayout'
 import ReadyPage from './containers/ReadyPage'
 import LessonPage from './containers/LessonPage'
-import ProfilePage from './containers/ProfilePage'
 
 import AuthLayout from './components/auth/AuthLayout'
 import LoginPage from './components/auth/LoginPage'
@@ -17,7 +16,8 @@ import ChangePasswordPage from './components/auth/ChangePasswordPage'
 
 import AdminPage from './components/admin/AdminPage'
 
-import PublicProfilePage from './components/profile/ProfilePage'
+import PublicProfilePage from './components/profile/PublicProfilePage'
+import EditProfilePage from './components/profile/EditProfilePage'
 
 import NotFoundPage from './containers/NotFoundPage'
 
@@ -32,7 +32,7 @@ export default function createRouter (history) {
         <Route path='/' component={DefaultLayout}>
           <IndexRoute component={ReadyPage} />
           <Route path='lessons/:lessonId' component={LessonPage} />
-          <Route path='profile' component={ProfilePage} />
+          <Route path='profile' component={EditProfilePage} />
           <Route path='users/:userId' component={PublicProfilePage} />
           <Route path='admin' component={AdminPage} />
           <Route path='password' component={ChangePasswordPage} />
