@@ -56,6 +56,7 @@ class ProfilePage extends Component {
 
     const editorOpen = !me && (!myReview || this.state.editorOpen)
     const userSinceText = moment(userSince).format('LL')
+    const showStudentFields = role !== 'teacher'
 
     const topicsArr = Object.keys(topics)
     const languagesArr = Object.keys(languages)
@@ -84,10 +85,12 @@ class ProfilePage extends Component {
                   {introduction || <i>Es gibt noch keine Informationen.</i>}
                 </div>
               </div>
-              <div className={css.field}>
-                <div className={css.fieldTitle}>Ich wohne in Deutschland seit</div>
-                <div className={css.fieldText}>{seitToText(inGermanySince)}</div>
-              </div>
+              {showStudentFields ? (
+                <div className={css.field}>
+                  <div className={css.fieldTitle}>Ich wohne in Deutschland seit</div>
+                  <div className={css.fieldText}>{seitToText(inGermanySince)}</div>
+                </div>
+              ) : null}
               <div className={css.field}>
                 <div className={css.fieldTitle}>Ich spreche gern über...</div>
                 <div className={css.fieldText}>
@@ -102,10 +105,12 @@ class ProfilePage extends Component {
           <div className={css.section}>
             <div className={css.sectionTitle}>Erfahrung</div>
             <div className={css.sectionContent}>
-              <div className={css.field}>
-                <div className={css.fieldTitle}>Deutschkenntnis</div>
-                <div className={css.fieldText}><ProficiencyRating value={'' + germanLevel} readOnly /></div>
-              </div>
+              {showStudentFields ? (
+                <div className={css.field}>
+                  <div className={css.fieldTitle}>Deutschkenntnis</div>
+                  <div className={css.fieldText}><ProficiencyRating value={'' + germanLevel} readOnly /></div>
+                </div>
+              ) : null}
               <div className={css.field}>
                 <div className={css.fieldTitle}>Ich spreche auch...</div>
                 <div className={css.fieldText}>

@@ -35,6 +35,7 @@ class Languages extends Component {
     inGermanySince: PropTypes.string.isRequired,
     languages: PropTypes.object.isRequired,
     germanLevel: PropTypes.number.isRequired,
+    role: PropTypes.string,
     onChange: PropTypes.func
   }
 
@@ -54,26 +55,32 @@ class Languages extends Component {
   }
 
   render () {
-    const {inGermanySince, germanLevel, languages} = this.props
+    const {inGermanySince, germanLevel, languages, role} = this.props
+    const showStudentFields = role !== 'teacher'
 
     return (
       <div style={{display: 'flex', flexWrap: 'wrap', maxWidth: 700, marginTop: 20}}>
         <div style={{fontSize: 15, fontWeight: 700, marginBottom: 8, marginRight: 10, flex: '0 0 150px'}}>
           Sprache
         </div>
+
         <div style={{flex: '1 1 400px'}}>
-          <div style={{marginBottom: 8, fontWeight: 700, fontSize: 14}}>Seit wann wohnst du in Deutschland?</div>
-          <div>
-            <DropDownMenu value={inGermanySince} style={{marginTop: -10, marginLeft: -20}} onChange={this.handleInGermanySinceChange}>
-              <MenuItem value='2016' primaryText='2016' />
-              <MenuItem value='2015' primaryText='2015' />
-              <MenuItem value='2014' primaryText='2014' />
-              <MenuItem value='earlier' primaryText='Früher als 2014' />
-            </DropDownMenu>
-          </div>
-          <div style={{marginBottom: 8, marginTop: 16, fontWeight: 700, fontSize: 14}}>Deutschkenntnis</div>
-          <div><ProficiencyRating value={'' + germanLevel} onChange={this.handleGermanLevelChange} /></div>
-          <div style={{marginBottom: 8, marginTop: 16, fontWeight: 700, fontSize: 14}}>Andere Sprachen</div>
+          {showStudentFields ? (
+            <div>
+              <div style={{marginBottom: 8, fontWeight: 700, fontSize: 14}}>Seit wann wohnst du in Deutschland?</div>
+              <div>
+                <DropDownMenu value={inGermanySince} style={{marginTop: -10, marginLeft: -20}} onChange={this.handleInGermanySinceChange}>
+                  <MenuItem value='2016' primaryText='2016' />
+                  <MenuItem value='2015' primaryText='2015' />
+                  <MenuItem value='2014' primaryText='2014' />
+                  <MenuItem value='earlier' primaryText='Früher als 2014' />
+                </DropDownMenu>
+              </div>
+              <div style={{marginBottom: 8, marginTop: 16, fontWeight: 700, fontSize: 14}}>Deutschkenntnis</div>
+              <div><ProficiencyRating value={'' + germanLevel} onChange={this.handleGermanLevelChange} /></div>
+            </div>
+          ) : null}
+          <div style={{marginBottom: 8, marginTop: showStudentFields ? 16 : 0, fontWeight: 700, fontSize: 14}}>Andere Sprachen</div>
           <div style={{display: 'flex', flexWrap: 'wrap'}}>
             <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={languages} selector='Englisch' onCheck={this.handleLanguageCheck} /></div>
             <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={languages} selector='Spanisch' onCheck={this.handleLanguageCheck} /></div>
@@ -264,6 +271,7 @@ class ProfilePage extends React.Component {
 
   render () {
     const {name, picture, topics, languages, inGermanySince, germanLevel, introduction} = this.state
+    const {role} = this.props.user.profile
 
     return (
       <div style={{margin: 16}}>
@@ -306,7 +314,7 @@ class ProfilePage extends React.Component {
             </div>
           </div>
 
-          <Languages languages={languages} inGermanySince={inGermanySince} germanLevel={germanLevel} onChange={this.handleChange} />
+          <Languages role={role} languages={languages} inGermanySince={inGermanySince} germanLevel={germanLevel} onChange={this.handleChange} />
           <Topics topics={topics} introduction={introduction} onChange={this.handleChange} />
 
         </div>
