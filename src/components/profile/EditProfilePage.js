@@ -103,6 +103,10 @@ class Topics extends React.Component {
     onChange: PropTypes.func
   }
 
+  static suggestions = ['Ausbildung', 'Autos', 'Bücher', 'Essen', 'Familie', 'Filme&Serien',
+    'Fotografie', 'Garten', 'Kunst&Kultur', 'Kreatives', 'Musik', 'Politik', 'Prominente',
+    'Reisen', 'Sport', 'Sprachen', 'Typisch Deutsch']
+
   shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate
 
   handleCheck = (topics) => {
@@ -125,15 +129,8 @@ class Topics extends React.Component {
         <div style={{flex: '1 1 400px'}}>
           <div style={{marginBottom: 8, fontWeight: 700, fontSize: 14}}>Ich spreche gern über...</div>
           <div style={{display: 'flex', flexWrap: 'wrap'}}>
-            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector='Autos' onCheck={this.handleCheck} /></div>
-            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector='Kochen' onCheck={this.handleCheck} /></div>
-            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector='Wandern' onCheck={this.handleCheck} /></div>
-            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector='Fotografie' onCheck={this.handleCheck} /></div>
-            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector='Garten' onCheck={this.handleCheck} /></div>
-            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector='Familie' onCheck={this.handleCheck} /></div>
-            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector='Politik' onCheck={this.handleCheck} /></div>
-            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector='Kunst' onCheck={this.handleCheck} /></div>
-            <div style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector='Sport' onCheck={this.handleCheck} /></div>
+            {[...Topics.suggestions, ...Object.keys(leftovers)].map((topic) =>
+              <div key={topic} style={{flex: '0 0 150px', margin: '4px 0'}}><ValuedCheckbox values={topics} selector={topic} onCheck={this.handleCheck} /></div>)}
           </div>
           <div>
             <TextField value={introduction} style={{marginTop: -8}} fullWidth multiLine floatingLabelText='Ein Paar Worte über dich' rows={1} rowsMax={8} onChange={this.handleIntroductionChage} />
