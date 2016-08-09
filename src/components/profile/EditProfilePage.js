@@ -121,6 +121,9 @@ class Topics extends React.Component {
   render () {
     const {topics, introduction} = this.props
 
+    const leftovers = {...topics}
+    Topics.suggestions.forEach((suggestion) => delete leftovers[suggestion])
+
     return (
       <div style={{display: 'flex', flexWrap: 'wrap', maxWidth: 630, marginTop: 20}}>
         <div style={{fontSize: 15, fontWeight: 700, marginBottom: 8, marginRight: 10, flex: '0 0 150px'}}>
